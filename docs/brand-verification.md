@@ -10,7 +10,7 @@ During this task, concurrent visual work replaced the original forest layout wit
 - Inspected final desktop homepage at 1440 × 1000 and mobile homepage and membership at 320 × 740.
 - No horizontal overflow on homepage or membership at 320px.
 - Mobile menu opens; membership navigation works and closes the menu.
-- Interactive collection switches to the honey story.
+- Interactive collection renders the shared catalog, including the curated-goods panel.
 - Browser error log: no errors reported during the final homepage/membership checks.
 - Homepage, membership, and all four product pages return 200. Unknown product and unknown page return 404.
 - Page metadata was reviewed for brand alignment; product descriptions derive from the shared catalog.
