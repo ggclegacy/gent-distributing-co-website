@@ -1,7 +1,6 @@
-/** Tiny local previews prevent empty rooms during image staging. */
 export const scenePlaceholders = {
-  "workshop": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAwCdASoYABAAPxF0tFEsJqUisAgBgCIJZwAAetEqUQ/0AAD+78mnlascuL84BSzlWrRtqOC7uZCYLlG31jDyj30/uT32BAAAAA==",
-  "vault": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAwCdASoYABAAPxF0slCsJqSisAgBgCIJZwABNMCiMAUQAP75m2qXyZ8jdNf3nZsx1NC+RRbtBS9c9wAAAA==",
-  "network": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAwCdASoYABAAPxFOv1osIqgkmAGAIgllAMwcaHDeGt5Kz4w5AAAA/vtpEQgrkqc57Q3uiBC4p9NY6OHSIWAA",
-  "arrival": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoYABAAPxF8tFGsKCUisAgBgCIJYwDE2GlfjDinggAA/vyn/iHbr0qIi3a5kLfsSKTLAnp6GgqVut7NQWtphgYWk5wAAA=="
-} as const;
+  "workshop": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAADwAwCdASoYABAAPu1iqk2ppaQiMAgBMB2JZwAD5SoCyRxwSyoa/T4AAP7sPlWM4QubLRdJgn4Dc1w1niXLyxyRwGXqZB2T4NM27gJ0w77vX3t0Jpe+cfTacvPOqc7/AbOuMAnGDy9X171GjM9GrPwX16+Nsa5i/j5Wd0zLlt+d5KIiCqVWABCTHkAAAA==",
+  "vault": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAADwAwCdASoYABAAPu1iqU2ppaQiMAgBMB2JZwDE2CLdteHml7vrgXOAAP5oaVExCe+wgsnLINQXSnr358ovyCWvlS0jIanu0pz9kYZUJyno7VaHKuaz1SixqE55JFf8Luiftyj+Y6oKkGNQDKRmAdVO4U1lFhFHrJwO8QiN6ihpAAAA",
+  "network": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAAAQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JZwAD5SmA9lNXuMb33LRL8AD+6deeYNNXQeTp2dixYS09YpNkiwqko2LKh3eDn86zUHaAg4ShWpufWs9yQlJjtsm30SwgjWrrAM5qt/mCwXozRDAqxBlzSZEZFIkRlKKstaNjXTFGlWXWI6rbOqS5pfOGtdbt4G2AHwAA",
+  "arrival": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JZQAAXGjU9hYSRFWzTJwQAP0DQ0bM6NmTBoR3ocvheb7MF/C09h6SBPTCMpeh/eNSRSVcu4xgIiV7a08xFZVxVF1KkFtsv0DYJAULPGLvts0+E2lB52EF9CxAZAlT1Yc56ZvRpir5Es5axuRUOjDNii2g9fd+cT4b1D/JFo28pztRs95MFYgD0fPb5dUZHPwAAA=="
+};

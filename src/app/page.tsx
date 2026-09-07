@@ -25,27 +25,29 @@ export default function Home() {
         <section className="material-scene workshop-scene" id="philosophy" data-scene="chamber" aria-labelledby="standard-title">
           <MaterialEnvironment scene="workshop" />
           <div className="scene-content material-content">
-            <div className="section-index"><span>02 / THE GENT STANDARD</span><span>THE MAKER’S WORKSHOP</span></div>
+            <div className="section-index"><span>02 / THE GENT STANDARD</span><span>PRODUCT DEVELOPMENT LAB</span></div>
             <div className="material-copy">
               <p className="eyebrow">NOT EVERYTHING EARNS A PLACE.</p>
               <h2 id="standard-title">Worth knowing.<br /><em>Worth having.</em></h2>
-              <p>Know where it came from. Who made it. Why it deserves to exist. Before anything carries our name, it has to meet our standard.</p>
+              <p>Source with intent. Develop with precision. Test what matters. Everything that carries our name must earn its place.</p>
             </div>
             <div className="workshop-stations">
               {[
-                ["01 / SOURCE", "Know the source.", "The place. The material. The beginning of the story."],
-                ["02 / MAKER", "Know the maker.", "The hands, the process, and the care behind the goods."],
-                ["03 / WORTH", "Know its worth.", "A place on the shelf is earned by what’s inside."],
+                ["01 / SOURCE", "Start with substance.", "Exceptional ingredients. Considered partners. Clear origins."],
+                ["02 / DEVELOP", "Refine the idea.", "Formulate, test and sharpen every detail."],
+                ["03 / VET", "Prove its worth.", "Quality, purpose and experience. Nothing overlooked."],
+                ["04 / APPROVE", "Earn the name.", "Only what meets the standard moves forward."],
               ].map(([n, title, copy]) => <article className="station-placard" key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}
             </div>
-            <span className="environment-note">MATERIAL → CRAFT → CHARACTER</span>
+            <span className="environment-note">SOURCE → DEVELOP → VET → APPROVE</span>
           </div>
         </section>
         <section className="material-scene collection-scene" id="collection" data-scene="display" aria-labelledby="collection-title">
           <MaterialEnvironment scene="vault" />
           <div className="scene-content material-content">
-            <div className="section-index"><span>03 / THE COLLECTION</span><span>THE GENT VAULT</span></div>
+            <div className="section-index"><span>03 / THE COLLECTION</span><span>PRODUCT REVEAL / 01</span></div>
             <div className="vault-heading"><p className="eyebrow">COFFEE IS CHAPTER ONE.</p><h2 id="collection-title">A first release.<br /><em>A larger world.</em></h2></div>
+            <p className="category-horizon">Coffee · Foods · Beverages · Supplements · Lifestyle</p>
             <ProductExplorer />
           </div>
         </section>
@@ -56,30 +58,30 @@ export default function Home() {
             <div className="material-copy">
               <p className="eyebrow">ORIGIN TRAVELS WITH IT.</p>
               <h2 id="distribution-title">Rooted here.<br /><em>Built to travel.</em></h2>
-              <p>From a maker’s hands to more shelves, tables, homes and businesses. We bring curation, storytelling and distribution together—so exceptional goods can go further without losing their identity.</p>
+              <p>Built with makers. Designed for scale. We connect product development, brand and distribution to carry exceptional goods from Louisiana toward a national—and wider—world.</p>
               <Link className="text-link" href="/approach">Explore the house <span aria-hidden="true">↗</span></Link>
             </div>
             <ol className="distribution-stops" aria-label="The journey of a Gent case">
               {[["MAKER", "Made with purpose"], ["GENT", "Selected. Sealed. Carried."], ["BUSINESS", "A place on the shelf"], ["CUSTOMER", "A place in daily life"]].map(([name,copy],i)=><li key={name}><span>0{i+1}</span><strong>{name}</strong><p>{copy}</p></li>)}
             </ol>
             <div className="location-plates" aria-label="Our reach, beginning in Lafayette">
-              {["Lafayette", "Acadiana", "Louisiana", "Gulf South", "Beyond"].map((name,i)=><span key={name}><small>0{i+1}</small>{name}</span>)}
+              {["Lafayette", "Louisiana", "Gulf South", "National", "Global ambition"].map((name,i)=><span key={name}><small>0{i+1}</small>{name}</span>)}
             </div>
-            <p className="reach-note">OUR ROOTS. OUR DIRECTION. OUR GROWING REACH.</p>
+            <p className="reach-note">LOUISIANA IS OUR ORIGIN. POSSIBILITY SETS OUR HORIZON.</p>
           </div>
         </section>
         <section className="material-scene arrival-scene" id="membership" data-scene="vault" aria-labelledby="membership-title">
           <MaterialEnvironment scene="arrival" />
           <div className="scene-content material-content">
-            <div className="section-index"><span>05 / COMMUNITY</span><span>THE ARRIVAL</span></div>
+            <div className="section-index"><span>05 / COMMUNITY</span><span>THE PRIVATE NETWORK</span></div>
             <div className="material-copy">
-              <p className="eyebrow">THE JOURNEY ENDS IN GOOD COMPANY.</p>
+              <p className="eyebrow">ACCESS TO WHAT COMES NEXT.</p>
               <h2 id="membership-title">Good taste.<br /><em>Better company.</em></h2>
-              <p>For people who enjoy the find as much as the goods themselves. A closer connection to Gent, to the makers, and to what comes next.</p>
+              <p>Early releases. New makers. Shared experiences. A closer connection to the products, people and possibilities taking shape at Gent.</p>
               <Link className="button" href="/membership">See the membership plans <span aria-hidden="true">↗</span></Link>
               <p className="micro">IN DEVELOPMENT · ENROLLMENT NOT YET OPEN</p>
             </div>
-            <span className="environment-note">A PLACE AT THE TABLE.</span>
+            <span className="environment-note">PRODUCTS. PEOPLE. WHAT COMES NEXT.</span>
           </div>
         </section>
         <section className="material-scene journey-closing" id="welcome" data-scene="doorway" aria-labelledby="welcome-title">

@@ -65,6 +65,15 @@ function orbitExchange(timeline: gsap.core.Timeline, hero: Element, mobile = fal
   timeline.to(sculpture, { scale: mobile ? .88 : .78, duration: 1.35 }, 1.95);
 }
 
+/** Decorative data activates with scene progress; no timers or idle render loop. */
+function activateFacility(timeline: gsap.core.Timeline, scene: Element, at: number, duration = 1) {
+  const find = (selector: string) => scene.querySelectorAll(selector);
+  timeline.fromTo(find(".facility-interface"), { opacity: .35, y: 14 }, { opacity: 1, y: -8, duration }, at);
+  timeline.fromTo(find(".facility-data i"), { scaleY: .15 }, { scaleY: 1, stagger: duration * .07, duration: duration * .45 }, at);
+  timeline.fromTo(find(".facility-route i"), { opacity: .2 }, { opacity: 1, stagger: duration * .15, duration: duration * .3 }, at);
+  timeline.fromTo(find(".facility-sweep"), { xPercent: -65 }, { xPercent: 65, duration, ease: "none" }, at);
+}
+
 /** One stage, one playhead. Scene entrances and exits share a transition interval. */
 export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
   const media = gsap.matchMedia();
@@ -128,6 +137,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
             const sceneFilm = gsap.timeline({ scrollTrigger: {
               trigger: scene, start: "top 90%", end: "bottom top", scrub: true,
             } });
+            activateFacility(sceneFilm, scene, 0);
             sceneFilm.fromTo(camera, { scale: 1.07, yPercent: 2 }, { scale: 1, yPercent: -2, ease: "none", duration: 1 }, 0);
             sceneFilm.fromTo(scene.querySelector(".environment-light"), { opacity: .32 }, { opacity: .03, duration: .4 }, 0);
             const caseObject = scene.querySelector(".network-case");
@@ -142,11 +152,12 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           });
           // WebKit can restore the hash before the local font and scene layout
           // settle. Reconcile once after load; subsequent scrolling stays native.
+          const initialHash = location.hash;
           let cancelled = false;
           let frame = 0;
           const alignNativeHash = () => {
             frame = requestAnimationFrame(() => {
-              if (cancelled || !location.hash) return;
+              if (cancelled || !initialHash || location.hash !== initialHash) return;
               try {
                 const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
                 if (target && root.contains(target)) target.scrollIntoView({ behavior: "instant", block: "start" });
@@ -213,6 +224,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           const overflow = content
             ? Math.max(0, content.scrollHeight - stage.clientHeight)
             : 0;
+          if (index > 0) activateFacility(film, scenes[index], at, 1.5);
           starts[index] = Math.max(0, at - (index ? 0.32 : 0));
           stops[index] = at + 0.12;
           film.addLabel(`scene-${index}`, stops[index]);
@@ -311,7 +323,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           cursor += 3.35;
           film.to(origins, { opacity: 0, scale: 1.15, duration: 0.8 }, cursor);
         }
-        // The origin's aperture opens into a real atelier. One continuous playhead
+        // The origin's aperture opens into a private development lab. One continuous playhead
         // owns architecture, light and cargo; content never depends on a renderer.
         let arrived = enter(1, cursor + .25, { opacity: 0, scale: 1.13 }, 1.2);
         film.to(scenes[1], { opacity: 1, duration: .8 }, cursor + .25);
@@ -326,7 +338,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           film.fromTo(select(1, ".environment-foreground"), { xPercent: 0 }, { xPercent: -25, duration: 3 }, arrived);
         });
         cursor = arrived + 3.2;
-        // Follow the finished pouch through the dark threshold into its archive.
+        // Follow the finished pouch through the dark threshold into its reveal chamber.
         film.to(select(1, ".environment-camera"), { scale: 1.3, xPercent: -7, duration: 1.4 }, cursor);
         film.to(select(1, ".environment-light"), { opacity: .88, duration: .8 }, cursor);
         arrived = enter(2, cursor + .55, { opacity: 0, scale: 1.08 }, 1.25);

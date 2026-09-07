@@ -48,3 +48,26 @@ test.describe("material journey", () => {
       });
     }
 });
+
+for (const width of [390, 1440]) {
+  test(`campus ${width}px validates rooms, reduced motion and unobstructed membership access`, async ({page}) => {
+    await page.setViewportSize({width,height:900});
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.goto('/#philosophy');
+    await expect(page.locator('#philosophy .station-placard')).toHaveCount(4);
+    for (const [id,asset] of [['philosophy','innovation-lab'],['collection','reveal-chamber'],['ecosystem','distribution-center'],['membership','private-network']]) {
+      const scene=page.locator('#'+id);
+      await scene.scrollIntoViewIfNeeded();
+      const room=scene.locator('.environment-image');
+      await expect(room).toHaveAttribute('src',new RegExp(asset));
+      await expect.poll(()=>room.evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+      await expect(scene.locator('.facility-data i').first()).toHaveCSS('transform','none');
+    }
+    await expect(page.locator('.category-horizon')).toContainText('Supplements');
+    await expect(page.locator('.location-plates')).toContainText('National');
+    const cta=page.locator('#membership .button');
+    await cta.scrollIntoViewIfNeeded();
+    expect(await cta.evaluate(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));})).toBe(true);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  });
+}

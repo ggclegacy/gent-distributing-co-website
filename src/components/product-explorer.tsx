@@ -47,7 +47,7 @@ export function ProductExplorer() {
           </button>
         ))}
       </div>
-      <Link className="future-bay" href="/products/gent-collection"><span>05</span> Future releases <small>CURATED GOODS ↗</small></Link>
+      <Link className="future-bay" href="/products/gent-collection"><span>05</span> Future releases <small>A LARGER WORLD ↗</small></Link>
       {products.map((p, i) => (
         <div
           key={p.handle}
@@ -60,7 +60,7 @@ export function ProductExplorer() {
           {selected === i ? (
             <div className={`explorer-content explore-${product.visual.kind}`}>
               <div className="archive-object-caption">
-                <span>ARCHIVE / 01</span><span>LEGACY RESERVE</span><small>CONCEPT PACKAGING · IN DEVELOPMENT</small>
+                <span>RELEASE / 01</span><span>LEGACY RESERVE</span><small>CONCEPT PACKAGING · IN DEVELOPMENT</small>
               </div>
               <div className="explorer-copy" key={product.handle}>
                 <p className="eyebrow">
