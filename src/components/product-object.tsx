@@ -21,7 +21,7 @@ export function ProductObject({
           <span className="package-kind">
             {kind === "bundles" ? "COLLECTION" : kind.toUpperCase()}
           </span>
-          <span className="package-small">EXCEPTIONAL BY NATURE</span>
+          <span className="package-small">WORTH HAVING</span>
         </div>
         <span className="package-bottom">THE GENT STANDARD</span>
       </div>

@@ -33,6 +33,10 @@ Before enabling sales: map real catalog variants, source prices and inventory fr
 
 Import this GitHub repository as a Next.js project. Default build (`npm run build`) and output detection apply. Set server environment variables in the appropriate Vercel environment when commerce is ready. No deployment is configured by this initial implementation.
 
+## Brand language
+
+See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hierarchy, claim standards, and copy ownership. Gent is a modern merchant house built around discovery, provenance, quality, and relationships.
+
 ## Design
 
 Ink #0b100e, forest #152e24, antique gold #c6aa71, parchment #ece8dc. Locally hosted Cormorant Garamond and Manrope with system fallbacks; licenses are in `public/fonts`. Native scrolling and progressive CSS scroll animation avoid a heavy animation runtime. Interactive elements support keyboard focus; motion follows reduced-motion preferences.

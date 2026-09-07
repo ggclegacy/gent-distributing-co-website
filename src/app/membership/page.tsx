@@ -1,41 +1,54 @@
 import Link from "next/link";
-export const metadata = { title: "Gent membership" };
+import { MembershipCard } from "@/components/membership-card";
+export const metadata = { title: "Gent membership — Good company, shared taste", description: "A closer connection to Gent’s goods and the people behind them. Explore our membership direction, currently in development. Enrollment is not yet open." };
 const benefits = [
   [
     "01",
-    "First through the door",
-    "Early access to upcoming products and special releases.",
+    "First access.",
+    "We’re exploring early access so members can discover upcoming goods before a wider release.",
   ],
   [
     "02",
-    "A more rewarding ritual",
-    "Member pricing on eligible products and future recurring offerings.",
+    "A reason to return.",
+    "Member pricing is part of the plan. Eligible goods and any savings will be confirmed before enrollment.",
   ],
   [
     "03",
-    "Something worth finding",
-    "Limited batches, curated bundles, and member-focused discoveries.",
+    "The next good find.",
+    "We’re considering small releases and selected bundles that give members something new to get to know.",
   ],
   [
     "04",
-    "One world. One membership.",
-    "An umbrella membership designed to grow across the Gent product house.",
+    "Room to grow.",
+    "The aim is one membership across the Gent collection, with participating products and terms made clear at launch.",
   ],
 ];
 export default function Membership() {
   return (
-    <main id="main" className="membership-page">
-      <p className="eyebrow">THE INNER WORLD OF GENT</p>
-      <h1>
-        A little closer.
-        <br />
-        <em>A little more Gent.</em>
-      </h1>
-      <p className="membership-intro">
-        A membership for people who believe that the things they choose should
-        mean something. One connection to an expanding world of considered
-        goods.
-      </p>
+    <main id="main" className="membership-page section-pad">
+      <div className="membership-page-hero">
+        <div>
+          <p className="eyebrow">GENT MEMBERSHIP / IN DEVELOPMENT</p>
+          <h1>
+            Good company.
+            <br />
+            <em>Shared taste.</em>
+          </h1>
+          <p className="membership-intro">
+            For those who enjoy the find as much as the goods themselves.
+            We’re shaping a closer connection to our collection and the people
+            behind it. These ideas are guiding membership; benefits are not yet final.
+          </p>
+          <a className="button button-outline" href="#benefits">
+            See what we’re planning <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+        <MembershipCard />
+      </div>
+      <div className="section-index" id="benefits">
+        <span>THE MEMBERSHIP VISION</span>
+        <span>BENEFITS UNDER CONSIDERATION</span>
+      </div>
       <div className="membership-benefits">
         {benefits.map(([number, title, description]) => (
           <article key={number}>
@@ -46,14 +59,20 @@ export default function Membership() {
         ))}
       </div>
       <div className="membership-launch">
-        <p className="eyebrow">CURRENTLY TAKING SHAPE</p>
-        <h2>Worth looking forward to.</h2>
+        <p className="eyebrow">
+          <span className="status-dot" /> BEFORE THE DOORS OPEN
+        </p>
+        <h2>
+          The details
+          <br />
+          <em>come first.</em>
+        </h2>
         <p>
-          Gent membership is in development. Pricing, eligibility, benefits, and
-          enrollment details will be announced before launch.
+          Enrollment is not open yet. We’ll publish pricing, eligibility,
+          confirmed benefits, and membership terms before you’re asked to join.
         </p>
         <Link className="button" href="/#collection">
-          Explore what’s coming ↗
+          Explore the collection <span aria-hidden="true">↗</span>
         </Link>
       </div>
     </main>

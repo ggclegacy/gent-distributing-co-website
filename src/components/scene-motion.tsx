@@ -3,7 +3,6 @@ import { useEffect } from "react";
 export function SceneMotion() {
   useEffect(() => {
     const media = matchMedia("(prefers-reduced-motion: reduce)");
-    if (media.matches) return;
     const nodes = document.querySelectorAll<HTMLElement>("[data-reveal]");
     const observer = new IntersectionObserver(
       (entries) =>
@@ -13,15 +12,17 @@ export function SceneMotion() {
             observer.unobserve(entry.target);
           }
         }),
-      { threshold: 0.12 },
+      { threshold: 0.1 },
     );
-    nodes.forEach((n) => {
-      n.classList.add("reveal-ready");
-      observer.observe(n);
-    });
+    if (!media.matches) {
+      nodes.forEach((node) => {
+        node.classList.add("reveal-ready");
+        observer.observe(node);
+      });
+    }
     return () => {
       observer.disconnect();
-      nodes.forEach((n) => n.classList.remove("reveal-ready"));
+      nodes.forEach((node) => node.classList.remove("reveal-ready"));
     };
   }, []);
   return null;

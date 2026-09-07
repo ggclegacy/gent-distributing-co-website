@@ -1,13 +1,16 @@
 import Link from "next/link";
 export default function NotFound() {
   return (
-    <main id="main" className="closing">
-      <p className="eyebrow">A DIFFERENT DIRECTION</p>
+    <main id="main" className="not-found-page">
+      <p className="eyebrow">PAGE NOT FOUND</p>
       <h1>
-        This discovery
+        A loose end.
         <br />
-        is still ahead.
+        Let’s get you home.
       </h1>
+      <p>
+        We couldn’t find that page. The collection is a good place to start.
+      </p>
       <Link className="button" href="/">
         Return to Gent ↗
       </Link>

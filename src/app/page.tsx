@@ -1,182 +1,210 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ProductObject } from "@/components/product-object";
 import { SceneMotion } from "@/components/scene-motion";
-import { products } from "@/lib/catalog";
+import { ProductExplorer } from "@/components/product-explorer";
+import { MembershipCard } from "@/components/membership-card";
+import { Ecosystem } from "@/components/ecosystem";
 export default function Home() {
   return (
     <main id="main">
       <SceneMotion />
       <section className="hero scene" aria-labelledby="hero-title">
-        <Image
-          className="hero-landscape"
-          src="/images/forest.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-        />
-        <div className="hero-atmosphere" />
+        <div className="hero-visual">
+          <Image
+            src="/images/gent-portal.webp"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 700px) 210vw, 100vw"
+            quality={85}
+          />
+        </div>
+        <div className="hero-shade" />
         <div className="hero-copy">
           <p className="eyebrow">
-            A MODERN PRODUCT HOUSE <span>EST. WITH INTENTION</span>
+            <span className="status-dot" /> A MODERN MERCHANT HOUSE
           </p>
           <h1 id="hero-title">
-            Exceptional
+            Good things
             <br />
-            by <em>nature.</em>
+            deserve to <em>travel.</em>
           </h1>
-          <p className="intro">
-            Extraordinary goods. Everyday rituals.
-            <br />A world curated with purpose.
+          <p className="hero-description">
+            We discover, develop, and bring exceptional goods to more people.
+            From our own label to independent makers we believe in.
           </p>
-          <Link className="button" href="#collection">
-            Discover the collection <span>↗</span>
-          </Link>
-        </div>
-        <div className="hero-product">
-          <span className="orbit-label">INTRODUCING THE FIRST CHAPTER</span>
-          <ProductObject large />
-          <div className="hero-product-caption">
-            <span>01 / GENT COFFEE</span>
-            <span>COMING SOON</span>
+          <div className="hero-actions">
+            <Link className="button" href="#collection">
+              Explore the collection <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="quiet-link" href="#philosophy">
+              Meet the house <span aria-hidden="true">↓</span>
+            </Link>
           </div>
+        </div>
+        <div className="portal-label" aria-hidden="true">
+          <span className="crosshair">+</span> GOOD GOODS. KEPT WORD.
         </div>
         <div className="hero-bottom">
-          <a href="#collection">
-            SCROLL TO EXPLORE <span>↓</span>
+          <a href="#philosophy">
+            <span className="scroll-line" /> SCROLL TO DISCOVER
           </a>
-          <span>QUALITY WITHOUT COMPROMISE.</span>
-          <span className="scene-count">
-            01 <i /> 04
+          <span>
+            DISCOVERY &nbsp; / &nbsp; QUALITY &nbsp; / &nbsp;
+            RELATIONSHIPS
           </span>
+          <span>01 — 05</span>
         </div>
       </section>
-      <section className="manifesto" id="philosophy">
-        <p className="eyebrow">THE GENT STANDARD</p>
-        <h2 data-reveal>
-          Not just well made.
-          <br />
-          <em>Well considered.</em>
-        </h2>
-        <p data-reveal>
-          What we bring into our lives matters. We’re building a house of
-          exceptional products, connected by a simple belief: the everyday
-          deserves something extraordinary.
-        </p>
-        <div className="values">
-          <span>01 &nbsp; Intentional selection</span>
-          <span>02 &nbsp; Uncompromising character</span>
-          <span>03 &nbsp; Lasting relationships</span>
+      <section className="standard-section section-pad" id="philosophy">
+        <div className="section-index">
+          <span>01 / THE GENT STANDARD</span>
+          <span>TRUST IS EARNED</span>
         </div>
-      </section>
-      <section className="coffee-scene scene" id="collection">
-        <div className="chapter-line">
-          <span>THE COLLECTION</span>
-          <span>CHAPTER 01 / THE DAILY RITUAL</span>
-        </div>
-        <div className="coffee-art">
-          <div className="coffee-halo" />
-          <ProductObject large />
-          <span className="vertical-note">THE BEGINNING OF SOMETHING GOOD</span>
-        </div>
-        <div className="scene-copy" data-reveal>
-          <p className="eyebrow">FIRST LIGHT. FIRST POUR.</p>
-          <h2>
-            Make room
+        <div className="standard-intro">
+          <p className="eyebrow" data-reveal>
+            WHY WE’RE HERE
+          </p>
+          <h2 data-reveal>
+            Worth knowing.
             <br />
-            for <em>ritual.</em>
+            <em>Worth having.</em>
           </h2>
-          <p>
-            A quiet moment. A deliberate beginning. Gent Coffee is the first
-            expression of our standard—and the first chapter in a much larger
-            story.
-          </p>
-          <Link href="/products/gent-coffee" className="text-link">
-            Explore Gent Coffee <span>↗</span>
-          </Link>
-          <p className="micro">FIRST RELEASE IN DEVELOPMENT</p>
-        </div>
-      </section>
-      <section className="collection-scene">
-        <div className="section-heading" data-reveal>
-          <div>
-            <p className="eyebrow">THE WORLD IS OPENING UP</p>
-            <h2>
-              Good things.
-              <br />
-              <em>On the horizon.</em>
-            </h2>
-          </div>
-          <p>
-            From the first cup to the last detail.
-            <br />A growing collection, held to one standard.
+          <p data-reveal>
+            Exceptional goods deserve a wider audience. People deserve to know
+            what they’re bringing home. Gent exists to make that connection.
+            We believe in quality you can explain, a handshake that means
+            something, and a reputation earned by keeping your word.
           </p>
         </div>
-        <div className="product-grid">
-          {products.slice(1).map((product, i) => (
-            <Link
-              className={`editorial-card card-${product.category}`}
-              href={`/products/${product.handle}`}
-              key={product.handle}
-            >
-              <div className="card-top">
-                <span>
-                  0{i + 2} / {product.chapter}
-                </span>
-                <span>↗</span>
-              </div>
-              <ProductObject kind={product.category} />
-              <div className="card-copy">
-                <span className="eyebrow">COMING SOON</span>
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-              </div>
-            </Link>
+        <div className="principle-grid">
+          {[
+            [
+              "01",
+              "Know the source.",
+              "Know where it came from. The place and the process belong in the story.",
+            ],
+            [
+              "02",
+              "Know the maker.",
+              "Know who made it. Good business starts with people and grows through trust.",
+            ],
+            [
+              "03",
+              "Know its worth.",
+              "Know why it’s worth having. A place on the shelf should be earned by what’s inside.",
+            ],
+          ].map(([n, title, copy]) => (
+            <article key={n} data-reveal>
+              <span className="principle-number">{n}</span>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+              <span className="principle-line" />
+            </article>
           ))}
         </div>
       </section>
-      <section className="membership-scene scene" id="membership">
-        <div className="membership-emblem" aria-hidden="true">
-          <span>G</span>
-          <i>THE INNER WORLD OF GENT</i>
+      <section className="collection-scene section-pad" id="collection">
+        <div className="section-index">
+          <span>02 / THE COLLECTION</span>
+          <span>OUR OWN GOODS & INDEPENDENT FINDS</span>
         </div>
-        <div className="scene-copy" data-reveal>
-          <p className="eyebrow">GENT MEMBERSHIP</p>
-          <h2>
-            Good taste.
-            <br />
-            <em>Better company.</em>
-          </h2>
-          <p>
-            One membership. The whole world of Gent. A closer connection to the
-            goods, releases, and rituals you love.
-          </p>
-          <div className="benefit-tags">
-            <span>Early access</span>
-            <span>Member pricing</span>
-            <span>Limited releases</span>
+        <div className="section-heading" data-reveal>
+          <div>
+            <p className="eyebrow">TAKING SHAPE</p>
+            <h2>
+              First, coffee.
+              <br />
+              <em>Then, more.</em>
+            </h2>
           </div>
-          <Link className="button" href="/membership">
-            Discover membership <span>↗</span>
-          </Link>
-          <p className="micro">A NEW CHAPTER. COMING SOON.</p>
+          <p>
+            Our own label begins with Gent Coffee.
+            <br />
+            Pantry goods and independent discoveries are next.
+          </p>
+        </div>
+        <ProductExplorer />
+      </section>
+      <section className="ecosystem-section section-pad" id="ecosystem">
+        <div className="section-index">
+          <span>03 / FOR MAKERS & PARTNERS</span>
+          <span>ROOTED IN RELATIONSHIPS</span>
+        </div>
+        <div className="ecosystem-grid">
+          <div className="scene-copy" data-reveal>
+            <p className="eyebrow">A WIDER AUDIENCE. A PERSONAL APPROACH.</p>
+            <h2>
+              More reach.
+              <br />
+              Same <em>soul.</em>
+            </h2>
+            <p>
+              You’ve put something of yourself into what you make. That should
+              travel with it. Our approach brings storytelling, commerce,
+              and distribution together to reach more shelves, tables, and
+              homes. We believe local can go further without losing where
+              it came from.
+            </p>
+            <Link className="text-link" href="#philosophy">
+              Get to know our standard <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <Ecosystem />
         </div>
       </section>
-      <section className="closing" data-reveal>
-        <p className="eyebrow">FROM OUR HOUSE TO YOUR EVERYDAY</p>
-        <h2>
-          A higher standard.
-          <br />A wider <em>world.</em>
-        </h2>
-        <p>
-          Products with character. Partnerships with purpose.
-          <br />
-          This is Gent Distribution Co.
-        </p>
-        <Link href="#collection" className="text-link">
-          Your discovery starts here ↗
-        </Link>
+      <section className="membership-scene section-pad" id="membership">
+        <div className="section-index">
+          <span>04 / GENT MEMBERSHIP</span>
+          <span>GOOD COMPANY. SHARED TASTE.</span>
+        </div>
+        <div className="membership-grid">
+          <MembershipCard />
+          <div className="scene-copy" data-reveal>
+            <p className="eyebrow">A CLOSER CONNECTION</p>
+            <h2>
+              Good taste.
+              <br />
+              <em>Better company.</em>
+            </h2>
+            <p>
+              For people who enjoy the find as much as the goods themselves.
+              We’re shaping a membership that brings you closer to Gent
+              and the people behind the collection as it grows.
+            </p>
+            <div className="benefit-tags">
+              <span>New discoveries</span>
+              <span>Closer connections</span>
+              <span>Shared standards</span>
+            </div>
+            <Link className="button" href="/membership">
+              See the membership plans <span aria-hidden="true">↗</span>
+            </Link>
+            <p className="micro">
+              IN DEVELOPMENT · ENROLLMENT NOT YET OPEN
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="closing section-pad">
+        <div className="section-index">
+          <span>05 / OUR DOOR IS OPEN</span>
+          <span>GENT DISTRIBUTION CO.</span>
+        </div>
+        <div className="closing-inner" data-reveal>
+          <p className="eyebrow">FROM OUR HOUSE TO YOURS</p>
+          <h2>
+            Come in.
+            <br />
+            <em>Find your good.</em>
+          </h2>
+          <Link className="button button-outline" href="#collection">
+            Explore the collection <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+        <span className="closing-word" aria-hidden="true">
+          GENT
+        </span>
       </section>
     </main>
   );

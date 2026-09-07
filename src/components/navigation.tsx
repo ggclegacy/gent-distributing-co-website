@@ -1,40 +1,62 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { BrandMark } from "./brand-mark";
 export function Navigation() {
   const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
   return (
-    <header className="site-header">
+    <header
+      className="site-header"
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && open) {
+          setOpen(false);
+          toggle.current?.focus();
+        }
+      }}
+    >
       <Link
         href="/"
-        className="wordmark"
+        className="brand"
         aria-label="Gent Distribution Co. home"
+        onClick={() => setOpen(false)}
       >
-        GENT<span>DISTRIBUTION CO.</span>
+        <BrandMark />
+        <span className="wordmark">
+          GENT<span>DISTRIBUTION CO.</span>
+        </span>
       </Link>
       <nav
-        id="mobile-menu"
-        aria-label="Main navigation"
+        id="main-navigation"
         className={open ? "nav open" : "nav"}
+        aria-label="Main navigation"
       >
-        <Link onClick={() => setOpen(false)} href="/#collection">
-          The collection
+        <Link href="/#collection" onClick={() => setOpen(false)}>
+          Collection
         </Link>
-        <Link onClick={() => setOpen(false)} href="/#philosophy">
+        <Link href="/#philosophy" onClick={() => setOpen(false)}>
           Our standard
         </Link>
-        <Link onClick={() => setOpen(false)} href="/membership">
-          Gent membership <span>↗</span>
+        <Link href="/#ecosystem" onClick={() => setOpen(false)}>
+          For makers
+        </Link>
+        <Link
+          className="nav-membership"
+          href="/membership"
+          onClick={() => setOpen(false)}
+        >
+          Gent membership <span aria-hidden="true">↗</span>
         </Link>
       </nav>
-      <span className="header-note">A WORLD OF GOOD TASTE</span>
       <button
+        ref={toggle}
         className="menu-toggle"
         aria-expanded={open}
-        aria-controls="mobile-menu"
+        aria-controls="main-navigation"
         onClick={() => setOpen(!open)}
       >
-        {open ? "Close" : "Menu"} <span>{open ? "−" : "+"}</span>
+        {open ? "Close" : "Menu"}{" "}
+        <span aria-hidden="true">{open ? "−" : "+"}</span>
       </button>
     </header>
   );

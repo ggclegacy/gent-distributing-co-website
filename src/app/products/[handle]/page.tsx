@@ -12,7 +12,12 @@ export async function generateMetadata({
 }) {
   const { handle } = await params;
   const product = getProduct(handle);
-  return { title: product?.name ?? "Product not found" };
+  return {
+    title: product?.name ?? "Product not found",
+    description: product
+      ? `${product.description} ${product.detail}`
+      : undefined,
+  };
 }
 export default async function ProductPage({
   params,
@@ -31,7 +36,7 @@ export default async function ProductPage({
         <div className={`detail-art card-${product.category}`}>
           <ProductObject kind={product.category} large />
           <span className="micro">
-            PACKAGING CONCEPT · FINAL DETAILS TO COME
+            CONCEPT PACKAGING · PRODUCT IN DEVELOPMENT
           </span>
         </div>
         <div>
@@ -40,21 +45,23 @@ export default async function ProductPage({
           <p className="detail-lead">{product.description}</p>
           <p>{product.detail}</p>
           <div className="release-note">
-            <span className="status-dot" /> IN DEVELOPMENT — COMING SOON
+            <span className="status-dot" /> IN DEVELOPMENT
           </div>
           <p>
-            Purchasing and pre-orders will open with confirmed product details.
-            No orders or payments are being accepted yet.
+            Still taking shape. Orders and preorders are not open. We’ll share
+            confirmed product details, pricing, and timing before asking you to
+            buy.
           </p>
           <Link className="button" href="/membership">
-            Explore the Gent membership ↗
+            See the membership plans ↗
           </Link>
           <details>
-            <summary>Future purchase options</summary>
+            <summary>Before you order</summary>
             <p>
-              The collection is being built to support individual purchases,
-              curated bundles, limited pre-orders, and recurring products where
-              offered. Availability and terms will be shown at release.
+              Each release will make availability, pricing, and delivery terms
+              clear. If we offer preorders, bundles, or repeat deliveries,
+              you’ll see the payment terms and any recurring commitment before
+              choosing.
             </p>
           </details>
         </div>
