@@ -1,29 +1,63 @@
 "use client";
-import { useEffect } from "react";
+
+import { useEffect, useRef } from "react";
+import { ExperienceControls } from "./experience-controls";
+
+/** Progressive enhancement: the server-rendered story is readable without GSAP. */
 export function SceneMotion() {
+  const rail = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const media = matchMedia("(prefers-reduced-motion: reduce)");
-    const nodes = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        }),
-      { threshold: 0.1 },
-    );
-    if (!media.matches) {
-      nodes.forEach((node) => {
-        node.classList.add("reveal-ready");
-        observer.observe(node);
-      });
-    }
+    let disposed = false;
+    let revert: (() => void) | undefined;
+    let generation = 0;
+    const root = document.querySelector<HTMLElement>("[data-cinema]");
+    if (!root) return;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = async () => {
+      const ticket = ++generation;
+      revert?.();
+      revert = undefined;
+      if (
+        reduced.matches ||
+        document.documentElement.dataset.motion === "paused"
+      )
+        return;
+      try {
+        const { mountCinema } = await import("@/lib/cinema");
+        if (disposed || ticket !== generation) return;
+        revert = mountCinema(root, rail.current);
+      } catch {
+        // A failed optional motion chunk must never hide the content.
+        root.removeAttribute("data-cinema-ready");
+      }
+    };
+    const observer = new MutationObserver(sync);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-motion"],
+    });
+    reduced.addEventListener("change", sync);
+    void sync();
     return () => {
+      disposed = true;
+      generation++;
       observer.disconnect();
-      nodes.forEach((node) => node.classList.remove("reveal-ready"));
+      reduced.removeEventListener("change", sync);
+      revert?.();
     };
   }, []);
-  return null;
+  return (
+    <div className="cinema-tools" ref={rail}>
+      <div className="cinema-position" aria-hidden="true">
+        <span data-act-label>01 / THE OPEN DOOR</span>
+        <span className="cinema-track">
+          <i data-act-progress />
+        </span>
+      </div>
+      <a href="#collection" className="cinema-skip">
+        Go to collection ↗
+      </a>
+      <ExperienceControls />
+    </div>
+  );
 }

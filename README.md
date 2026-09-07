@@ -13,7 +13,7 @@ npm run build
 
 ## Current release
 
-A prelaunch editorial experience with four environmental chapters, responsive navigation, accessible reduced-motion behavior, product detail routes, and a dedicated umbrella membership page. Packaging is an original CSS concept, not final product photography. Product descriptions deliberately avoid unverified origin, certification, roast, pricing, or delivery claims.
+A prelaunch immersive experience with an architectural portal hero, five editorial chapters, a keyboard-accessible product explorer, persistent responsive navigation, reduced-motion controls, product detail routes, and a dedicated umbrella membership page. Packaging is an original CSS concept, not final product photography. Product descriptions deliberately avoid unverified origin, certification, roast, pricing, or delivery claims.
 
 ## Architecture
 
@@ -21,7 +21,7 @@ A prelaunch editorial experience with four environmental chapters, responsive na
 - `src/components`: shared shell, conceptual packaging, and isolated client interactions.
 - `src/lib/catalog.ts`: typed product stories, category/status, future Shopify variant and selling-plan references.
 - `src/lib/shopify.ts`: server-only Storefront API client and validated cart creation foundation.
-- `public/images/forest.jpg`: atmospheric forest image from Unsplash (photo-1448375240586-882707db888b).
+- `public/images/gent-portal.webp`: bespoke AI-generated architectural hero, optimized to approximately 78 KB and served from a fingerprinted static asset URL. The former forest asset remains unused.
 
 ## Commerce and membership launch
 
@@ -39,4 +39,4 @@ See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hier
 
 ## Design
 
-Ink #0b100e, forest #152e24, antique gold #c6aa71, parchment #ece8dc. Locally hosted Cormorant Garamond and Manrope with system fallbacks; licenses are in `public/fonts`. Native scrolling and progressive CSS scroll animation avoid a heavy animation runtime. Interactive elements support keyboard focus; motion follows reduced-motion preferences.
+Obsidian #050806, emerald #0c2a1d, metallic gold #c5a66a, and pale gold text #ecdfbd. Every page uses dark brand surfaces. A locally hosted Manrope variable font (approximately 24 KB) is served through next/font; its license is in `public/fonts`. Transform-based pointer response and progressive motion preserve a readable static experience. A concurrent cinematic enhancement adds an optional GSAP layer for scene transitions. Device reduced-motion preferences and a session-persistent motion control are supported. See [the cinematic experience guide](docs/cinematic-experience.md) for research, scene architecture, verification, and future asset needs. Run `npm run test:e2e` for the browser regressions (first install the browser with `npx playwright install chromium`).

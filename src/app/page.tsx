@@ -1,109 +1,114 @@
 import Link from "next/link";
 import Image from "next/image";
+import portal from "../../public/images/gent-portal.webp";
 import { SceneMotion } from "@/components/scene-motion";
 import { ProductExplorer } from "@/components/product-explorer";
 import { MembershipCard } from "@/components/membership-card";
 import { Ecosystem } from "@/components/ecosystem";
 export default function Home() {
   return (
-    <main id="main">
+    <main id="main" data-cinema>
       <SceneMotion />
-      <section className="hero scene" aria-labelledby="hero-title">
-        <div className="hero-visual">
-          <Image
-            src="/images/gent-portal.webp"
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 700px) 210vw, 100vw"
-            quality={85}
-          />
-        </div>
-        <div className="hero-shade" />
-        <div className="hero-copy">
-          <p className="eyebrow">
-            <span className="status-dot" /> A MODERN MERCHANT HOUSE
-          </p>
-          <h1 id="hero-title">
-            Good things
-            <br />
-            deserve to <em>travel.</em>
-          </h1>
-          <p className="hero-description">
-            We discover, develop, and bring exceptional goods to more people.
-            From our own label to independent makers we believe in.
-          </p>
-          <div className="hero-actions">
-            <Link className="button" href="#collection">
-              Explore the collection <span aria-hidden="true">↗</span>
-            </Link>
-            <Link className="quiet-link" href="#philosophy">
-              Meet the house <span aria-hidden="true">↓</span>
-            </Link>
+      <div className="opening-act">
+        <section className="hero scene" aria-labelledby="hero-title">
+          <div className="hero-visual">
+            <Image
+              src={portal}
+              alt=""
+              fill
+              loading="eager"
+              fetchPriority="high"
+              unoptimized
+              sizes="(max-width: 700px) 210vw, 100vw"
+              quality={85}
+            />
           </div>
-        </div>
-        <div className="portal-label" aria-hidden="true">
-          <span className="crosshair">+</span> GOOD GOODS. KEPT WORD.
-        </div>
-        <div className="hero-bottom">
-          <a href="#philosophy">
-            <span className="scroll-line" /> SCROLL TO DISCOVER
-          </a>
-          <span>
-            DISCOVERY &nbsp; / &nbsp; QUALITY &nbsp; / &nbsp;
-            RELATIONSHIPS
-          </span>
-          <span>01 — 05</span>
-        </div>
-      </section>
-      <section className="standard-section section-pad" id="philosophy">
-        <div className="section-index">
-          <span>01 / THE GENT STANDARD</span>
-          <span>TRUST IS EARNED</span>
-        </div>
-        <div className="standard-intro">
-          <p className="eyebrow" data-reveal>
-            WHY WE’RE HERE
-          </p>
-          <h2 data-reveal>
-            Worth knowing.
-            <br />
-            <em>Worth having.</em>
-          </h2>
-          <p data-reveal>
-            Exceptional goods deserve a wider audience. People deserve to know
-            what they’re bringing home. Gent exists to make that connection.
-            We believe in quality you can explain, a handshake that means
-            something, and a reputation earned by keeping your word.
-          </p>
-        </div>
-        <div className="principle-grid">
-          {[
-            [
-              "01",
-              "Know the source.",
-              "Know where it came from. The place and the process belong in the story.",
-            ],
-            [
-              "02",
-              "Know the maker.",
-              "Know who made it. Good business starts with people and grows through trust.",
-            ],
-            [
-              "03",
-              "Know its worth.",
-              "Know why it’s worth having. A place on the shelf should be earned by what’s inside.",
-            ],
-          ].map(([n, title, copy]) => (
-            <article key={n} data-reveal>
-              <span className="principle-number">{n}</span>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-              <span className="principle-line" />
-            </article>
-          ))}
-        </div>
-      </section>
+          <div className="hero-shade" />
+          <div className="portal-light" aria-hidden="true" />
+          <div className="hero-copy">
+            <p className="eyebrow">
+              <span className="status-dot" /> A MODERN MERCHANT HOUSE
+            </p>
+            <h1 id="hero-title">
+              Good things
+              <br />
+              deserve to <em>travel.</em>
+            </h1>
+            <p className="hero-description">
+              We discover, develop, and bring exceptional goods to more people.
+              From our own label to independent makers we believe in.
+            </p>
+            <div className="hero-actions">
+              <Link className="button" href="#collection">
+                Explore the collection <span aria-hidden="true">↗</span>
+              </Link>
+              <Link className="quiet-link" href="#philosophy">
+                Meet the house <span aria-hidden="true">↓</span>
+              </Link>
+            </div>
+          </div>
+          <div className="portal-label" aria-hidden="true">
+            <span className="crosshair">+</span> GOOD GOODS. KEPT WORD.
+          </div>
+          <div className="hero-bottom">
+            <a href="#philosophy">
+              <span className="scroll-line" /> SCROLL TO DISCOVER
+            </a>
+            <span>
+              DISCOVERY &nbsp; / &nbsp; QUALITY &nbsp; / &nbsp; RELATIONSHIPS
+            </span>
+            <span>01 — 05</span>
+          </div>
+        </section>
+        <section className="standard-section section-pad" id="philosophy">
+          <div className="section-index">
+            <span>01 / THE GENT STANDARD</span>
+            <span>TRUST IS EARNED</span>
+          </div>
+          <div className="standard-intro">
+            <p className="eyebrow" data-reveal>
+              WHY WE’RE HERE
+            </p>
+            <h2 data-reveal>
+              Worth knowing.
+              <br />
+              <em>Worth having.</em>
+            </h2>
+            <p data-reveal>
+              Exceptional goods deserve a wider audience. People deserve to know
+              what they’re bringing home. Gent exists to make that connection.
+              We believe in quality you can explain, a handshake that means
+              something, and a reputation earned by keeping your word.
+            </p>
+          </div>
+          <div className="principle-grid">
+            {[
+              [
+                "01",
+                "Know the source.",
+                "Know where it came from. The place and the process belong in the story.",
+              ],
+              [
+                "02",
+                "Know the maker.",
+                "Know who made it. Good business starts with people and grows through trust.",
+              ],
+              [
+                "03",
+                "Know its worth.",
+                "Know why it’s worth having. A place on the shelf should be earned by what’s inside.",
+              ],
+            ].map(([n, title, copy]) => (
+              <article key={n} data-reveal>
+                <span className="principle-number">{n}</span>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+                <span className="principle-line" />
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
       <section className="collection-scene section-pad" id="collection">
         <div className="section-index">
           <span>02 / THE COLLECTION</span>
@@ -141,10 +146,9 @@ export default function Home() {
             </h2>
             <p>
               You’ve put something of yourself into what you make. That should
-              travel with it. Our approach brings storytelling, commerce,
-              and distribution together to reach more shelves, tables, and
-              homes. We believe local can go further without losing where
-              it came from.
+              travel with it. Our approach brings storytelling, commerce, and
+              distribution together to reach more shelves, tables, and homes. We
+              believe local can go further without losing where it came from.
             </p>
             <Link className="text-link" href="#philosophy">
               Get to know our standard <span aria-hidden="true">↗</span>
@@ -169,8 +173,8 @@ export default function Home() {
             </h2>
             <p>
               For people who enjoy the find as much as the goods themselves.
-              We’re shaping a membership that brings you closer to Gent
-              and the people behind the collection as it grows.
+              We’re shaping a membership that brings you closer to Gent and the
+              people behind the collection as it grows.
             </p>
             <div className="benefit-tags">
               <span>New discoveries</span>
@@ -180,9 +184,7 @@ export default function Home() {
             <Link className="button" href="/membership">
               See the membership plans <span aria-hidden="true">↗</span>
             </Link>
-            <p className="micro">
-              IN DEVELOPMENT · ENROLLMENT NOT YET OPEN
-            </p>
+            <p className="micro">IN DEVELOPMENT · ENROLLMENT NOT YET OPEN</p>
           </div>
         </div>
       </section>
