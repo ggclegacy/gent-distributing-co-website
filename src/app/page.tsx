@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import { brand } from "@/lib/brand";
 import Link from "next/link";
 import { AcadianaHero } from "@/components/acadiana-hero";
-import { SceneAtmosphere } from "@/components/scene-atmosphere";
 import { SceneMotion } from "@/components/scene-motion";
 import { ProductExplorer } from "@/components/product-explorer";
-import { MembershipCard } from "@/components/membership-card";
-import { Ecosystem } from "@/components/ecosystem";
+import { MaterialEnvironment, TransitCase } from "@/components/material-environment";
 export const metadata: Metadata = {
   title: { absolute: brand.title },
   description: brand.description,
@@ -14,203 +12,83 @@ export const metadata: Metadata = {
   twitter: { card: "summary", title: brand.title, description: brand.description },
 };
 
+
 export default function Home() {
   return (
-    <main id="main" data-cinema>
+    <main id="main" data-cinema className="gent-journey">
       <SceneMotion />
       <div className="cinema-stage">
         <div className="homecoming-scene" id="arrival" data-scene="hero">
           <AcadianaHero />
           <div className="portal-light" aria-hidden="true" />
         </div>
-        <section
-          className="standard-section section-pad"
-          id="philosophy"
-          data-scene="chamber"
-        >
-          <SceneAtmosphere kind="chamber" />
-          <div className="scene-content">
-            <div className="section-index">
-              <span>01 / THE GENT STANDARD</span>
-              <span>TRUST IS EARNED</span>
+        <section className="material-scene workshop-scene" id="philosophy" data-scene="chamber" aria-labelledby="standard-title">
+          <MaterialEnvironment scene="workshop" />
+          <div className="scene-content material-content">
+            <div className="section-index"><span>02 / THE GENT STANDARD</span><span>THE MAKER’S WORKSHOP</span></div>
+            <div className="material-copy">
+              <p className="eyebrow">NOT EVERYTHING EARNS A PLACE.</p>
+              <h2 id="standard-title">Worth knowing.<br /><em>Worth having.</em></h2>
+              <p>Know where it came from. Who made it. Why it deserves to exist. Before anything carries our name, it has to meet our standard.</p>
             </div>
-            <div className="standard-intro">
-              <p className="eyebrow" data-reveal>
-                WHY WE’RE HERE
-              </p>
-              <h2 data-reveal>
-                Worth knowing.
-                <br />
-                <em>Worth having.</em>
-              </h2>
-              <p data-reveal>
-                Exceptional goods deserve a wider audience. People deserve to
-                know what they’re bringing home. Gent exists to make that
-                connection. We’re defined by the standard of goods that earn a
-                place in our network, with quality you can explain and a
-                reputation earned by keeping your word.
-              </p>
-            </div>
-            <div className="principle-grid">
+            <div className="workshop-stations">
               {[
-                [
-                  "01",
-                  "Know the source.",
-                  "Know where it came from. The place and the process belong in the story.",
-                ],
-                [
-                  "02",
-                  "Know the maker.",
-                  "Know who made it. Good business starts with people and grows through trust.",
-                ],
-                [
-                  "03",
-                  "Know its worth.",
-                  "Know why it’s worth having. A place on the shelf should be earned by what’s inside.",
-                ],
-              ].map(([n, title, copy]) => (
-                <article key={n} data-reveal>
-                  <span className="principle-number">{n}</span>
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
-                  <span className="principle-line" />
-                </article>
-              ))}
+                ["01 / SOURCE", "Know the source.", "The place. The material. The beginning of the story."],
+                ["02 / MAKER", "Know the maker.", "The hands, the process, and the care behind the goods."],
+                ["03 / WORTH", "Know its worth.", "A place on the shelf is earned by what’s inside."],
+              ].map(([n, title, copy]) => <article className="station-placard" key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}
             </div>
+            <span className="environment-note">MATERIAL → CRAFT → CHARACTER</span>
           </div>
         </section>
-        <section
-          className="collection-scene section-pad"
-          id="collection"
-          data-scene="display"
-        >
-          <SceneAtmosphere kind="display" />
-          <div className="scene-content">
-            <div className="section-index">
-              <span>02 / THE COLLECTION</span>
-              <span>OUR OWN GOODS & INDEPENDENT FINDS</span>
-            </div>
-            <div className="section-heading" data-reveal>
-              <div>
-                <p className="eyebrow">TAKING SHAPE</p>
-                <h2>
-                  First, coffee. <br />
-                  <em>Then, more.</em>
-                </h2>
-              </div>
-              <p>
-                Our own label begins with Gent Coffee.
-                <br />
-                Coffee, honey, sauces, and seasonings open the story.
-                The standard will carry us into what comes next.
-              </p>
-            </div>
+        <section className="material-scene collection-scene" id="collection" data-scene="display" aria-labelledby="collection-title">
+          <MaterialEnvironment scene="vault" />
+          <div className="scene-content material-content">
+            <div className="section-index"><span>03 / THE COLLECTION</span><span>THE GENT VAULT</span></div>
+            <div className="vault-heading"><p className="eyebrow">COFFEE IS CHAPTER ONE.</p><h2 id="collection-title">A first release.<br /><em>A larger world.</em></h2></div>
             <ProductExplorer />
           </div>
         </section>
-        <section
-          className="ecosystem-section section-pad"
-          id="ecosystem"
-          data-scene="network"
-        >
-          <SceneAtmosphere kind="network" />
-          <div className="scene-content">
-            <div className="section-index">
-              <span>03 / FOR MAKERS & PARTNERS</span>
-              <span>ROOTED IN RELATIONSHIPS</span>
+        <section className="material-scene distribution-scene" id="ecosystem" data-scene="network" aria-labelledby="distribution-title">
+          <MaterialEnvironment scene="network" />
+          <div className="scene-content material-content">
+            <div className="section-index"><span>04 / FOR MAKERS & PARTNERS</span><span>THE NETWORK</span></div>
+            <div className="material-copy">
+              <p className="eyebrow">ORIGIN TRAVELS WITH IT.</p>
+              <h2 id="distribution-title">Rooted here.<br /><em>Built to travel.</em></h2>
+              <p>From a maker’s hands to more shelves, tables, homes and businesses. We bring curation, storytelling and distribution together—so exceptional goods can go further without losing their identity.</p>
+              <Link className="text-link" href="/approach">Explore the house <span aria-hidden="true">↗</span></Link>
             </div>
-            <div className="ecosystem-grid">
-              <div className="scene-copy" data-reveal>
-                <p className="eyebrow">
-                  A WIDER AUDIENCE. A PERSONAL APPROACH.
-                </p>
-                <h2>
-                  More reach.
-                  <br />
-                  Same <em>soul.</em>
-                </h2>
-                <p>
-                  Good products deserve to keep their identity as they grow.
-                  Our house is built for goods we develop, brands we represent,
-                  and wholesale selections we stand behind. From our first
-                  relationships in Acadiana to the ones ahead, we bring
-                  thoughtful curation, storytelling, and distribution together.
-                </p>
-                <Link className="text-link" href="/approach">
-                  Explore the house <span aria-hidden="true">↗</span>
-                </Link>
-              </div>
-              <Ecosystem />
+            <ol className="distribution-stops" aria-label="The journey of a Gent case">
+              {[["MAKER", "Made with purpose"], ["GENT", "Selected. Sealed. Carried."], ["BUSINESS", "A place on the shelf"], ["CUSTOMER", "A place in daily life"]].map(([name,copy],i)=><li key={name}><span>0{i+1}</span><strong>{name}</strong><p>{copy}</p></li>)}
+            </ol>
+            <div className="location-plates" aria-label="Our reach, beginning in Lafayette">
+              {["Lafayette", "Acadiana", "Louisiana", "Gulf South", "Beyond"].map((name,i)=><span key={name}><small>0{i+1}</small>{name}</span>)}
             </div>
+            <p className="reach-note">OUR ROOTS. OUR DIRECTION. OUR GROWING REACH.</p>
           </div>
         </section>
-        <section
-          className="membership-scene section-pad"
-          id="membership"
-          data-scene="vault"
-        >
-          <SceneAtmosphere kind="vault" />
-          <div className="scene-content">
-            <div className="section-index">
-              <span>04 / GENT MEMBERSHIP</span>
-              <span>GOOD COMPANY. SHARED TASTE.</span>
+        <section className="material-scene arrival-scene" id="membership" data-scene="vault" aria-labelledby="membership-title">
+          <MaterialEnvironment scene="arrival" />
+          <div className="scene-content material-content">
+            <div className="section-index"><span>05 / COMMUNITY</span><span>THE ARRIVAL</span></div>
+            <div className="material-copy">
+              <p className="eyebrow">THE JOURNEY ENDS IN GOOD COMPANY.</p>
+              <h2 id="membership-title">Good taste.<br /><em>Better company.</em></h2>
+              <p>For people who enjoy the find as much as the goods themselves. A closer connection to Gent, to the makers, and to what comes next.</p>
+              <Link className="button" href="/membership">See the membership plans <span aria-hidden="true">↗</span></Link>
+              <p className="micro">IN DEVELOPMENT · ENROLLMENT NOT YET OPEN</p>
             </div>
-            <div className="membership-grid">
-              <MembershipCard />
-              <div className="scene-copy" data-reveal>
-                <p className="eyebrow">A CLOSER CONNECTION</p>
-                <h2>
-                  Good taste.
-                  <br />
-                  <em>Better company.</em>
-                </h2>
-                <p>
-                  For people who enjoy the find as much as the goods themselves.
-                  We’re shaping a membership that brings you closer to Gent and
-                  the people behind the collection as it grows.
-                </p>
-                <div className="benefit-tags">
-                  <span>New discoveries</span>
-                  <span>Closer connections</span>
-                  <span>Shared standards</span>
-                </div>
-                <Link className="button" href="/membership">
-                  See the membership plans <span aria-hidden="true">↗</span>
-                </Link>
-                <p className="micro">
-                  IN DEVELOPMENT · ENROLLMENT NOT YET OPEN
-                </p>
-              </div>
-            </div>
+            <span className="environment-note">A PLACE AT THE TABLE.</span>
           </div>
         </section>
-        <section
-          className="closing section-pad"
-          id="welcome"
-          data-scene="doorway"
-        >
-          <SceneAtmosphere kind="doorway" />
-          <div className="scene-content">
-            <div className="section-index">
-              <span>05 / OUR DOOR IS OPEN</span>
-              <span>GENT DISTRIBUTION CO.</span>
-            </div>
-            <div className="closing-inner" data-reveal>
-              <p className="eyebrow">FROM OUR HOUSE TO YOURS</p>
-              <h2>
-                Come in.
-                <br />
-                <em>Find your good.</em>
-              </h2>
-              <Link className="button button-outline" href="#collection">
-                Explore the collection <span aria-hidden="true">↗</span>
-              </Link>
-            </div>
-            <span className="closing-word" aria-hidden="true">
-              GENT
-            </span>
+        <section className="material-scene journey-closing" id="welcome" data-scene="doorway" aria-labelledby="welcome-title">
+          <MaterialEnvironment scene="arrival" />
+          <div className="scene-content material-content">
+            <div className="material-copy"><p className="eyebrow">FROM OUR HOUSE TO YOURS</p><h2 id="welcome-title">Come in.<br /><em>Find your good.</em></h2><Link className="button button-outline" href="#collection">Explore the collection <span aria-hidden="true">↗</span></Link></div>
           </div>
         </section>
+        <div className="journey-cargo" aria-hidden="true"><TransitCase /></div>
         <div className="lens-column" aria-hidden="true" />
       </div>
     </main>

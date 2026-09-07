@@ -1,0 +1,41 @@
+{
+  "mode": "built-in image_gen",
+  "environments": {
+    "workshop": "Use case: photorealistic-natural. Asset type: cinematic website environment, landscape 1536x1024. Ultra-premium architectural editorial photograph, tactile realistic material detail, restrained black and walnut palette, tiny warm brass highlights and very faint forest-black reflections, deep blacks but visible objects. Same continuous private Louisiana atelier / archive complex. No graphics, no contours, no neon, no particles, no text, no watermarks. Composition: generous darkness at left 40% for separate HTML typography; principal objects in right half, keep significant elements inside middle vertical 70% for mobile crop. Scene: maker's workshop, wide view of a massive aged walnut workbench, three stations receding from foreground right to rear center. Front: dark ceramic shallow bowl of raw coffee beans and antique brass scoop. Middle: artisan's worn steel coffee tools and balance scale, folded dark leather apron. Rear: a single matte black gusseted coffee pouch under warm lamp near a monumental dark doorway. Cypress-black timber walls, blackened steel, warm directional light, convincingly physical craftsmanship. Shot on medium format, no people.",
+    "vault": "Use case: photorealistic-natural. Asset type: cinematic website environment, landscape 1536x1024. Ultra-premium architectural editorial photograph, tactile realistic material detail, restrained black and walnut palette, tiny warm brass highlights and very faint forest-black reflections, deep blacks but visible objects. Same continuous private Louisiana atelier / archive complex. No graphics, no contours, no neon, no particles, no text, no watermarks. Composition: generous darkness at left 40% for separate HTML typography; principal objects in right half, keep significant elements inside middle vertical 70% for mobile crop. Scene: monumental private archive, obsidian floor with subdued reflections, deep black stone walls, blackened steel vertical piers, smoked glass bays receding in right rear. One square black stone pedestal at 66% horizontal 67% vertical, with one realistic matte black gusseted coffee bag standing on it. Bag clearly reads GENT in small gold foil and LEGACY RESERVE then SIGNATURE BLEND below, no other claims. Overhead recessed warm architectural light reveals the bag's creases and gold. Four empty dormant plinths recessed into rear darkness. Imposing restrained luxury gallery, believable physical scale, bag large enough to read.",
+    "network": "Use case: photorealistic-natural. Asset type: cinematic website environment, landscape 1536x1024. Ultra-premium architectural editorial photograph, tactile realistic material detail, restrained black and walnut palette, tiny warm brass highlights and very faint forest-black reflections, deep blacks but visible objects. Same continuous private Louisiana atelier / archive complex. No graphics, no contours, no neon, no particles, no text, no watermarks. Composition: generous darkness at left 40% for separate HTML typography; principal objects in right half, keep significant elements inside middle vertical 70% for mobile crop. Scene: behind the private archive opens a deep dimensional luxury distribution hall. Black steel shelving with dark walnut shipping cases, a packing station foreground right, loading portals and racking disappear to a vanishing point at 65% horizontal. A closed dark walnut shipping case on packing table at right foreground, small brushed brass seal. Architectural warm practical lights, charcoal industrial forms, no people, no stock warehouse aesthetic. Strong depth, occluding foreground steel column on far right edge.",
+    "arrival": "Use case: photorealistic-natural. Asset type: cinematic website environment, landscape 1536x1024. Ultra-premium architectural editorial photograph, tactile realistic material detail, restrained black and walnut palette, tiny warm brass highlights and very faint forest-black reflections, deep blacks but visible objects. Same continuous private Louisiana atelier / archive complex. No graphics, no contours, no neon, no particles, no text, no watermarks. Composition: generous darkness at left 40% for separate HTML typography; principal objects in right half, keep significant elements inside middle vertical 70% for mobile crop. Scene: quiet private members room, low close angle looking across substantial walnut table in right half, soft dark leather chair in background, a closed small black shipping case near table's rear, and a single black metal membership card resting flat diagonally in foreground on table. The card is understated black with gold foil GENT and MEMBERSHIP, fine brass edge catching one soft warm lamp. Deep negative space left, no spectacle, no bright windows. Tactile warm wood grain, elegant reflection."
+  },
+  "layers": [
+    [
+      "vault-room",
+      "exec-936007c3-f0e2-4ddb-8969-e8b9c63deb3e.png",
+      "Remove ONLY the coffee bag from the main pedestal. Keep the empty pedestal, ALL architecture, camera framing, lighting, shadows and image dimensions exactly unchanged. This is a background plate for placing the same independent product over it. Do not add any objects."
+    ],
+    [
+      "coffee-object",
+      "exec-936007c3-f0e2-4ddb-8969-e8b9c63deb3e.png",
+      "Extract ONLY the complete single matte black coffee bag, preserving exact GENT LEGACY RESERVE SIGNATURE BLEND gold lettering, shape, lighting and realistic material texture. Put on genuinely transparent background, no pedestal, no room. Center the isolated bag filling about 85% of height. Retain its dark gussets, subtle warm light and no cut-off edges. Transparent product cutout for compositing back into its original room."
+    ],
+    [
+      "network-room",
+      "exec-064c5d35-862b-4727-a396-f3b603f3d2d3.png",
+      "Remove ONLY the prominent closed walnut shipping case with round brass seal from the foreground packing table. Keep the table, shelving, other crates, architecture, camera framing, lighting and image dimensions exactly unchanged. Empty foreground packing table for independent moving object compositing."
+    ],
+    [
+      "case-object",
+      "exec-064c5d35-862b-4727-a396-f3b603f3d2d3.png",
+      "Extract ONLY the single closed dark walnut case with small round brass seal from the foreground table. Keep exact realistic wood grain, proportions, original three-quarter perspective and warm lighting. Genuinely transparent background; no table, no warehouse, no other objects. Center case filling 85% of width, tight composition. Standalone object for moving between environments."
+    ],
+    [
+      "arrival-room",
+      "exec-ee891e8b-14b6-4ab2-939a-e616920da716.png",
+      "Remove ONLY the black membership card and large black chest/case from the walnut table. Keep the entire table, dark leather chair, lamp, background, camera framing, lighting and image dimensions exactly unchanged. Empty table for separately animated card and walnut case compositing. No new objects."
+    ],
+    [
+      "card-object",
+      "exec-ee891e8b-14b6-4ab2-939a-e616920da716.png",
+      "Extract ONLY the complete black GENT MEMBERSHIP card from the table, keep original perspective, exact gold foil text and gold edge light, realistic material. Genuinely transparent background with no table or room or other objects. Center card filling 85% of width with no cut off corners. Independent physical card asset for compositing back onto the original table."
+    ]
+  ]
+}

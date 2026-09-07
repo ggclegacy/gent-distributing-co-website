@@ -22,9 +22,9 @@ export type Product = {
 };
 export const products: Product[] = [
   {
-    handle: "gent-coffee", name: "Gent Coffee", category: "provisions", subcategory: "coffee", explorerLabel: "Coffee",
-    chapter: "Our first release", description: "Our first release. For the cup you come back to.",
-    detail: "Gent Coffee is in development under our own label. We’re starting with something that earns a place in daily life: a good cup of coffee. We’ll share the origin, roast, format, and price before the first release.",
+    handle: "gent-coffee", name: "Legacy Reserve", category: "provisions", subcategory: "coffee", explorerLabel: "Coffee",
+    chapter: "Signature Blend Coffee", description: "Our first release. For the cup you come back to.",
+    detail: "Legacy Reserve Signature Blend Coffee is in development under our own label. We’re starting with something that earns a place in daily life: a good cup of coffee. We’ll share the origin, roast, format, and price before the first release.",
     status: "coming-soon", visibility: "preview", featured: true, brandId: "gent", businessLayer: "gent-developed",
     audiences: ["personal", "retail", "hospitality"], origin: { status: "pending" }, visual: { kind: "coffee", label: "COFFEE" },
   },

@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { ProductObject } from "./product-object";
+import { useRef, useState, type KeyboardEvent } from "react";
+
 import { featuredProducts as products } from "@/lib/catalog";
 
 export function ProductExplorer() {
   const [selected, setSelected] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const stage = useRef<HTMLDivElement>(null);
   const product = products[selected];
   function keydown(e: KeyboardEvent<HTMLButtonElement>) {
     let next = selected;
@@ -21,25 +20,8 @@ export function ProductExplorer() {
     setSelected(next);
     tabs.current[next]?.focus();
   }
-  function tilt(e: PointerEvent<HTMLDivElement>) {
-    if (
-      e.pointerType !== "mouse" ||
-      matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      document.documentElement.dataset.motion === "paused"
-    )
-      return;
-    const box = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - box.left) / box.width - 0.5) * 4;
-    const y = ((e.clientY - box.top) / box.height - 0.5) * -3;
-    stage.current?.style.setProperty("--tilt-x", `${y}deg`);
-    stage.current?.style.setProperty("--tilt-y", `${x}deg`);
-  }
-  function reset() {
-    stage.current?.style.setProperty("--tilt-x", "0deg");
-    stage.current?.style.setProperty("--tilt-y", "0deg");
-  }
   return (
-    <div className="product-explorer">
+    <div className="product-explorer" data-archive-selected={selected}>
       <div
         className="collection-tabs"
         role="tablist"
@@ -61,10 +43,11 @@ export function ProductExplorer() {
           >
             <span className="tab-number">0{i + 1}</span>
             {p.explorerLabel}
-            <span className="tab-dot" />
+            <span className="bay-status" aria-hidden="true">{i === 0 ? "CHAPTER ONE" : "IN DEVELOPMENT"}</span>
           </button>
         ))}
       </div>
+      <Link className="future-bay" href="/products/gent-collection"><span>05</span> Future releases <small>CURATED GOODS ↗</small></Link>
       {products.map((p, i) => (
         <div
           key={p.handle}
@@ -76,31 +59,16 @@ export function ProductExplorer() {
         >
           {selected === i ? (
             <div className={`explorer-content explore-${product.visual.kind}`}>
-              <div
-                className="product-theater"
-                onPointerMove={tilt}
-                onPointerLeave={reset}
-              >
-                <div className="theater-grid" />
-                <div className="theater-orbit orbit-one" />
-                <div className="theater-orbit orbit-two" />
-                <div className="theater-product" ref={stage}>
-                  <ProductObject kind={product.visual.kind} label={product.visual.label} large />
-                </div>
-                <span className="theater-caption">
-                  GENT / PRODUCT CONCEPT 0{i + 1}
-                </span>
-                <span className="theater-corner" aria-hidden="true">
-                  +
-                </span>
+              <div className="archive-object-caption">
+                <span>ARCHIVE / 01</span><span>LEGACY RESERVE</span><small>CONCEPT PACKAGING · IN DEVELOPMENT</small>
               </div>
               <div className="explorer-copy" key={product.handle}>
                 <p className="eyebrow">
                   <span className="status-dot" /> IN DEVELOPMENT
                 </p>
-                <h3>{product.name}</h3>
+                <h3>{selected === 0 ? <>Legacy Reserve<span className="blend-name">Signature Blend Coffee</span></> : product.name}</h3>
                 <p className="product-tagline">{product.description}</p>
-                <p className="product-description">{product.detail}</p>
+                <p className="product-description">{selected === 0 ? "Our own label begins here. A daily ritual, held to the Gent standard. Origin, roast, format and release details will be shared before orders open." : product.detail}</p>
                 <div className="product-meta">
                   <span>COLLECTION 0{i + 1}</span>
                   <span>IN DEVELOPMENT</span>

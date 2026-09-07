@@ -3,6 +3,10 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: false,
+  projects: [
+    { name: "chromium", use: { browserName: "chromium" } },
+    { name: "webkit", testMatch: /materials\.spec\.ts/, use: { browserName: "webkit" } },
+  ],
   timeout: 60000,
   expect: { timeout: 15000 },
   use: {

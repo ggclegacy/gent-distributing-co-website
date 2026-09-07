@@ -40,3 +40,9 @@ See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hier
 ## Design
 
 Obsidian #050806, emerald #0c2a1d, metallic gold #c5a66a, and pale gold text #ecdfbd. Every page uses dark brand surfaces. A locally hosted Manrope variable font (approximately 24 KB) is served through next/font; its license is in `public/fonts`. Transform-based pointer response and progressive motion preserve a readable static experience. A lazily loaded GSAP master timeline carries visitors through one continuous stage: Acadiana, the standard, collection, makers, membership, and an open doorway. Mobile retains connected scenes with shorter camera moves and readable content travel. Device reduced-motion preferences and a session-persistent motion control are supported. See [the cinematic experience guide](docs/cinematic-experience.md) for research, scene architecture, verification, and future asset needs. Run `npm run test:e2e` for the browser regressions (first install the browser with `npx playwright install chromium`).
+
+## Cinematic material rebuild
+
+The post-origin homepage now travels through the Maker’s Workshop, Gent Vault, Distribution Network and a quiet membership arrival. See [the implementation guide](docs/cinematic-homepage.md) and [verification results](docs/cinematic-verification.md). The approved hero is retained. Product/partner routes and prelaunch commerce safeguards remain intact.
+
+`npm run test:e2e` runs the existing Chromium regressions plus the new material-scene tests in Chromium and WebKit. Install both with `npx playwright install chromium webkit`.

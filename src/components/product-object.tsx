@@ -1,3 +1,4 @@
+import Image from "next/image";
 export function ProductObject({
   kind = "coffee",
   large = false,
@@ -7,6 +8,7 @@ export function ProductObject({
   large?: boolean;
   label?: string;
 }) {
+  if (kind === "coffee") return <div className="detail-coffee-scene"><Image src="/images/cinema/vault.webp" alt="Legacy Reserve Signature Blend Coffee concept packaging on its stone archive pedestal" fill sizes="(max-width: 700px) 86vw, 45vw" /></div>;
   if (kind === "editorial") return <div className="editorial-object" role="img" aria-label="Gent collection editorial concept"><span>GENT</span><p>{label ?? "THE COLLECTION"}</p><small>ONE HOUSE. ONE STANDARD.</small></div>;
   return (
     <div

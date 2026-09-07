@@ -7,8 +7,8 @@ const titles = [
   "ROOTED HERE",
   "THE GENT STANDARD",
   "THE COLLECTION",
-  "MAKERS & PARTNERS",
-  "GOOD COMPANY",
+  "DISTRIBUTION",
+  "COMMUNITY",
   "COME IN",
 ];
 
@@ -72,6 +72,12 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
   const scenes = Array.from(
     stage.querySelectorAll<HTMLElement>("[data-scene]"),
   );
+  const warmScene = (index: number) => {
+    scenes[index]?.querySelectorAll<HTMLImageElement>("img[loading='lazy']").forEach(image => {
+      image.loading = "eager";
+      void image.decode().catch(() => { /* Text and placeholders remain available offline. */ });
+    });
+  };
   let active = 0;
   let destroyed = false;
   const originalFocus = new Map<HTMLElement, string | null>();
@@ -96,6 +102,16 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
       (context) => {
 
         if (context.conditions?.mobile) {
+          root.dataset.nativeCinema = "true";
+          const staging = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              if (!entry.isIntersecting) return;
+              const index = scenes.indexOf(entry.target as HTMLElement);
+              warmScene(index);
+              warmScene(index + 1);
+            });
+          }, { rootMargin: "100% 0px" });
+          scenes.forEach(scene => staging.observe(scene));
           // Phones keep native document flow; one bounded scroll-driven camera,
           // no pinned scenes, animation loop, canvas, or high-DPI render target.
           const hero = root.querySelector<HTMLElement>(".hero");
@@ -106,7 +122,49 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
             .to(hero.querySelector(".network-camera"), { scale: .88, yPercent: -2, duration: 3.2, ease: "none" }, 0);
           wakeNetwork(descent, hero);
           orbitExchange(descent, hero, true);
-          return;
+          scenes.slice(1).forEach((scene) => {
+            const camera = scene.querySelector(".environment-camera");
+            if (!camera) return;
+            const sceneFilm = gsap.timeline({ scrollTrigger: {
+              trigger: scene, start: "top 90%", end: "bottom top", scrub: true,
+            } });
+            sceneFilm.fromTo(camera, { scale: 1.07, yPercent: 2 }, { scale: 1, yPercent: -2, ease: "none", duration: 1 }, 0);
+            sceneFilm.fromTo(scene.querySelector(".environment-light"), { opacity: .32 }, { opacity: .03, duration: .4 }, 0);
+            const caseObject = scene.querySelector(".network-case");
+            if (caseObject) sceneFilm.fromTo(caseObject, { x: -45, y: 5 }, { x: 20, y: -10, duration: 1 }, 0);
+            const coffee = scene.querySelector(".physical-coffee");
+            if (coffee) sceneFilm.fromTo(coffee, { rotationY: -7 }, { rotationY: 3, duration: 1 }, 0);
+            const card = scene.querySelector(".physical-card");
+            if (card) sceneFilm.fromTo(card, { rotation: -1 }, { rotation: 1, duration: 1 }, 0);
+            scene.querySelectorAll(".station-placard, .distribution-stops li, .location-plates > span").forEach((plate, i) => {
+              sceneFilm.fromTo(plate, { borderTopColor: "#b3955d40" }, { borderTopColor: "#e8c98e", duration: .2 }, Math.min(.8, i * .15));
+            });
+          });
+          // WebKit can restore the hash before the local font and scene layout
+          // settle. Reconcile once after load; subsequent scrolling stays native.
+          let cancelled = false;
+          let frame = 0;
+          const alignNativeHash = () => {
+            frame = requestAnimationFrame(() => {
+              if (cancelled || !location.hash) return;
+              try {
+                const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+                if (target && root.contains(target)) target.scrollIntoView({ behavior: "instant", block: "start" });
+              } catch { /* Malformed external fragments leave normal flow intact. */ }
+            });
+          };
+          void document.fonts.ready.then(() => {
+            if (cancelled) return;
+            if (document.readyState === "complete") alignNativeHash();
+            else window.addEventListener("load", alignNativeHash, { once: true });
+          });
+          return () => {
+            staging.disconnect();
+            root.removeAttribute("data-native-cinema");
+            cancelled = true;
+            cancelAnimationFrame(frame);
+            window.removeEventListener("load", alignNativeHash);
+          };
         }
         const desktop = Boolean(context.conditions?.desktop);
         root.dataset.cinemaReady = desktop ? "desktop" : "small";
@@ -122,6 +180,8 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
         const updateActive = (index: number) => {
           if (current === index) return;
           current = active = index;
+          warmScene(index);
+          warmScene(index + 1);
           root.dataset.activeScene = String(index);
           scenes.forEach((scene, i) => {
             scene.inert = i !== index;
@@ -251,187 +311,66 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           cursor += 3.35;
           film.to(origins, { opacity: 0, scale: 1.15, duration: 0.8 }, cursor);
         }
-        // 01 → 02: continue from the regional story into the vaulted green chamber.
-        film
-          .to(
-            select(0, ".hero-copy, .hero-bottom, .portal-label"),
-            { autoAlpha: 0, y: -55, duration: 0.45 },
-            cursor,
-          )
-          .to(
-            select(0, ".network-camera"),
-            {
-              scale: 2.8,
-              xPercent: 0,
-              duration: 1.55,
-            },
-            cursor,
-          )
-          .fromTo(
-            select(0, ".portal-light"),
-            { opacity: 0 },
-            { opacity: 0.8, duration: 0.65 },
-            cursor + 0.3,
-          );
-        let arrived = enter(1, cursor + 0.75, {
-          opacity: 0,
-          scale: 0.78,
-          clipPath: "inset(8% 18% 8% 18%)",
+        // The origin's aperture opens into a real atelier. One continuous playhead
+        // owns architecture, light and cargo; content never depends on a renderer.
+        let arrived = enter(1, cursor + .25, { opacity: 0, scale: 1.13 }, 1.2);
+        film.to(scenes[1], { opacity: 1, duration: .8 }, cursor + .25);
+        film.fromTo(select(1, ".environment-camera"), { scale: 1.12, xPercent: 1, yPercent: -2 }, { scale: 1.17, xPercent: -1, yPercent: -2, duration: 1.4 }, cursor + .25);
+        film.to(select(1, ".environment-camera"), { scale: 1.28, xPercent: -5, yPercent: 0, duration: .9 }, arrived + .8);
+        film.to(select(1, ".environment-camera"), { scale: 1.43, xPercent: -7, yPercent: 8, duration: 1 }, arrived + 1.7);
+        film.fromTo(select(1, ".environment-light"), { opacity: .6 }, { opacity: .04, duration: 1.2 }, arrived - .3);
+        hold(1, arrived + .2);
+        const stations = select(1, ".station-placard");
+        stations.forEach((station, i) => {
+          film.fromTo(station, { borderTopColor: "#b3955d40" }, { borderTopColor: "#e8c98e", duration: .7 }, arrived + i * .9);
+          film.fromTo(select(1, ".environment-foreground"), { xPercent: 0 }, { xPercent: -25, duration: 3 }, arrived);
         });
-        film
-          .to(scenes[1], { opacity: 1, duration: 0.7 }, cursor + 0.75)
-          .from(
-            select(1, ".world-depth"),
-            { scale: 1.6, duration: 1.2 },
-            cursor + 0.75,
-          )
-          .from(
-            select(1, ".principle-grid article"),
-            { y: 55, opacity: 0, stagger: 0.13, duration: 0.5 },
-            arrived - 0.4,
-          );
-        cursor = hold(1, arrived + 0.3);
-        // 02 → 03: chamber walls spread; a display rises through the center aperture.
-        film
-          .to(select(1, ".world-depth"), { scale: 2.8, duration: 1.35 }, cursor)
-          .to(
-            select(1, ".scene-content"),
-            { scale: 1.15, opacity: 0, duration: 0.75 },
-            cursor,
-          );
-        arrived = enter(
-          2,
-          cursor + 0.15,
-          { clipPath: "inset(49.8% 0% 49.8% 0%)", scale: 1.15 },
-          1.35,
-        );
-        film
-          .from(
-            select(2, ".product-explorer"),
-            { y: desktop ? 130 : 55, duration: 1.1 },
-            cursor + 0.4,
-          )
-          .from(
-            select(2, ".world-floor"),
-            { rotationX: 70, yPercent: 35, duration: 1.25 },
-            cursor + 0.2,
-          );
-        cursor = hold(2, arrived + 0.2);
-        // 03 → 04: lateral tracking shot, with a foreground column crossing the lens.
-        film.to(scenes[2], { xPercent: -35, duration: 1.35 }, cursor);
-        arrived = enter(
-          3,
-          cursor,
-          { xPercent: 100, clipPath: "inset(0% 0% 0% 0%)" },
-          1.35,
-        );
-        film
-          .fromTo(
-            stage.querySelector(".lens-column"),
-            { xPercent: 120, x: 0, opacity: 1 },
-            { xPercent: -120, x: 0, duration: 1.6, immediateRender: false },
-            cursor - 0.05,
-          )
-          .from(
-            select(3, ".ecosystem-map"),
-            { rotation: 0, scale: 0.92, duration: 1.5 },
-            cursor,
-          );
-        scenes[3]
-          .querySelectorAll<SVGPathElement>(".network-lines path")
-          .forEach((path) => {
-            const length = path.getTotalLength();
-            film.fromTo(
-              path,
-              { strokeDasharray: length, strokeDashoffset: length },
-              { strokeDashoffset: 0, duration: 1.1 },
-              arrived - 0.35,
-            );
-          });
-        film.from(
-          select(3, ".network-node"),
-          { opacity: 0, stagger: 0.12, duration: 0.4 },
-          arrived - 0.15,
-        );
-        film.set(stage.querySelector(".lens-column"), { opacity: 0 }, arrived + 0.2);
-        cursor = hold(3, arrived + 0.8);
-
-        // 04 → 05: the network's circular center becomes the entrance to the private room.
-        film
-          .to(
-            select(3, ".ecosystem-map"),
-            {
-              scale: desktop ? 1.35 : 1.15,
-              rotation: 0,
-              xPercent: desktop ? -30 : 0,
-              duration: 1.4,
-            },
-            cursor,
-          )
-          .to(
-            select(3, ".scene-copy"),
-            { opacity: 0, x: -80, duration: 0.5 },
-            cursor,
-          );
-        arrived = enter(
-          4,
-          cursor + 0.25,
-          { clipPath: "inset(48% 0% 48% 0%)", scale: 0.85 },
-          1.3,
-        );
-        film
-          .fromTo(
-            select(4, ".member-card"),
-            { rotationY: -8, rotationZ: 0, y: 30 },
-            { rotationY: 0, rotationZ: 0, y: 0, duration: 1.25 },
-            cursor + 0.4,
-          )
-          .fromTo(
-            select(4, ".member-card"),
-            { "--card-light": "-100%" },
-            { "--card-light": "100%", duration: 1.6 },
-            cursor + 0.45,
-          );
-        cursor = hold(4, arrived + 0.3);
-        // 05 → 06: pass the card and open the final pair of doors into warm light.
-        film
-          .to(
-            select(4, ".member-card-stage"),
-            {
-              scale: desktop ? 1.3 : 1.1,
-              xPercent: -50,
-              opacity: 0,
-              duration: 1.1,
-            },
-            cursor,
-          )
-          .to(
-            select(4, ".scene-copy"),
-            { opacity: 0, y: -40, duration: 0.6 },
-            cursor,
-          );
-        arrived = enter(5, cursor + 0.35, { opacity: 0, scale: 1.2 }, 1.2);
-        film
-          .to(scenes[5], { opacity: 1, duration: 0.65 }, cursor + 0.35)
-          .fromTo(
-            select(5, ".door-left"),
-            { xPercent: 0 },
-            { xPercent: -100, duration: 1.25 },
-            cursor + 0.5,
-          )
-          .fromTo(
-            select(5, ".door-right"),
-            { xPercent: 0 },
-            { xPercent: 100, duration: 1.25 },
-            cursor + 0.5,
-          )
-          .from(
-            select(5, ".closing-inner"),
-            { opacity: 0, y: 45, duration: 0.7 },
-            arrived - 0.1,
-          );
-        hold(5, arrived + 0.55);
-        film.to({}, { duration: 0.65 });
+        cursor = arrived + 3.2;
+        // Follow the finished pouch through the dark threshold into its archive.
+        film.to(select(1, ".environment-camera"), { scale: 1.3, xPercent: -7, duration: 1.4 }, cursor);
+        film.to(select(1, ".environment-light"), { opacity: .88, duration: .8 }, cursor);
+        arrived = enter(2, cursor + .55, { opacity: 0, scale: 1.08 }, 1.25);
+        film.to(scenes[2], { opacity: 1, duration: .8 }, cursor + .55);
+        film.fromTo(select(2, ".environment-light"), { opacity: .92 }, { opacity: .02, duration: 1.15 }, arrived - .5);
+        film.fromTo(select(2, ".environment-camera"), { scale: 1.09, xPercent: 1 }, { scale: 1, xPercent: -1, duration: 3 }, arrived - .4);
+        film.fromTo(select(2, ".physical-coffee"), { rotationY: -8, xPercent: -2 }, { rotationY: 4, xPercent: 1, duration: 2.8 }, arrived - .4);
+        film.fromTo(select(2, ".coffee-glint"), { opacity: 0 }, { opacity: .8, duration: 2 }, arrived);
+        cursor = hold(2, arrived + .75) + .6;
+        // Widen the archive into the operating house. An architectural column
+        // occludes the join while the same physical case enters the foreground.
+        const cargo = stage.querySelector<HTMLElement>(".journey-cargo");
+        film.to(select(2, ".environment-camera"), { scale: .93, duration: 1.4 }, cursor);
+        arrived = enter(3, cursor + .35, { opacity: 0, scale: 1.13 }, 1.2);
+        film.to(scenes[3], { opacity: 1, duration: 1 }, cursor + .35);
+        film.fromTo(stage.querySelector(".lens-column"), { xPercent: 120, opacity: 1 }, { xPercent: -120, duration: 1.65, immediateRender: false }, cursor);
+        film.set(stage.querySelector(".lens-column"), { opacity: 0 }, arrived);
+        film.fromTo(select(3, ".environment-camera"), { scale: 1.14, xPercent: -3 }, { scale: 1, xPercent: 2, duration: 4.2 }, cursor + .35);
+        film.fromTo(cargo, { autoAlpha: 0, x: -80, y: 25, scale: .8 }, { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: .9 }, arrived - .3);
+        film.fromTo(cargo?.querySelector(".case-glint") ?? [], { opacity: .1 }, { opacity: 1, duration: .6 }, arrived);
+        film.to(cargo, { x: 95, y: -30, scale: .72, duration: 2.5 }, arrived + .7);
+        hold(3, arrived + .25);
+        select(3, ".distribution-stops li").forEach((stop,i) => {
+          film.fromTo(stop, { borderTopColor: "#b2945b40" }, { borderTopColor: "#e8c98e", duration: .55 }, arrived + i * .7);
+        });
+        select(3, ".location-plates > span").forEach((plate,i) => {
+          film.fromTo(plate, { borderColor: "#74644850" }, { borderColor: "#c2a166", duration: .5 }, arrived + i * .55);
+        });
+        cursor = arrived + 3.4;
+        // The case stays in the same DOM layer as the large hall falls away.
+        arrived = enter(4, cursor + .25, { opacity: 0, scale: 1.025 }, 1.35);
+        film.to(scenes[4], { opacity: 1, duration: 1.1 }, cursor + .25);
+        film.to(cargo, { x: 65, y: -45, scale: .8, duration: 1.35 }, cursor + .25);
+        film.fromTo(select(4, ".environment-camera"), { scale: 1.025, rotation: -.25 }, { scale: 1, rotation: 0, duration: 2.8 }, cursor + .25);
+        film.fromTo(select(4, ".environment-light"), { opacity: .35 }, { opacity: .02, duration: 1.8 }, cursor + .25);
+        film.fromTo(select(4, ".physical-card"), { rotation: -1.5, rotationY: -3 }, { rotation: 0, rotationY: 0, duration: 2.5 }, cursor + .25);
+        film.fromTo(select(4, ".card-glint"), { opacity: 0 }, { opacity: .7, duration: 2 }, cursor + .4);
+        cursor = hold(4, arrived + .65) + .6;
+        // A quiet editorial coda in the same room, never another spectacle.
+        film.to(cargo, { autoAlpha: 0, duration: .9 }, cursor);
+        arrived = enter(5, cursor, { opacity: 0 }, .9);
+        film.to(scenes[5], { opacity: 1, duration: .9 }, cursor);
+        hold(5, arrived + .3);
+        film.to({}, { duration: .5 });
         updateActive(0);
         ScrollTrigger.create({
           animation: film,
@@ -612,6 +551,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
       scene.removeAttribute("aria-hidden");
     });
     root.removeAttribute("data-cinema-ready");
+    root.removeAttribute("data-native-cinema");
     root.removeAttribute("data-active-scene");
     throw error;
   }

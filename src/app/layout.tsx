@@ -9,6 +9,7 @@ import "./premium.css";
 import "./acadiana-network.css";
 import "./portfolio.css";
 import "./distribution-engine.css";
+import "./cinematic-materials.css";
 const manrope = localFont({
   src: "../../public/fonts/manrope-latin-variable.woff2",
   weight: "200 800",

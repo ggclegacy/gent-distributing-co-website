@@ -19,6 +19,8 @@ for (const width of [320,390,768,1024,1440]) {
   await page.getByRole('button',{name:'Apparel & goods',exact:true}).click();
   await expect(page.locator('#engine-category-detail')).toContainText('intend to explore');
   await page.getByRole('link',{name:'Go to collection'}).click();
+  // On phones the physical archive establishes the scene before its controls.
+  if (width < 1000) await page.getByRole('tab',{name:'01 Coffee'}).scrollIntoViewIfNeeded();
   await expect(page.getByRole('tab',{name:'01 Coffee'})).toBeInViewport();
   await page.emulateMedia({reducedMotion:'reduce'});
   await expect(page.locator('.pin-spacer')).toHaveCount(0);

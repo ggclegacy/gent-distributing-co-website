@@ -1,0 +1,8 @@
+{
+  "engine": "WebKit",
+  "profile": "Playwright iPhone 13 (390x844, DPR 3, mobile, touch, iOS user agent)",
+  "touchNavigation": true,
+  "productRoundTrip": true,
+  "membershipLink": true,
+  "errors": []
+}

@@ -1,0 +1,96 @@
+{
+  "conditions": "Local production build, 390x844 at DPR 3, 4x CPU slowdown, cold cache, 1.6Mbps down/100ms RTT. Scroll sample with unthrottled network.",
+  "first": {
+    "lcp": 2980,
+    "cls": 0,
+    "longTasks": 17,
+    "paint": [
+      {
+        "name": "first-paint",
+        "time": 1464
+      },
+      {
+        "name": "first-contentful-paint",
+        "time": 1464
+      }
+    ],
+    "resources": [
+      {
+        "name": "http://localhost:3012/_next/static/media/manrope_latin_variable-s.p.1p_a2k8qd5zhp.woff2",
+        "bytes": 25136
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/1xtay8zg9szaz.css",
+        "bytes": 18189
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/3s6nzrbk-8mnv.js",
+        "bytes": 2329
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/19mx3mg6lkumu.js",
+        "bytes": 7914
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/1j_9b-l0n6u-t.js",
+        "bytes": 71876
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/2-rtuqsgzmno4.js",
+        "bytes": 45395
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/turbopack-0ymco23n1zhu4.js",
+        "bytes": 4150
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/11h64v1t1x04r.js",
+        "bytes": 8032
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/0jahffv9lep84.js",
+        "bytes": 514
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/28mhxhlm-s07s.js",
+        "bytes": 12761
+      },
+      {
+        "name": "http://localhost:3012/_next/static/chunks/2c36qathfcjnp.js",
+        "bytes": 48488
+      },
+      {
+        "name": "http://localhost:3012/?_rsc=5CB68i4pnAekjehf",
+        "bytes": 570
+      },
+      {
+        "name": "http://localhost:3012/?_rsc=8nTjltbQWvg6NcbE",
+        "bytes": 6202
+      },
+      {
+        "name": "http://localhost:3012/_next/image?url=%2Fimages%2Fcinema%2Fworkshop.webp&w=3840&q=75",
+        "bytes": 52506
+      }
+    ],
+    "canvas": 0
+  },
+  "scroll": {
+    "medianMs": 33.30000000000109,
+    "p95Ms": 283.2999999999993,
+    "frames": 26
+  },
+  "warmedScroll": [
+    {
+      "cpuSlowdown": 1,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 16.700000000000273,
+      "frames": 121
+    },
+    {
+      "cpuSlowdown": 4,
+      "medianMs": 16.699999999999818,
+      "p95Ms": 33.399999999999636,
+      "frames": 103
+    }
+  ]
+}

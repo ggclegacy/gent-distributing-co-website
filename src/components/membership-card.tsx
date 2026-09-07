@@ -11,12 +11,6 @@ export function MembershipCard() {
           <span>GENT</span>
           <BrandMark />
         </div>
-        <div className="card-orbits" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
         <div className="member-card-bottom">
           <span>
             GOOD COMPANY.
