@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { ProductObject } from "./product-object";
-import { products } from "@/lib/catalog";
-const labels = ["Coffee", "Honey", "Seasonings", "Curated goods"];
+import { featuredProducts as products } from "@/lib/catalog";
+
 export function ProductExplorer() {
   const [selected, setSelected] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -29,8 +29,8 @@ export function ProductExplorer() {
     )
       return;
     const box = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - box.left) / box.width - 0.5) * 12;
-    const y = ((e.clientY - box.top) / box.height - 0.5) * -8;
+    const x = ((e.clientX - box.left) / box.width - 0.5) * 4;
+    const y = ((e.clientY - box.top) / box.height - 0.5) * -3;
     stage.current?.style.setProperty("--tilt-x", `${y}deg`);
     stage.current?.style.setProperty("--tilt-y", `${x}deg`);
   }
@@ -43,7 +43,7 @@ export function ProductExplorer() {
       <div
         className="collection-tabs"
         role="tablist"
-        aria-label="Explore product categories"
+        aria-label="Explore the first provisions"
       >
         {products.map((p, i) => (
           <button
@@ -60,7 +60,7 @@ export function ProductExplorer() {
             onKeyDown={keydown}
           >
             <span className="tab-number">0{i + 1}</span>
-            {labels[i]}
+            {p.explorerLabel}
             <span className="tab-dot" />
           </button>
         ))}
@@ -75,7 +75,7 @@ export function ProductExplorer() {
           tabIndex={0}
         >
           {selected === i ? (
-            <div className={`explorer-content explore-${product.category}`}>
+            <div className={`explorer-content explore-${product.visual.kind}`}>
               <div
                 className="product-theater"
                 onPointerMove={tilt}
@@ -85,7 +85,7 @@ export function ProductExplorer() {
                 <div className="theater-orbit orbit-one" />
                 <div className="theater-orbit orbit-two" />
                 <div className="theater-product" ref={stage}>
-                  <ProductObject kind={product.category} large />
+                  <ProductObject kind={product.visual.kind} label={product.visual.label} large />
                 </div>
                 <span className="theater-caption">
                   GENT / PRODUCT CONCEPT 0{i + 1}
@@ -106,7 +106,7 @@ export function ProductExplorer() {
                   <span>IN DEVELOPMENT</span>
                 </div>
                 <Link className="button" href={`/products/${product.handle}`}>
-                  Explore {labels[i].toLowerCase()}{" "}
+                  Explore {product.explorerLabel.toLowerCase()}{" "}
                   <span aria-hidden="true">↗</span>
                 </Link>
                 <span className="micro">

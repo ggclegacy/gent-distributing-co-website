@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { ExperienceControls } from "./experience-controls";
 
 /** Progressive enhancement: the server-rendered story is readable without GSAP. */
@@ -54,9 +55,9 @@ export function SceneMotion() {
           <i data-act-progress />
         </span>
       </div>
-      <a href="#collection" className="cinema-skip">
+      <Link href="#collection" className="cinema-skip">
         Go to collection ↗
-      </a>
+      </Link>
       <nav className="scene-stepping" aria-label="Scene navigation">
         <button
           data-scene-prev

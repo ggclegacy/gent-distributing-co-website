@@ -12,16 +12,17 @@ export function Footer() {
         >
           <BrandMark />
           <span className="wordmark">
-            GENT<span>DISTRIBUTION CO.</span>
+            GENT <span>DISTRIBUTION CO.</span>
           </span>
         </Link>
-        <p>Good goods. Kept word. Open doors.</p>
+        <p>Lafayette roots. Exceptional goods. A wider horizon.</p>
         <ExperienceControls />
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} Gent Distribution Co.</span>
         <div>
           <Link href="/#collection">Collection</Link>
+          <Link href="/approach">The house</Link>
           <Link href="/membership">Membership</Link>
           <a href="#top">Back to top ↑</a>
         </div>

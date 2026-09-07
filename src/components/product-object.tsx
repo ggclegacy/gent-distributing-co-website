@@ -1,10 +1,13 @@
 export function ProductObject({
   kind = "coffee",
   large = false,
+  label,
 }: {
   kind?: string;
   large?: boolean;
+  label?: string;
 }) {
+  if (kind === "editorial") return <div className="editorial-object" role="img" aria-label="Gent collection editorial concept"><span>GENT</span><p>{label ?? "THE COLLECTION"}</p><small>ONE HOUSE. ONE STANDARD.</small></div>;
   return (
     <div
       className={`object-stage ${large ? "large" : ""}`}
@@ -19,7 +22,7 @@ export function ProductObject({
           <span className="package-small">DISTRIBUTION CO.</span>
           <div className="package-rule" />
           <span className="package-kind">
-            {kind === "bundles" ? "COLLECTION" : kind.toUpperCase()}
+            {label ?? (kind === "bundles" ? "COLLECTION" : kind.toUpperCase())}
           </span>
           <span className="package-small">WORTH HAVING</span>
         </div>

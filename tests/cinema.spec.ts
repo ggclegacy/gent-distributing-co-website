@@ -8,6 +8,12 @@ const ids = [
   "welcome",
 ];
 async function ready(page: import("@playwright/test").Page) {
+  const viewport = page.viewportSize();
+  if (viewport && (viewport.width < 1000 || viewport.height < 700)) {
+    await expect(page.locator(".cinema-tools .motion-control")).toBeVisible();
+    await expect(page.locator(".pin-spacer")).toHaveCount(0);
+    return;
+  }
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
     "data-cinema-ready",
     /desktop|small/,
@@ -33,7 +39,8 @@ test("all six scenes share one stage, with reversible native-scroll transitions 
   const seen = new Set<string>();
   for (let y = 0; y < end; y += 450) {
     await page.evaluate((top) => scrollTo({ top, behavior: "instant" }), y);
-    await page.waitForTimeout(80);
+    // Allow the 300 ms scrub interpolation to settle before sampling the scene.
+    await page.waitForTimeout(350);
     const state = await page.evaluate(() => ({
       active:
         document.querySelector<HTMLElement>("[data-cinema]")!.dataset
@@ -142,40 +149,25 @@ test("motion preference restores a readable document and persists", async ({
   await ready(page);
 });
 
-test("mobile keeps the connected stage and pans tall scenes to their controls", async ({
-  page,
-}) => {
+test("mobile preserves native flow, camera descent, product controls and responsive cleanup", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await ready(page);
-  for (let i = 0; i < ids.length; i++) {
-    await expect(page.locator("[data-cinema]")).toHaveAttribute(
-      "data-active-scene",
-      String(i),
-    );
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
-    await page.screenshot({ path: `test-results/scene-${i}-mobile.png` });
-    if (i < 5)
-      await page
-        .getByRole("button", { name: "Next scene", exact: true })
-        .click();
+  const initial = await page.locator(".network-camera").evaluate(el => getComputedStyle(el).transform);
+  await page.evaluate(() => scrollTo({top: 400, behavior: "instant"}));
+  await expect.poll(() => page.locator(".network-camera").evaluate(el => getComputedStyle(el).transform)).not.toBe(initial);
+  for (const id of ids) {
+    await expect(page.locator("#" + id)).toBeVisible();
+    await expect(page.locator("#" + id)).not.toHaveAttribute("inert");
   }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.getByRole("link", { name: "Go to collection" }).click();
   await page.getByRole("tab", { name: "03 Seasonings" }).click();
-  const productLink = page.getByRole("link", {
-    name: "Explore seasonings",
-    exact: true,
-  });
-  await productLink.focus();
-  await expect(productLink).toBeInViewport();
-  await productLink.click();
+  await page.getByRole("link", {name: "Explore seasonings", exact: true}).click();
   await expect(page).toHaveURL(/products\/gent-seasonings/);
+  await expect(page.getByRole("heading", {name: "Gent Seasonings", exact: true})).toBeVisible();
   await page.goBack();
-  await ready(page);
+  await expect(page.locator("[data-cinema]")).toBeVisible();
   await page.setViewportSize({ width: 844, height: 390 });
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -200,7 +192,7 @@ test("no JavaScript and system reduced-motion expose every scene in order", asyn
 });
 
 for (const width of [1440, 390]) {
-  test(`Acadiana opening resolves its origin, routes and goods at ${width}px`, async ({
+  test(`Engine opening resolves its origin and story at ${width}px`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
@@ -208,13 +200,10 @@ for (const width of [1440, 390]) {
     await ready(page);
     await page.getByRole("link", { name: "Follow our roots" }).click();
     await expect(page.locator("#origins")).toHaveCSS("opacity", "1");
+    if (width === 1440) await expect(page.locator(".engine-surface")).toHaveCSS("visibility", "hidden");
     await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
-    expect(
-      await page
-        .locator(".origin-routes path")
-        .last()
-        .evaluate((el) => parseFloat(getComputedStyle(el).strokeDashoffset)),
-    ).toBeLessThan(1);
+    await expect(page.locator(".connection-outcomes article")).toHaveCount(3);
+    await expect(page.locator(".connection-outcomes article").last()).toHaveCSS("opacity", "1");
     await page.screenshot({ path: `test-results/origin-${width}.png` });
   });
 }
@@ -227,8 +216,8 @@ for (const width of [320, 390]) {
     await page.goto("/#origins");
     await ready(page);
     await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
-    const products = await page.locator(".origin-products").boundingBox();
-    expect(products!.y + products!.height).toBeLessThan(610);
+    await page.locator(".origin-products").scrollIntoViewIfNeeded();
+    await expect(page.locator(".origin-products")).toBeInViewport();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,

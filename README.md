@@ -13,13 +13,13 @@ npm run build
 
 ## Current release
 
-A prelaunch immersive experience with an architectural portal hero, five editorial chapters, a keyboard-accessible product explorer, persistent responsive navigation, reduced-motion controls, product detail routes, and a dedicated umbrella membership page. Packaging is an original CSS concept, not final product photography. Product descriptions deliberately avoid unverified origin, certification, roast, pricing, or delivery claims.
+A prelaunch immersive experience with a live dimensional Louisiana sculpture hero, five editorial chapters, a keyboard-accessible product explorer, persistent responsive navigation, reduced-motion controls, product detail routes, and a dedicated umbrella membership page. Packaging is an original CSS concept, not final product photography. Product descriptions deliberately avoid unverified origin, certification, roast, pricing, or delivery claims.
 
 ## Architecture
 
 - `src/app`: server-rendered pages and global design tokens.
 - `src/components`: shared shell, conceptual packaging, and isolated client interactions.
-- `src/lib/catalog.ts`: typed product stories, category/status, future Shopify variant and selling-plan references.
+- `src/lib/catalog.ts` and `portfolio.ts`: product stories, scalable categories, business layers, brands, provenance, audience, visibility and future Shopify references.
 - `src/lib/shopify.ts`: server-only Storefront API client and validated cart creation foundation.
 - `public/images/gent-portal.webp`: bespoke AI-generated architectural hero, optimized to approximately 78 KB and served from a fingerprinted static asset URL. The former forest asset remains unused.
 
@@ -35,7 +35,7 @@ Import this GitHub repository as a Next.js project. Default build (`npm run buil
 
 ## Brand language
 
-See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hierarchy, claim standards, and copy ownership. Gent is a modern merchant house built around discovery, provenance, quality, and relationships.
+See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hierarchy, claim standards, and copy ownership. Gent is a modern premium multi-category distribution house, born in Lafayette and built to reach beyond Louisiana. See [portfolio strategy](docs/portfolio-strategy.md) for the catalog model, business layers, launch scope and provenance rules.
 
 ## Design
 

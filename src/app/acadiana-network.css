@@ -1,0 +1,98 @@
+/* Louisiana as a precision-crafted object. All light and routes are live layers. */
+:root { --gold: #C4912F; }
+.homecoming-stage .hero { overflow: hidden; isolation: isolate; }
+.network-camera { position: absolute; inset: 0; transform-origin: 70% 55%; pointer-events: none; perspective: 1400px; background: radial-gradient(ellipse at 74% 43%,#17291f80,transparent 53%),#070a08; }
+.network-world { position: absolute; width: 65%; max-width: 1100px; aspect-ratio: 800/760; right: -6%; top: 50%; transform: translateY(-50%); perspective: 1400px; }
+.state-turntable { width: 100%; height: 100%; transform: rotateX(25deg) rotateZ(-13deg); transform-style: preserve-3d; transform-origin: 45% 53%; }
+.network-terrain { display: block; width: 100%; height: 100%; overflow: visible; }
+.sculpture-spotlight { position: absolute; width: 60%; height: 100%; right: 0; top: -40%; background: radial-gradient(ellipse at 50% 50%,#b4cdb712,transparent 65%); }
+.sculpture-ground { position: absolute; width: 48%; height: 20%; right: 2%; top: 70%; border-radius: 50%; background: radial-gradient(ellipse,#C4912F10,#21362935 35%,#00000050 60%,transparent 73%); transform: rotate(-9deg); }
+.terrain-source-label { font: 700 14px var(--font-sans); letter-spacing: 2px; fill: #f1d6a4; }
+.terrain-coordinate { font: 8px var(--font-sans); letter-spacing: 1.1px; fill: #bdc5b5; }
+.terrain-partner-label { font: 600 8px var(--font-sans); letter-spacing: .9px; fill: #e1cfaa; paint-order: stroke; stroke: #102019; stroke-width: 2px; stroke-linejoin: round; }
+.state-signature { font: 8px var(--font-sans); letter-spacing: 2px; fill: #8e9c8e; }
+.state-edge-trace { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.distribution-routes path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.distribution-packets path { stroke-dasharray: .013 .987; stroke-dashoffset: 0; opacity: 0; }
+.network-mist { position: absolute; pointer-events: none; width: 55%; height: 15%; right: -5%; top: 76%; background: radial-gradient(ellipse,#bacab20a,transparent 65%); }
+body .homecoming-stage .hero-shade { pointer-events: none; background: linear-gradient(90deg,#070a0870,transparent 50%),linear-gradient(0deg,#080b0a,transparent 18%,transparent 88%,#080b0a30); }
+body .homecoming-stage .hero-copy { max-width: 680px; }
+body .homecoming-stage .hero h1 { font-size: clamp(3.2rem,5.5vw,5.5rem); line-height: 1.07; }
+body .homecoming-stage .hero-description { font-size: clamp(14px,1.2vw,18px); color: #d5d4c9; margin: 26px 0 32px; }
+body .homecoming-stage .hero-categories { font-size: 9px; letter-spacing: .16em; margin-top: 32px; color: #acb5a8; }
+body .homecoming-stage .landscape-caption { z-index: 2; right: 6%; bottom: 15%; font-size: 9px; letter-spacing: .2em; gap: 10px; }
+body .homecoming-stage .landscape-caption-detail { color: #c4c9bb; font-size: 8px; letter-spacing: .13em; }
+body .homecoming-stage .hero-bottom { font-size: 9px; }
+.network-threshold { position: absolute; inset: 0; opacity: 0; pointer-events: none; background: radial-gradient(ellipse at 70% 55%,#C4912F20,transparent 40%); }
+.network-story { position: absolute; z-index: 3; left: 7%; top: 31%; width: 45%; pointer-events: none; }
+.network-beat { visibility: hidden; position: absolute; inset: 0; opacity: 0; }
+.network-beat h2 { font-size: clamp(36px,4vw,64px); line-height: 1.1; margin: 25px 0; }
+.network-beat > p:last-child { font-size: 16px; line-height: 1.8; color: #b9c4b6; }
+@media (min-width: 1000px) {
+ [data-cinema-ready] .origin-story-copy h2 { font-size: clamp(48px,4.5vw,68px); }
+ [data-cinema-ready] .origin-story { padding-bottom: 135px; }
+ [data-cinema-ready] .origin-product-line { font-size: clamp(24px,2.15vw,32px); }
+}
+@media (max-width: 999px) {
+ .network-world { width: 700px; max-width: none; right: auto; left: 50%; top: 350px; transform: translateX(-50%); }
+ .network-camera { transform-origin: 50% 66%; background: radial-gradient(ellipse at 50% 65%,#17291f85,transparent 53%),#070a08; }
+ .sculpture-ground { width: 90%; right: 5%; top: 76%; }
+ body .homecoming-stage .hero { align-items: flex-start; padding-top: 155px; min-height: 1120px; }
+ body .homecoming-stage .hero-copy { max-width: 680px; }
+ body .homecoming-stage .hero h1 { font-size: clamp(3.5rem,8vw,5rem); }
+ body .homecoming-stage .hero-shade { background: linear-gradient(0deg,#080b0a,transparent 18%); }
+ body .homecoming-stage .landscape-caption { display: grid; bottom: 12%; }
+ .network-story { display: none; }
+}
+@media (max-width: 700px) {
+ body .homecoming-stage .hero { padding: 125px 7% 100px; min-height: 980px; height: max(100svh,980px); }
+ body .homecoming-stage .hero h1 { font-size: clamp(2rem,9.8vw,4rem); }
+ body .homecoming-stage .hero-copy .eyebrow { margin-bottom: 23px; font-size: 9px; letter-spacing: .16em; }
+ body .homecoming-stage .hero-description { max-width: 290px; font-size: 14px; line-height: 1.7; margin: 20px 0 25px; }
+ body .homecoming-stage .hero-actions { gap: 15px; }
+ body .homecoming-stage .hero-actions .button { font-size: 12px; padding: 12px 14px; gap: 15px; }
+ body .homecoming-stage .hero-actions .quiet-link { font-size: 12px; }
+ body .homecoming-stage .hero-categories { font-size: 8px; letter-spacing: .07em; margin-top: 23px; }
+ .network-world { width: min(108vw,480px); left: calc(50% + 10px); top: 400px; }
+ .terrain-source-label { font-size: 19px; }
+ .terrain-coordinate { font-size: 11px; }
+ .terrain-partner-label { font-size: 10px; }
+ .state-signature { font-size: 10px; letter-spacing: 1px; }
+ .network-camera { transform-origin: 50% 67%; }
+ body .homecoming-stage .landscape-caption { right: 7%; bottom: 115px; font-size: 8px; }
+ body .homecoming-stage .hero-bottom { bottom: 77px; font-size: 8px; }
+}
+@media (max-width: 350px) { .network-world { top: 440px; } }
+@media (max-height: 599px) and (min-width: 701px) {
+ body .homecoming-stage .hero { min-height: 1000px; padding-top: 135px; }
+ .network-world { top: 330px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .network-camera *, .network-camera { animation: none !important; }
+}
+/* Small architectural moments replace pins and sector labels. */
+.connection-hotspots { position: absolute; inset: 0; pointer-events: none; }
+.connection-hotspot { position: absolute; width: 48px; height: 48px; transform: translate(-50%,-75%); pointer-events: auto; background: transparent; border: 1px solid transparent; border-radius: 50%; cursor: pointer; color: #f1d8a0; }
+.connection-hotspot > span { position: absolute; right: -5px; top: -6px; width: 18px; height: 18px; display: grid; place-items: center; font: 12px var(--font-sans); border: 1px solid #c4912f75; border-radius: 50%; background: #0d1b13; }
+.connection-hotspot:hover,.connection-hotspot:focus-visible,.connection-hotspot[aria-expanded="true"] { outline: 2px solid #e9c477; outline-offset: 5px; background: #c4912f14; }
+.connection-hotspot:disabled { pointer-events: none; }
+.connection-hotspot:disabled > span { display: none; }
+.connection-place[data-selected="true"] .place-warmth { opacity: 1 !important; }
+.connection-place[data-selected="true"] .place-window { fill: #ffdfa1; }
+.connection-inspector { position: absolute; z-index: 5; right: 7%; bottom: 18%; width: 325px; padding: 25px 30px; background: #0a130ff5; border: 1px solid #c4912f70; box-shadow: 0 16px 50px #0009; pointer-events: auto; }
+.connection-inspector[hidden] { display: none; }
+.connection-inspector .eyebrow { font-size: 9px; padding-right: 15px; }
+.connection-inspector h3 { font-size: 24px; line-height: 1.2; margin: 15px 0; color: #ead3a3; }
+.connection-inspector > p:last-of-type { font-size: 13px; line-height: 1.7; color: #c4ccbf; }
+.connection-close { position: absolute; top: 0; right: 0; width: 44px; height: 44px; border: 0; background: transparent; color: #ecd4a2; cursor: pointer; font-size: 24px; }
+.connection-close:focus-visible { outline: 2px solid #e9c477; outline-offset: -4px; }
+.network-beat h2 { font-size: clamp(32px,3.6vw,58px); }
+@media (max-width:999px) { .connection-inspector { bottom: 165px; right: 7%; } }
+@media (max-width:700px) { .connection-inspector { width: 86%; bottom: 115px; padding: 22px; } .connection-inspector h3 { font-size: 22px; } }
+.network-beat h2 { font-size: clamp(30px,3.15vw,52px); }
+.connection-outcomes { display: grid; gap: 24px; }
+.connection-outcomes article { padding-top: 20px; border-top: 1px solid #c4912f40; }
+.connection-outcomes article > span { font-size: 9px; color: #c4912f; letter-spacing: .15em; }
+.connection-outcomes h3 { font-size: clamp(24px,2.4vw,34px); color: #e3d1a9; margin: 12px 0 8px; }
+.connection-outcomes p { font-size: 13px; line-height: 1.7; color: #bdc8b8; max-width: 430px; }
+@media (max-width:700px) { .connection-outcomes { gap: 18px; } .connection-outcomes h3 { font-size: 24px; } }

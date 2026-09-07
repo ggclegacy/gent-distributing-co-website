@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { brand } from "@/lib/brand";
 import Link from "next/link";
 import { AcadianaHero } from "@/components/acadiana-hero";
 import { SceneAtmosphere } from "@/components/scene-atmosphere";
@@ -7,9 +8,10 @@ import { ProductExplorer } from "@/components/product-explorer";
 import { MembershipCard } from "@/components/membership-card";
 import { Ecosystem } from "@/components/ecosystem";
 export const metadata: Metadata = {
-  title: "Gent Distribution Co. — Rooted here. Built to move.",
-  description:
-    "Premium goods born in Acadiana. Distributed with purpose. Based in Lafayette, Louisiana, Gent connects local makers, exceptional goods, and our community.",
+  title: { absolute: brand.title },
+  description: brand.description,
+  openGraph: { title: brand.title, description: brand.description, siteName: brand.name, type: "website" },
+  twitter: { card: "summary", title: brand.title, description: brand.description },
 };
 
 export default function Home() {
@@ -44,9 +46,9 @@ export default function Home() {
               <p data-reveal>
                 Exceptional goods deserve a wider audience. People deserve to
                 know what they’re bringing home. Gent exists to make that
-                connection. We believe in quality you can explain, a handshake
-                that means something, and a reputation earned by keeping your
-                word.
+                connection. We’re defined by the standard of goods that earn a
+                place in our network, with quality you can explain and a
+                reputation earned by keeping your word.
               </p>
             </div>
             <div className="principle-grid">
@@ -99,7 +101,8 @@ export default function Home() {
               <p>
                 Our own label begins with Gent Coffee.
                 <br />
-                Pantry goods and independent discoveries are next.
+                Coffee, honey, sauces, and seasonings open the story.
+                The standard will carry us into what comes next.
               </p>
             </div>
             <ProductExplorer />
@@ -127,14 +130,14 @@ export default function Home() {
                   Same <em>soul.</em>
                 </h2>
                 <p>
-                  You’ve put something of yourself into what you make. That
-                  should travel with it. Our approach brings storytelling,
-                  commerce, and distribution together to reach more shelves,
-                  tables, and homes. We believe local can go further without
-                  losing where it came from.
+                  Good products deserve to keep their identity as they grow.
+                  Our house is built for goods we develop, brands we represent,
+                  and wholesale selections we stand behind. From our first
+                  relationships in Acadiana to the ones ahead, we bring
+                  thoughtful curation, storytelling, and distribution together.
                 </p>
-                <Link className="text-link" href="#philosophy">
-                  Get to know our standard <span aria-hidden="true">↗</span>
+                <Link className="text-link" href="/approach">
+                  Explore the house <span aria-hidden="true">↗</span>
                 </Link>
               </div>
               <Ecosystem />

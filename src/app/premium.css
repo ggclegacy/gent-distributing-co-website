@@ -1,0 +1,111 @@
+/* Gent: charcoal, field green and aged brass. Shared across every route. */
+:root {
+  --black: #080b0a;
+  --surface: #101513;
+  --surface-raised: #18201c;
+  --green: #14271e;
+  --green-light: #3d5848;
+  --gold: #c4913f;
+  --gold-light: #f0f1eb;
+  --gold-muted: #acb2a9;
+  --line: #aab3a52e;
+  --ease: cubic-bezier(.22,.68,.25,1);
+}
+body { font-size: 1rem; color: var(--gold-light); }
+h1, h2, h3 { font-weight: 800; letter-spacing: -.045em; text-transform: uppercase; }
+em { color: var(--gold); }
+body .hero h1 em { background: none; -webkit-text-fill-color: var(--gold); color: var(--gold); }
+body .hero h1 { font-size: clamp(3rem, 6.4vw, 6.8rem); line-height: 1.02; letter-spacing: -.055em; }
+body .hero-copy { max-width: 850px; }
+.hero-visual img { filter: saturate(.7) contrast(1.12); }
+body .hero-shade { background: linear-gradient(90deg,#080b0ae6,#080b0a55 62%,#080b0a08),linear-gradient(0deg,#080b0a,transparent 38%); }
+body .eyebrow, body .hero-copy .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .15em; }
+body .micro, body .section-index, body .hero-categories, body .hero-bottom,
+body .landscape-caption, body .network-caption, body .origin-products .eyebrow,
+body .footer-bottom, body .footer-bottom > span:last-child, body .map-caption,
+body .product-meta, body .theater-caption, body .scene-copy .micro,
+body .explorer-copy .micro, body .detail-art .micro { font-size: .75rem; letter-spacing: .06em; }
+body .button { border-radius: 0; background: var(--gold); border: 1px solid var(--gold); font-size: .875rem; font-weight: 800; min-height: 50px; padding: 13px 20px; gap: 22px; transition: background .16s ease, border-color .16s ease; }
+body .button:hover { transform: none; box-shadow: none; background: #dcab59; }
+body .button-outline { background: transparent; color: var(--gold-light); border-color: #aab3a566; }
+body .button-outline:hover { background: #ffffff0b; border-color: var(--gold); }
+body .text-link, body .quiet-link { font-size: .875rem; font-weight: 600; }
+body .site-header { background: #080b0af2; border-bottom: 1px solid #ffffff20; backdrop-filter: none; }
+body .wordmark { font-weight: 800; letter-spacing: .12em; }
+body .wordmark > span { font-size: .625rem; letter-spacing: .1em; }
+body .nav { font-size: .875rem; font-weight: 600; gap: 26px; }
+body .nav-membership, body .menu-toggle, body .motion-control { border-radius: 0; }
+body .menu-toggle, body .motion-control, body .footer-top p { font-size: .875rem; }
+body .nav-membership { border-color: #c4913f80; }
+body .standard-intro { text-align: left; max-width: none; }
+body .standard-intro > p:last-child { max-width: 680px; }
+body .standard-intro > p:last-child, body .principle-grid p,
+body .scene-copy > p:not(.eyebrow):not(.micro), body .section-heading > p,
+body .product-description, body .product-tagline, body .membership-intro,
+body .membership-benefits p, body .membership-launch > p:not(.eyebrow),
+body .detail-grid p:not(.eyebrow), body .origin-story-copy > p:not(.eyebrow) {
+  font-size: 1rem; line-height: 1.7; color: #bec4bb;
+}
+body .principle-grid { gap: 0; border-top: 1px solid var(--line); }
+body .principle-grid article { padding: 26px 24px; border-left: 1px solid var(--line); }
+body .principle-grid article:first-child { padding-left: 0; border-left: 0; }
+body .principle-grid h3 { font-size: clamp(1.25rem,2vw,1.75rem); }
+body .principle-number { font-weight: 800; color: var(--gold); }
+body .scene-world { background: linear-gradient(115deg,#17251e,#0b100d 65%,#080b0a); }
+body .world-depth i { border-radius: 0; border-width: 1px; border-color: #8b9a8d22; box-shadow: none; }
+body .world-display .world-depth, body .world-network .world-depth, body .world-vault .world-depth { transform: none; inset: 12% 8%; }
+body .world-beam { opacity: .2; }
+body .world-floor { opacity: .35; }
+body .door-left, body .door-right { background: linear-gradient(90deg,#0d1510,#18251d); box-shadow: none; }
+body .product-explorer { border: 1px solid var(--line); border-radius: 0; }
+body .collection-tabs button { font-size: .875rem; font-weight: 700; border-radius: 0; }
+body .collection-tabs button[aria-selected="true"] { background: #c4913f14; color: #f0f1eb; }
+body .tab-number { font-size: .75rem; }
+body .product-theater, body .detail-art { background: linear-gradient(135deg,#1b2620,#0c110e); border: 1px solid var(--line); }
+body .theater-orbit { display: none; }
+body .product-object { transform: rotateY(-5deg); border-color: #7d896955; box-shadow: inset -7px 0 12px #0008,10px 16px 20px #0006; }
+body .package-label { align-items: flex-start; padding-left: 16px; border: 0; border-left: 3px solid var(--gold); }
+body .package-monogram { display: none; }
+body .package-brand { font-weight: 800; letter-spacing: .07em; margin-left: 0; color: #f0f1eb; }
+body .package-kind { font-weight: 800; letter-spacing: .08em; }
+body .package-rule { width: 70%; background: var(--gold); }
+body .member-card { border-radius: 3px; background: linear-gradient(120deg,#232d27,#101713 65%); border: 1px solid #73816c; box-shadow: 8px 14px 22px #0007; transform: rotate(-2deg); }
+body .member-card-top > span { font-weight: 800; color: #f0f1eb; }
+body .card-orbits { inset: 29% 7% 32%; transform: none; border-top: 1px solid #c4913f80; border-bottom: 1px solid #c4913f40; }
+body .card-orbits i { display: none; }
+body .member-card-bottom { font-size: clamp(.5rem,.8vw,.6875rem); font-weight: 700; letter-spacing: .05em; }
+body .benefit-tags { font-size: .875rem; gap: 16px; }
+body .network-core { border-radius: 2px; box-shadow: none; background: #17251e; }
+body .network-node { font-weight: 700; }
+body .membership-benefits article { border-radius: 0; background: #111a15; border: 1px solid var(--line); border-top: 3px solid var(--gold); }
+body .membership-benefits h2 { font-size: 1.5rem; }
+body .membership-page h1, body .detail-grid h1 { font-size: clamp(2.5rem,5.5vw,5.5rem); }
+body .closing h2 { font-size: clamp(3rem,7vw,6.5rem); }
+body .origin-product-line { font-weight: 700; }
+body .origin-products > span { font-size: .875rem; }
+body .status-dot { box-shadow: none; }
+body .cinema-controls { border-radius: 0; }
+@media (max-width: 999px) {
+  body .nav { gap: 16px; }
+  body .hero h1 { font-size: clamp(2.4rem,8vw,5rem); }
+  body .section-index { flex-wrap: wrap; gap: 8px; }
+}
+@media (max-width: 700px) {
+  body .hero h1 { font-size: clamp(2.1rem,9vw,3.8rem); }
+  body .hero-actions { flex-wrap: wrap; gap: 8px 20px; }
+  body .hero-description { font-size: 1rem; }
+  body .hero-categories { margin-top: 18px; }
+  body .hero-bottom > span { display: none; }
+  body .nav.open { background: #0b100d; }
+  body .principle-grid article, body .principle-grid article:first-child { padding: 24px 0; border-left: 0; }
+  body .member-card { width: 96%; }
+  body .network-node { font-size: .5rem; }
+  body .explorer-copy h3 { font-size: 2rem; }
+  body .origin-story { padding-top: 75px; }
+  body .hero, body [data-cinema-ready="small"] .homecoming-stage .hero { min-height: 760px; }
+  body .hero-bottom { bottom: 80px; }
+  body .membership-page h1 { font-size: clamp(2.25rem,9vw,3.5rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}

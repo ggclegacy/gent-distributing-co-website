@@ -23,7 +23,7 @@ export function Navigation() {
       >
         <BrandMark />
         <span className="wordmark">
-          GENT<span>DISTRIBUTION CO.</span>
+          GENT <span>DISTRIBUTION CO.</span>
         </span>
       </Link>
       <nav
@@ -38,7 +38,7 @@ export function Navigation() {
           Our standard
         </Link>
         <Link href="/#ecosystem" onClick={() => setOpen(false)}>
-          For makers
+          For partners
         </Link>
         <Link
           className="nav-membership"

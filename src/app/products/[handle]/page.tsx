@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getProduct, products } from "@/lib/catalog";
+import { getProduct, publicProducts, originLabel } from "@/lib/catalog";
+import { categories, businessLayers, brands } from "@/lib/portfolio";
 import { ProductObject } from "@/components/product-object";
 export function generateStaticParams() {
-  return products.map((p) => ({ handle: p.handle }));
+  return publicProducts.map((p) => ({ handle: p.handle }));
 }
 export async function generateMetadata({
   params,
@@ -33,10 +34,10 @@ export default async function ProductPage({
         ← The collection
       </Link>
       <div className="detail-grid">
-        <div className={`detail-art card-${product.category}`}>
-          <ProductObject kind={product.category} large />
+        <div className={`detail-art card-${product.visual.kind}`}>
+          <ProductObject kind={product.visual.kind} label={product.visual.label} large />
           <span className="micro">
-            CONCEPT PACKAGING · PRODUCT IN DEVELOPMENT
+            {product.visual.kind === "editorial" ? "COLLECTION DIRECTION · IN DEVELOPMENT" : "CONCEPT PACKAGING · PRODUCT IN DEVELOPMENT"}
           </span>
         </div>
         <div>
@@ -44,6 +45,12 @@ export default async function ProductPage({
           <h1>{product.name}</h1>
           <p className="detail-lead">{product.description}</p>
           <p>{product.detail}</p>
+          <dl className="product-provenance">
+            <div><dt>Category</dt><dd>{categories[product.category].label}</dd></div>
+            <div><dt>Origin</dt><dd>{originLabel(product)}</dd></div>
+            <div><dt>In the house</dt><dd>{product.businessLayer ? businessLayers[product.businessLayer].label : "Relationship to be confirmed before release"}</dd></div>
+            {product.brandId && <div><dt>Brand</dt><dd>{brands[product.brandId].name}</dd></div>}
+          </dl>
           <div className="release-note">
             <span className="status-dot" /> IN DEVELOPMENT
           </div>

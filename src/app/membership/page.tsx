@@ -20,7 +20,7 @@ const benefits = [
   [
     "04",
     "Room to grow.",
-    "The aim is one membership across the Gent collection, with participating products and terms made clear at launch.",
+    "The aim is one membership that can grow across Gent’s categories and participating brands, with eligibility and terms made clear before enrollment.",
   ],
 ];
 export default function Membership() {
