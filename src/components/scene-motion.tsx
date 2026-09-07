@@ -49,7 +49,7 @@ export function SceneMotion() {
   return (
     <div className="cinema-tools" ref={rail}>
       <div className="cinema-position" aria-hidden="true">
-        <span data-act-label>01 / THE OPEN DOOR</span>
+        <span data-act-label>01 / ROOTED HERE</span>
         <span className="cinema-track">
           <i data-act-progress />
         </span>
@@ -57,6 +57,30 @@ export function SceneMotion() {
       <a href="#collection" className="cinema-skip">
         Go to collection ↗
       </a>
+      <nav className="scene-stepping" aria-label="Scene navigation">
+        <button
+          data-scene-prev
+          aria-label="Previous scene"
+          onClick={() =>
+            window.dispatchEvent(
+              new CustomEvent("gent-scene-step", { detail: -1 }),
+            )
+          }
+        >
+          ←
+        </button>
+        <button
+          data-scene-next
+          aria-label="Next scene"
+          onClick={() =>
+            window.dispatchEvent(
+              new CustomEvent("gent-scene-step", { detail: 1 }),
+            )
+          }
+        >
+          →
+        </button>
+      </nav>
       <ExperienceControls />
     </div>
   );

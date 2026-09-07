@@ -1277,29 +1277,6 @@ details p {
   transform: none;
 }
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
-    .hero-visual {
-      animation: portal-depth linear both;
-      animation-timeline: scroll();
-      animation-range: 0px 850px;
-    }
-    .hero-copy {
-      animation: hero-departure linear both;
-      animation-timeline: scroll();
-      animation-range: 0px 800px;
-    }
-    @keyframes portal-depth {
-      to {
-        transform: scale(1.16) translateY(65px);
-      }
-    }
-    @keyframes hero-departure {
-      to {
-        transform: translateY(-55px);
-        opacity: 0.05;
-      }
-    }
-  }
   .explorer-copy {
     animation: product-enter 0.45s var(--ease);
   }
@@ -1891,16 +1868,159 @@ html[data-motion="paused"] .theater-product {
   background: #050806ed;
 }
 
-/* Scene layout is enabled only after the optional motion engine is ready. */
+/* The story is readable in normal flow until its single cinematic stage is ready. */
 .hero-visual,
 .hero-copy {
   animation: none !important;
 }
-[data-cinema-ready="desktop"] .hero-bottom {
-  bottom: 90px;
-}
-.opening-act {
+.cinema-stage {
   position: relative;
+}
+.scene-world {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.scene-content {
+  position: relative;
+  z-index: 2;
+}
+.world-depth {
+  position: absolute;
+  inset: -10% 4% -25%;
+  perspective: 900px;
+}
+.world-depth i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #c5a66a35;
+  border-radius: 45% 45% 0 0;
+  box-shadow:
+    inset 15px 0 35px #0005,
+    0 0 1px #ecd39840;
+}
+.world-depth i:nth-child(2) {
+  inset: 6% 9%;
+}
+.world-depth i:nth-child(3) {
+  inset: 12% 18%;
+}
+.world-depth i:nth-child(4) {
+  inset: 18% 27%;
+}
+.world-depth i:nth-child(5) {
+  inset: 24% 36%;
+}
+.world-floor {
+  position: absolute;
+  inset: 60% -30% -50%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 100px,
+      #c5a66a16 101px 102px
+    ),
+    repeating-linear-gradient(0deg, transparent 0 75px, #c5a66a12 76px 77px);
+  transform: perspective(500px) rotateX(58deg);
+  mask-image: linear-gradient(transparent, #000);
+}
+.world-beam {
+  position: absolute;
+  inset: -20% 0;
+  background: conic-gradient(
+    from 150deg at 50% 0%,
+    transparent,
+    #c5a66a16 25deg,
+    transparent 50deg
+  );
+}
+.world-haze {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    transparent 15%,
+    #050806aa 80%
+  );
+}
+.world-chamber {
+  background: radial-gradient(
+    ellipse at 50% 25%,
+    #214c34,
+    #07150e 60%,
+    #050806
+  );
+}
+.world-display {
+  background: radial-gradient(
+    ellipse at 28% 45%,
+    #23533a,
+    #0b2015 40%,
+    #050806 75%
+  );
+}
+.world-display .world-depth {
+  inset: 10% 45% -35% -5%;
+  transform: rotate(-25deg);
+}
+.world-display .world-depth i {
+  border-radius: 50%;
+  border-color: #c5a66a20;
+}
+.world-network {
+  background: radial-gradient(ellipse at 70% 50%, #163b27, #050806 73%);
+}
+.world-network .world-depth {
+  inset: -45% -30% -45% 30%;
+  transform: rotate(30deg);
+}
+.world-network .world-depth i {
+  border-radius: 50%;
+  border-color: #c5a66a14;
+}
+.world-vault {
+  background: linear-gradient(115deg, #193d29, #0c2116 48%, #050806);
+}
+.world-vault .world-depth {
+  inset: -55% 45% -55% -35%;
+  transform: rotate(-25deg);
+}
+.world-vault .world-depth i {
+  border-radius: 50%;
+  border-width: 15px;
+  border-color: #b59b5930;
+}
+.world-doorway {
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    #a68a4560,
+    #123923 30%,
+    #050806 75%
+  );
+}
+.world-doorway .world-depth {
+  inset: -20% 15% -65%;
+}
+.world-doorway .world-depth i {
+  border-width: 12px;
+  border-color: #c5a66a25;
+}
+.door-left,
+.door-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(100deg, #0a170f, #193623, #060b08);
+  border: 1px solid #c5a66a66;
+  box-shadow: inset 0 0 70px #000;
+}
+.door-left {
+  left: 0;
+}
+.door-right {
+  right: 0;
 }
 .portal-light {
   position: absolute;
@@ -1913,7 +2033,155 @@ html[data-motion="paused"] .theater-product {
     #c5a66a15 28%,
     transparent 60%
   );
-  transform-origin: 72% 48%;
+}
+.lens-column {
+  display: none;
+}
+[data-cinema-ready] .cinema-stage {
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--black);
+}
+[data-cinema-ready] [data-scene] {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--black);
+}
+[data-cinema-ready] [data-scene] > .scene-content {
+  min-height: 100svh;
+  padding: 118px 7% 100px;
+}
+[data-cinema-ready] .hero {
+  padding: 130px 7% 140px;
+}
+[data-cinema-ready] .hero-bottom {
+  bottom: 90px;
+}
+[data-cinema-ready] .section-index {
+  font-size: 10px;
+  border: 0;
+  padding: 0;
+}
+[data-cinema-ready] .section-index > span:first-child {
+  color: var(--gold);
+}
+[data-cinema-ready] .standard-section > .scene-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-cinema-ready] .standard-intro {
+  margin: 38px auto 25px;
+}
+[data-cinema-ready] .standard-intro h2 {
+  margin: 18px 0;
+  font-size: clamp(38px, 4.3vw, 64px);
+}
+[data-cinema-ready] .principle-grid article {
+  padding: 18px 0 26px;
+}
+[data-cinema-ready] .principle-grid h3 {
+  margin: 14px 0;
+}
+[data-cinema-ready] .collection-scene .section-heading {
+  margin: 20px 0;
+  align-items: center;
+}
+[data-cinema-ready] .collection-scene .section-heading h2 {
+  font-size: clamp(34px, 3.4vw, 50px);
+}
+[data-cinema-ready] .collection-scene .section-heading h2 br {
+  display: none;
+}
+[data-cinema-ready] .collection-scene .section-heading .eyebrow {
+  margin-bottom: 8px;
+}
+[data-cinema-ready] .product-explorer {
+  border: 0;
+  background: transparent;
+}
+[data-cinema-ready] .collection-tabs button {
+  min-height: 50px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: #05080650;
+}
+[data-cinema-ready] .explorer-content {
+  min-height: 420px;
+}
+[data-cinema-ready] .product-theater {
+  min-height: 410px;
+  background: transparent;
+}
+[data-cinema-ready] .theater-product {
+  scale: 0.85;
+}
+[data-cinema-ready] .explorer-copy {
+  padding: 22px 6%;
+}
+[data-cinema-ready] .explorer-copy h3 {
+  margin: 14px 0;
+  font-size: 46px;
+}
+[data-cinema-ready] .product-description {
+  margin: 15px 0;
+}
+[data-cinema-ready] .product-meta {
+  margin-bottom: 20px;
+}
+[data-cinema-ready]
+  :is(.ecosystem-section, .membership-scene)
+  > .scene-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[data-cinema-ready] :is(.ecosystem-grid, .membership-grid) {
+  margin-top: 50px;
+}
+[data-cinema-ready] .ecosystem-map {
+  scale: 1.08;
+}
+[data-cinema-ready] .member-card:after {
+  transform: translateX(var(--card-light, 0%));
+}
+[data-cinema-ready] .closing > .scene-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+[data-cinema-ready] .closing-inner {
+  margin: 65px 0;
+}
+[data-cinema-ready] .closing-word {
+  opacity: 0.08;
+}
+[data-cinema-ready] .lens-column {
+  display: block;
+  position: absolute;
+  z-index: 15;
+  top: -15%;
+  bottom: -15%;
+  width: 85%;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 10%,
+    #080e09 44%,
+    #b69b5960 48%,
+    #040805 52%,
+    transparent 90%
+  );
+  pointer-events: none;
+  opacity: 0;
 }
 .cinema-tools {
   position: fixed;
@@ -1923,7 +2191,7 @@ html[data-motion="paused"] .theater-product {
   right: 24px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
   pointer-events: none;
 }
 .cinema-tools > * {
@@ -1962,101 +2230,157 @@ html[data-motion="paused"] .theater-product {
   margin-left: auto;
   background: #050806ed;
 }
-html[data-motion="paused"] .cinema-position {
+.scene-stepping {
+  display: flex;
+  border: 1px solid var(--line);
+  background: #050806ed;
+}
+.scene-stepping button {
+  border: 0;
+  background: none;
+  width: 48px;
+  min-height: 44px;
+  color: var(--gold);
+}
+.scene-stepping button:disabled {
+  opacity: 0.3;
+}
+[data-cinema]:not([data-cinema-ready]) :is(.scene-stepping, .cinema-position) {
   display: none;
 }
-[data-cinema-ready="desktop"] .opening-act {
-  height: 100svh;
+[data-cinema]:not([data-cinema-ready]) .scene-world {
+  display: none;
 }
-[data-cinema-ready="desktop"] .hero {
-  height: 100%;
-  min-height: 0;
-  max-height: none;
-}
-[data-cinema-ready="desktop"] .standard-section {
-  position: absolute;
-  inset: 0;
-  padding: 112px 7% 62px;
-  background: radial-gradient(ellipse at 50% 20%, #183c28, #050806 72%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-[data-cinema-ready="desktop"] .standard-intro {
-  margin: 28px auto 20px;
-}
-[data-cinema-ready="desktop"] .standard-intro h2 {
-  margin: 16px 0;
-  font-size: clamp(38px, 4.3vw, 64px);
-}
-[data-cinema-ready="desktop"] .principle-grid article {
-  padding: 15px 0 24px;
-}
-[data-cinema-ready="desktop"] .principle-grid h3 {
-  margin: 14px 0;
-}
-[data-cinema-ready="desktop"] :is(.ecosystem-section, .membership-scene) {
-  min-height: 100svh;
-  padding-top: 115px;
-  padding-bottom: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-[data-cinema-ready="desktop"] :is(.ecosystem-grid, .membership-grid) {
-  margin-top: 40px;
-}
-[data-cinema-ready] .member-card:after {
-  transform: translateX(var(--card-light, 0%));
-}
-[data-cinema-ready] .hero-visual {
-  will-change: transform;
-}
-@media (max-width: 999px), (max-height: 759px) {
-  [data-cinema-ready="small"] .hero {
-    height: 100svh;
-    min-height: 620px;
-    max-height: none;
-    padding-top: 130px;
-  }
-  [data-cinema-ready="small"] .hero-visual {
-    transform: scale(1);
+@media (max-width: 999px), (max-height: 699px) {
+  .cinema-tools {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    gap: 10px;
   }
   .cinema-position {
     display: none;
-  }
-  .cinema-tools {
-    left: 14px;
-    right: 14px;
-    bottom: 12px;
-    gap: 10px;
   }
   .cinema-tools .motion-control,
   .cinema-skip {
     font-size: 10px;
     min-height: 44px;
   }
-}
-@media (max-width: 700px) {
-  [data-cinema-ready="small"] .hero-visual {
-    inset: 120px -30% 0 -80%;
-    transform: scale(1);
+  .scene-stepping button {
+    width: 36px;
   }
-  [data-cinema-ready="small"] .hero-description {
+  [data-cinema-ready] [data-scene] > .scene-content {
+    padding: 108px 7% 110px;
+  }
+  [data-cinema-ready] .hero {
+    padding: 130px 7% 110px;
+    align-items: start;
+  }
+  [data-cinema-ready] .hero-visual {
+    inset: 100px -30% 0 -80%;
+  }
+  [data-cinema-ready] .hero-description {
     max-width: 310px;
   }
-  [data-cinema-ready="small"] .hero-bottom {
+  [data-cinema-ready] .portal-label {
+    display: none;
+  }
+  [data-cinema-ready] .hero-bottom {
     bottom: 75px;
   }
-  [data-cinema-ready="small"] .portal-label {
+  [data-cinema-ready] .section-index {
+    font-size: 9px;
+  }
+  [data-cinema-ready] .section-index > span:last-child {
     display: none;
   }
+  [data-cinema-ready] .standard-intro {
+    margin: 35px auto 15px;
+  }
+  [data-cinema-ready] .principle-grid article {
+    padding: 18px 0 18px 32px;
+  }
+  [data-cinema-ready] .principle-number {
+    top: 30px;
+  }
+  [data-cinema-ready] .principle-grid h3 {
+    font-size: 24px;
+  }
+  [data-cinema-ready] .collection-scene .section-heading {
+    margin: 22px 0;
+  }
+  [data-cinema-ready] .collection-scene .section-heading h2 {
+    font-size: 35px;
+  }
+  [data-cinema-ready] .collection-scene .section-heading > p {
+    margin-top: 12px;
+  }
+  [data-cinema-ready] .product-theater {
+    min-height: 300px;
+  }
+  [data-cinema-ready] .theater-product {
+    scale: 0.67;
+  }
+  [data-cinema-ready] .explorer-copy {
+    padding: 24px 0;
+    border: 0;
+  }
+  [data-cinema-ready] .explorer-copy h3 {
+    font-size: 36px;
+  }
+  [data-cinema-ready] .ecosystem-grid {
+    gap: 20px;
+  }
+  [data-cinema-ready] :is(.ecosystem-grid, .membership-grid) {
+    margin-top: 32px;
+  }
+  [data-cinema-ready] .ecosystem-map {
+    scale: 1;
+    margin-top: 20px;
+  }
+  [data-cinema-ready] .membership-grid {
+    gap: 0;
+  }
+  [data-cinema-ready] .member-card-stage {
+    max-width: 380px;
+  }
+  [data-cinema-ready] .scene-copy h2 {
+    font-size: 42px;
+  }
+  .world-depth {
+    inset: 0 -40% -30%;
+  }
 }
-@media (prefers-reduced-motion: reduce) {
-  .cinema-position {
-    display: none;
+@media (max-width: 370px) {
+  .cinema-skip {
+    padding: 10px 8px;
+    font-size: 9px;
+  }
+  .scene-stepping button {
+    width: 30px;
   }
 }
 footer {
   padding-bottom: 100px;
+}
+
+/* Keep the authored opening inside the same camera frame. */
+[data-cinema-ready] .homecoming-scene .homecoming-stage {
+  height: 100%;
+  min-height: 0;
+}
+[data-cinema-ready] .homecoming-scene .hero {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  min-height: 0;
+}
+[data-cinema-ready] .homecoming-scene .origin-story {
+  min-height: 100%;
+}
+
+@media (max-width: 350px) and (max-height: 740px) {
+  [data-cinema-ready] .homecoming-scene .acadiana-network {
+    width: min(100%, 20svh);
+  }
 }

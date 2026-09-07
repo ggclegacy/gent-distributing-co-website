@@ -1,45 +1,46 @@
-# Cinematic homepage
+# Continuous cinematic experience
 
-The premium black, metallic gold, and deep green design remains the foundation. The opening changes from a scrolling illustration to a camera-directed portal, followed by distinct acts using the existing DOM, SVG, and CSS product artwork.
+## What changed
 
-## Research and decisions
+The homepage is one persistent camera stage, not independently pinned sections. A single GSAP timeline owns every entrance, exit, and reading interval. The next environment replaces the current environment inside the viewport, so native scrolling never exposes gaps between scenes. Product and membership detail routes retain their focused reading and commerce layouts.
 
-- [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) supports native-scroll pinning, reversible scrubbed timelines, and refreshed measurements. The implementation uses native viewport scrolling with a short 0.35-second scrub catch-up. No wheel/touch interception, smooth-scroll replacement, snapping, or WebGL runtime.
-- [GSAP matchMedia](<https://gsap.com/docs/v3/GSAP/gsap.matchMedia()>) automatically reverts scoped animation state when responsive conditions change. The scene owner also reverts on route unmount and motion-preference changes.
-- The installed Next.js 16.3.4 server/client component guide recommends narrow client boundaries. Homepage copy, headings, and commerce links remain server-rendered. Only the optional choreography is dynamically imported after hydration and when motion is enabled.
+The concurrent Acadiana hero work is integrated: its landscape, Lafayette origin, illuminated routes, and local goods form the opening movement. The full sequence is:
 
-## Story beats
+1. **Acadiana / arrival:** camera push into the first-light landscape, departing typography, the Lafayette origin and drawn distribution routes, then the local-goods reveal.
+2. **The standard / chamber:** pass from the landscape into layered green arches. The principles occupy the room, then the walls spread and the copy moves toward the camera.
+3. **The collection / display:** a horizontal aperture opens into the product theater. Products, tabs, and details remain live DOM controls. A lateral tracking shot carries the display away.
+4. **The makers / network:** a foreground column crosses the lens; the connected world arrives from the side. Its center expands into the next room.
+5. **Membership / vault:** a circular aperture reveals the card turning into gold light. The card passes the camera as the room departs.
+6. **Come in / doorway:** paired doors open into the invitation, followed by the ordinary footer after the film ends.
 
-1. **The open door → the Gent standard:** a pinned camera approach into the existing portal, outgoing typography, a soft gold light bloom, then the standard appears on the same stage. Desktop distance: 2.3 viewport heights.
-2. **The collection:** a center-out display reveal and lateral heading movement. The animation finishes as the section enters the viewport; product tabs and links retain their independent keyboard and pointer behavior.
-3. **Makers:** a pinned SVG route drawing, emerging nodes, and a gentle map orbit. Desktop distance: 1.05 viewport heights.
-4. **Membership:** a pinned perspective turn of the existing card with a gold reflection passing across its surface. Desktop distance: 0.95 viewport heights.
-5. **Come in:** a rising oversized wordmark behind the final invitation, returning to unpinned document flow.
+## Research behind the architecture
 
-## Ownership and extension
+[GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) recommends animating children rather than the pinned element and does not support nested pinning. The implementation therefore pins only `.cinema-stage`, with all scene layers inside it. There is no replacement scroller, wheel interception, scroll snapping, or WebGL engine.
 
-- `src/components/scene-motion.tsx` owns lazy loading, preferences, cleanup, and the persistent skip/motion controls.
-- `src/lib/cinema.ts` owns choreography. Its scoped `timeline` primitive standardizes pinning, scroll distance, easing, and refresh behavior. Each act uses its own local selectors and timeline; do not animate one property from multiple timelines.
-- `.opening-act` holds both opening scenes. `[data-cinema-ready]` enables enhanced layout only after the engine is ready; the default layout remains readable without JavaScript or when the optional chunk fails.
-- The existing motion control broadcasts preference changes so the fixed and footer controls stay synchronized. Turning motion off removes all pin spacers and restores normal layout rather than merely freezing the animation.
-- Chapter links use native anchors with enhanced scroll destinations for pinned acts. Browser history and direct hashes remain supported. Motion controls and collection skip are always available.
+[GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()) scopes animations and restores styles when responsive conditions change. [ScrollTrigger getTween](https://gsap.com/docs/v3/Plugins/ScrollTrigger/getTween/) lets direct scene navigation finish the scrub immediately, preventing an anchor jump from waiting for the camera to catch up.
 
-## Responsive and accessibility behavior
+The installed Next.js server/client component guidance supports keeping narrative markup on the server and loading the motion engine only in the narrow client controller. Text, links, headings, and initial product information remain server-rendered.
 
-Full staging requires at least 1000px width and 760px height. Smaller viewports use one short hero pin (0.65 viewport heights), lighter transforms, and document-flow content for all later acts. Resizing between modes reverts and rebuilds timelines.
+## Reusable parts
 
-Reduced-motion preference, including a live OS change, disables the motion engine. A session preference can also disable it. No JavaScript still exposes all story text, the initial product, navigation links, and product-detail links. Product category switching requires JavaScript as before.
+- `src/lib/cinema.ts`: one master film; `enter` coordinates overlapping scene transitions; `hold` allocates reading time and optional camera travel for tall content. Named timeline labels define direct navigation destinations. `#origins` addresses the completed opening narrative.
+- `src/components/scene-atmosphere.tsx`: reusable architectural depth, floor, light, haze, and door layers. They are decorative, lightweight CSS rather than additional image/video downloads.
+- `src/components/scene-motion.tsx`: deferred engine loading, lifecycle cleanup, progress, scene stepping, skip, and motion controls.
+- `src/components/acadiana-hero.tsx` and `src/app/acadiana-hero.css`: authored Lafayette landscape and origin narrative, supplied by the coordinated hero task.
+- `data-scene` identifies stage children. `data-active-scene` identifies the current readable act. Only that act is interactive; other scenes are inert and hidden from assistive technology until reached. Previous/next scene buttons and ordinary navigation links let keyboard and assistive-technology users choose a destination directly.
 
-## Performance and asset needs
+## Mobile and accessibility
 
-The existing portal is approximately 78 KB; no new raster assets, video sequences, canvas, or 3D dependencies are added. The opening asset retains its eager loading for first paint. GSAP and the scene module are deferred to an optional chunk; reduced-motion visitors skip it. The existing product tilt and CSS packaging remain intact. Do not add per-frame React state updates or extra full-screen blur layers.
+Mobile uses the same connected stage with shorter scroll distances and lighter camera transforms. When content is taller than the viewport, its reading interval pans the content far enough to expose the complete copy and controls. Keyboard focus also seeks a visible camera position for off-screen controls.
 
-No new asset is required for this implementation. Future upgrades could use approved final product photography and real maker/location imagery. The current packaging and membership card remain concepts; do not imply they are final products. Higher-resolution layered portal imagery could improve close-up realism if later needed. Any video or image sequence should have a static poster, a mobile budget, and a measured benefit before inclusion.
+Screens shorter than 600 CSS pixels use the readable document layout. Reduced motion, the persistent motion-off control, and missing JavaScript also show the full story in document order. Turning motion off removes the stage pin and all inert/hidden state. Browser resize, preference changes, and route unmount clean up animations and listeners.
+
+No new video or WebGL dependency was added. Hidden acts are not painted, motion updates avoid React state, and the animation chunk is skipped for reduced-motion visitors. The Acadiana image is supplied by the hero task; see `docs/acadiana-hero.md` for its provenance. Other environments use CSS/SVG and existing product concepts. Final product and maker photography remain optional future improvements, not blockers.
 
 ## Verification
 
-Run `npm run lint`, `npm run build`, and `npm run test:e2e`. Install the browser once with `npx playwright install chromium`. The test suite reuses a running local app or starts one on port 3000.
+`npm run lint`, `npm run build`, and `npm run test:e2e` are the verification commands. Install the test browser once with `npx playwright install chromium`. `PLAYWRIGHT_BASE_URL` selects an already-running test server.
 
-Nine browser regressions cover reversible desktop camera staging, chapter navigation, keyboard category selection and product routes, route cleanup, persistent and synchronized motion controls, live reduced-motion changes, mobile/landscape and responsive resize, direct links, and no-JavaScript content. Desktop and mobile screenshots are written to ignored `test-results/` when those tests run.
+The browser suite verifies continuous native-scroll travel through all six scenes, one pin throughout, reverse travel, direct scene links, active/inactive accessibility state, scene stepping, category keyboard interaction, product navigation and route cleanup, mobile control visibility, short-screen fallback, resizing, motion preference persistence, live reduced motion, and no-JavaScript content. Screenshots capture each act at desktop and mobile sizes.
 
-Visual checks use desktop 1440 × 900 and mobile 390 × 844. Automated viewport checks additionally include 844 × 390. Browser emulation does not replace physical low-end Android/iOS device profiling; no frame-rate or Core Web Vitals score is claimed.
+Desktop/mobile browser emulation verifies layout and behavior; it does not claim physical-device frame rates or a production Core Web Vitals score.

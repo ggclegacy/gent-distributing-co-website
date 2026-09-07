@@ -1,74 +1,91 @@
 import { test, expect } from "@playwright/test";
+const ids = [
+  "arrival",
+  "philosophy",
+  "collection",
+  "ecosystem",
+  "membership",
+  "welcome",
+];
+async function ready(page: import("@playwright/test").Page) {
+  await expect(page.locator("[data-cinema]")).toHaveAttribute(
+    "data-cinema-ready",
+    /desktop|small/,
+    { timeout: 15000 },
+  );
+  await expect(page.locator(".pin-spacer")).toHaveCount(1);
+}
 
-test("desktop camera pins, enters the second scene, and reverses", async ({
+test("all six scenes share one stage, with reversible native-scroll transitions and no gaps", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
+  await ready(page);
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
-    "data-cinema-ready",
-    "desktop",
+    "data-active-scene",
+    "0",
   );
-  await expect(page.locator(".pin-spacer")).toHaveCount(3);
-  await page.evaluate(() => window.scrollTo({ top: 850, behavior: "instant" }));
-  await expect
-    .poll(() =>
-      page
-        .locator(".hero-copy")
-        .evaluate((el) => +getComputedStyle(el).opacity),
-    )
-    .toBeLessThan(0.05);
-  expect(Math.abs((await page.locator(".hero").boundingBox())!.y)).toBeLessThan(
-    2,
+  const end = await page
+    .locator(".pin-spacer")
+    .evaluate((el) => el.getBoundingClientRect().height - innerHeight);
+  const seen = new Set<string>();
+  for (let y = 0; y < end; y += 450) {
+    await page.evaluate((top) => scrollTo({ top, behavior: "instant" }), y);
+    await page.waitForTimeout(80);
+    const state = await page.evaluate(() => ({
+      active:
+        document.querySelector<HTMLElement>("[data-cinema]")!.dataset
+          .activeScene!,
+      top: document.querySelector(".cinema-stage")!.getBoundingClientRect().top,
+      visible: [...document.querySelectorAll("[data-scene]")].some(
+        (el) =>
+          getComputedStyle(el).visibility === "visible" &&
+          +getComputedStyle(el).opacity > 0.15,
+      ),
+    }));
+    seen.add(state.active);
+    expect(Math.abs(state.top)).toBeLessThan(2);
+    expect(state.visible).toBe(true);
+  }
+  await expect(page.locator("[data-cinema]")).toHaveAttribute(
+    "data-active-scene",
+    "5",
   );
-  await page.evaluate(() =>
-    window.scrollTo({ top: 1950, behavior: "instant" }),
+  expect(seen.size).toBe(6);
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await expect(page.locator("[data-cinema]")).toHaveAttribute(
+    "data-active-scene",
+    "0",
   );
-  await expect(page.locator("#philosophy")).toBeVisible();
-  await expect
-    .poll(() =>
-      page
-        .locator("#philosophy")
-        .evaluate((el) => +getComputedStyle(el).opacity),
-    )
-    .toBeGreaterThan(0.95);
-  await page.screenshot({ path: "test-results/desktop-standard.png" });
-  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-  await expect
-    .poll(() =>
-      page
-        .locator(".hero-copy")
-        .evaluate((el) => +getComputedStyle(el).opacity),
-    )
-    .toBeGreaterThan(0.95);
+  await expect(page.locator(".hero-copy")).toHaveCSS("opacity", "1");
   expect(errors).toEqual([]);
 });
 
-test("chapter links bypass pinning and collection keeps keyboard navigation", async ({
+test("scene navigation exposes only the active scene and maintains product interaction", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page.locator("[data-cinema]")).toHaveAttribute(
-    "data-cinema-ready",
-    "desktop",
-  );
-  await page.getByRole("link", { name: "Our standard", exact: true }).click();
-  await expect
-    .poll(() =>
-      page
-        .locator("#philosophy")
-        .evaluate((el) => +getComputedStyle(el).opacity),
-    )
-    .toBeGreaterThan(0.95);
+  await ready(page);
+  for (let i = 0; i < ids.length; i++) {
+    await expect(page.locator("[data-cinema]")).toHaveAttribute(
+      "data-active-scene",
+      String(i),
+    );
+    await expect(page.locator("#" + ids[i])).not.toHaveAttribute("inert");
+    expect(await page.locator("[data-scene][inert]").count()).toBe(5);
+    if (i >= 3) await expect(page.locator(".lens-column")).toHaveCSS("opacity", "0");
+    await page.screenshot({ path: `test-results/scene-${i}-desktop.png` });
+    if (i < 5)
+      await page
+        .getByRole("button", { name: "Next scene", exact: true })
+        .click();
+  }
+  await expect(
+    page.getByRole("button", { name: "Next scene", exact: true }),
+  ).toBeDisabled();
   await page.getByRole("link", { name: "Go to collection" }).click();
-  await expect
-    .poll(() =>
-      page
-        .locator("#collection")
-        .evaluate((el) => Math.abs(el.getBoundingClientRect().top - 96)),
-    )
-    .toBeLessThan(5);
   const coffee = page.getByRole("tab", { name: "01 Coffee" });
   await coffee.focus();
   await page.keyboard.press("ArrowRight");
@@ -80,141 +97,143 @@ test("chapter links bypass pinning and collection keeps keyboard navigation", as
   await expect(page).toHaveURL(/products\/gent-honey/);
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await page.goBack();
-  await expect(page.locator(".pin-spacer")).toHaveCount(3);
+  await ready(page);
 });
 
-test("motion toggle removes every pin and synchronizes both controls", async ({
+for (const [index, id] of ids.entries()) {
+  test(`direct link to ${id} lands on its visible scene`, async ({ page }) => {
+    await page.goto("/#" + id);
+    await ready(page);
+    await expect(page.locator("[data-cinema]")).toHaveAttribute(
+      "data-active-scene",
+      String(index),
+    );
+    await expect(page.locator("#" + id)).toHaveCSS("opacity", "1");
+    expect(
+      Math.abs((await page.locator("#" + id).boundingBox())!.y),
+    ).toBeLessThan(2);
+  });
+}
+
+test("motion preference restores a readable document and persists", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page.locator(".pin-spacer")).toHaveCount(3);
-  await page.locator(".cinema-tools button").click();
+  await ready(page);
+  await page.locator(".cinema-tools .motion-control").click();
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
-  await expect(page.locator("#philosophy")).toBeVisible();
-  await expect(page.locator("footer button")).toHaveAttribute(
+  await expect(page.locator("[data-scene][inert]")).toHaveCount(0);
+  for (const id of ids) await expect(page.locator("#" + id)).toBeVisible();
+  await expect(page.locator("footer .motion-control")).toHaveAttribute(
     "aria-pressed",
     "true",
   );
   await page.reload();
-  await expect(page.locator(".cinema-tools button")).toHaveAttribute(
+  await expect(page.locator(".cinema-tools .motion-control")).toHaveAttribute(
     "aria-pressed",
     "true",
   );
-  await expect(page.locator(".pin-spacer")).toHaveCount(0);
-  await page.locator(".cinema-tools button").click();
-  await expect(page.locator(".pin-spacer")).toHaveCount(3);
-});
-
-test("system reduced motion works initially and when changed live", async ({
-  page,
-}) => {
+  await page.locator(".cinema-tools .motion-control").click();
+  await ready(page);
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
-  await expect(page.locator(".cinema-tools button")).toBeDisabled();
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
-  await expect(page.locator("#philosophy")).toBeVisible();
+  await expect(page.locator(".cinema-tools .motion-control")).toBeDisabled();
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await expect(page.locator(".pin-spacer")).toHaveCount(3);
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.locator(".pin-spacer")).toHaveCount(0);
+  await ready(page);
 });
 
-test("mobile and short viewports use one brief pin and retain all content", async ({
+test("mobile keeps the connected stage and pans tall scenes to their controls", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await expect(page.locator("[data-cinema]")).toHaveAttribute(
-    "data-cinema-ready",
-    "small",
-  );
-  await expect(page.locator(".pin-spacer")).toHaveCount(1);
-  await page.screenshot({ path: "test-results/mobile-hero.png" });
-  await page.getByRole("button", { name: "Menu" }).click();
-  await page.getByRole("link", { name: "Our standard", exact: true }).click();
-  await expect(page.getByRole("button", { name: "Menu" })).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
+  await ready(page);
+  for (let i = 0; i < ids.length; i++) {
+    await expect(page.locator("[data-cinema]")).toHaveAttribute(
+      "data-active-scene",
+      String(i),
+    );
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.screenshot({ path: `test-results/scene-${i}-mobile.png` });
+    if (i < 5)
+      await page
+        .getByRole("button", { name: "Next scene", exact: true })
+        .click();
+  }
   await page.getByRole("link", { name: "Go to collection" }).click();
   await page.getByRole("tab", { name: "03 Seasonings" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Gent Seasonings" }),
-  ).toBeVisible();
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await expect(page.locator(".pin-spacer")).toHaveCount(3);
+  const productLink = page.getByRole("link", {
+    name: "Explore seasonings",
+    exact: true,
+  });
+  await productLink.focus();
+  await expect(productLink).toBeInViewport();
+  await productLink.click();
+  await expect(page).toHaveURL(/products\/gent-seasonings/);
+  await page.goBack();
+  await ready(page);
   await page.setViewportSize({ width: 844, height: 390 });
-  await expect(page.locator(".pin-spacer")).toHaveCount(1);
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
+  await expect(page.locator(".pin-spacer")).toHaveCount(0);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await ready(page);
 });
 
-test("deep links land on the standard after layout initializes", async ({
+test("no JavaScript and system reduced-motion expose every scene in order", async ({
+  browser,
   page,
 }) => {
-  await page.goto("/#philosophy");
-  await expect(page.locator("[data-cinema]")).toHaveAttribute(
-    "data-cinema-ready",
-    "desktop",
-  );
-  await expect
-    .poll(() =>
-      page
-        .locator("#philosophy")
-        .evaluate((el) => +getComputedStyle(el).opacity),
-    )
-    .toBeGreaterThan(0.95);
-});
-
-test("without JavaScript all story content and links remain in normal flow", async ({
-  browser,
-}) => {
-  const context = await browser.newContext({
-    javaScriptEnabled: false,
-    viewport: { width: 390, height: 844 },
-  });
-  const page = await context.newPage();
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await expect(page.locator("#philosophy")).toBeVisible();
+  await expect(page.locator(".cinema-tools .motion-control")).toBeDisabled();
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
-  await expect(
-    page.getByRole("heading", { name: "First, coffee. Then, more." }),
-  ).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const staticPage = await context.newPage();
+  await staticPage.goto("/");
+  for (const id of ids)
+    await expect(staticPage.locator("#" + id)).toBeVisible();
+  await expect(staticPage.locator(".pin-spacer")).toHaveCount(0);
   await context.close();
 });
 
-for (const [hash, selector] of [
-  ["ecosystem", ".network-node"],
-  ["membership", "#membership .member-card"],
-] as const) {
-  test(`direct ${hash} links land in the settled act`, async ({ page }) => {
-    await page.goto("/#" + hash);
-    await expect(page.locator(".pin-spacer")).toHaveCount(3);
-    if (hash === "ecosystem") {
-      await expect
-        .poll(() =>
-          page
-            .locator(selector)
-            .first()
-            .evaluate((el) => +getComputedStyle(el).opacity),
-        )
-        .toBeGreaterThan(0.95);
-    }
+for (const width of [1440, 390]) {
+  test(`Acadiana opening resolves its origin, routes and goods at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
+    await page.goto("/");
+    await ready(page);
+    await page.getByRole("link", { name: "Follow our roots" }).click();
+    await expect(page.locator("#origins")).toHaveCSS("opacity", "1");
+    await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
     expect(
       await page
-        .locator("#" + hash)
-        .evaluate((el) => Math.abs(el.getBoundingClientRect().top)),
-    ).toBeLessThan(5);
-    await page.screenshot({ path: `test-results/desktop-${hash}.png` });
+        .locator(".origin-routes path")
+        .last()
+        .evaluate((el) => parseFloat(getComputedStyle(el).strokeDashoffset)),
+    ).toBeLessThan(1);
+    await page.screenshot({ path: `test-results/origin-${width}.png` });
+  });
+}
+
+for (const width of [320, 390]) {
+  test(`compact ${width}px phone keeps the opening goods and controls readable`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 667 });
+    await page.goto("/#origins");
+    await ready(page);
+    await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
+    const products = await page.locator(".origin-products").boundingBox();
+    expect(products!.y + products!.height).toBeLessThan(610);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await page.screenshot({ path: `test-results/compact-${width}.png` });
   });
 }
