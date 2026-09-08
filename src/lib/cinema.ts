@@ -1,78 +1,53 @@
+import { exchangeSignal, EXCHANGE_DURATION } from "./exchange-film";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+// Scroll is an absolute film position: never stretch scrub recovery after a slow GPU frame.
+gsap.ticker.lagSmoothing(0);
 
 const titles = [
-  "ROOTED HERE",
+  "THE MACHINE",
   "THE GENT STANDARD",
   "THE COLLECTION",
-  "DISTRIBUTION",
-  "COMMUNITY",
+  "THE NETWORK",
+  "THE EXCHANGE",
   "COME IN",
 ];
 
-/** Eight authored beats, followed by a terminal hold. One reversible playhead
- * owns the entire opening; future category objects are conceptual silhouettes. */
-const OPENING_DURATION = 8.45;
-function wakeNetwork(timeline: gsap.core.Timeline, hero: Element, mobile = false) {
-  const find = (selector: string) => hero.querySelectorAll(selector);
-  timeline.addLabel("opening-ignition", 0);
-  timeline.to(find(".engine-tilt"), { rotationX: mobile ? 6 : 10, rotationY: -6,
-    rotationZ: -2, duration: 1.6, ease: "sine.inOut" }, 0);
-  timeline.to(find(".exchange-sculpture"), { scale: 1.06, duration: 1.2, ease: "sine.inOut" }, 0);
-  timeline.fromTo(find(".engine-origin"), { opacity: .4 }, { opacity: 1, duration: .6 }, .25);
-  timeline.fromTo(find(".engine-origin-path"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: .9, ease: "power2.inOut" }, .3);
-  timeline.fromTo(find(".exchange-core-light"), { opacity: .12 }, { opacity: 1, scale: 1.4, svgOrigin: "300 300", duration: .65 }, .85);
-  timeline.to(find(".exchange-core-light"), { opacity: .5, duration: .8 }, 1.5);
-  timeline.fromTo(find(".exchange-monogram"), { opacity: .65 }, { opacity: 1, duration: .6 }, .85);
-  timeline.to(find(".hero-copy, .engine-opening-label"), { autoAlpha: 0, y: -14, duration: .6 }, 1.1);
-  timeline.addLabel("opening-unlock", 1.7);
-  timeline.to(find(".exchange-ring-outer"), { rotation: 52, svgOrigin: "300 300", duration: 4.7, ease: "sine.inOut" }, 1.3);
-  timeline.to(find(".exchange-ring-inner"), { rotation: -68, svgOrigin: "300 300", duration: 4.7, ease: "sine.inOut" }, 1.3);
-  timeline.to(find(".exchange-panel-signal"), { stroke: "#ffe5aa", strokeWidth: 3, stagger: .12, duration: .4 }, 1.6);
-  // Local Y is radial because every housing has its own rotated parent.
-  timeline.to(find(".exchange-panel"), { y: -22, stagger: .12, duration: .6, ease: "power3.inOut" }, 1.9);
-  timeline.to(find(".exchange-blade, .exchange-blade-edge"), { y: -42, rotation: -26,
-    svgOrigin: "300 300", duration: 1.35, ease: "power3.inOut" }, 2.35);
-  timeline.to(find(".exchange-panel"), { y: mobile ? -115 : -140, opacity: .24, stagger: .09, duration: 1.15, ease: "power3.inOut" }, 2.9);
-  timeline.to(find(".exchange-sculpture"), { scale: mobile ? .88 : .92, duration: 1.35, ease: "sine.inOut" }, 2.7);
-  timeline.to(find(".engine-product"), { opacity: 0, duration: .4 }, 3);
-  timeline.to(find(".engine-origin"), { y: 805, duration: 1.3, ease: "sine.inOut" }, 2.7);
-  timeline.addLabel("opening-products", 3.4);
-  find(".exchange-released-product").forEach((product, i) => {
-    const angle = i * Math.PI / 3;
-    const radius = mobile ? 267 : 280;
-    timeline.fromTo(product, { opacity: 0, scale: .22, x: Math.sin(angle)*120, y: -Math.cos(angle)*120, rotation: -8 },
-      { opacity: 1, scale: mobile ? 1.3 : 1.35, x: Math.sin(angle)*radius, y: -Math.cos(angle)*radius,
-        rotation: 0, duration: 1.65, ease: "power3.inOut" }, 3.4 + i*.16);
-  });
-  timeline.fromTo(find(".exchange-release-halo"), { opacity: 0, scale: .7, svgOrigin: "300 300" }, { opacity: .45, scale: 1, duration: 1.3 }, 3.6);
-  timeline.fromTo(find(".exchange-product-route"), { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: .4, stagger: .12, duration: 1.2 }, 4);
-  timeline.to(find(".engine-tilt"), { rotationX: 0, rotationY: 0, rotationZ: 0, duration: 1.8, ease: "sine.inOut" }, 3.4);
-  timeline.addLabel("opening-distribution", 5.8);
-  timeline.fromTo(find(".engine-paths path:not(.engine-origin-path)"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: .12, duration: 1 }, 5.65);
-  timeline.fromTo(find(".engine-expansion"), { opacity: .06 }, { opacity: .75, duration: 1 }, 5.8);
-  timeline.fromTo(find(".engine-expansion path"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: .08, duration: .9 }, 5.8);
-  timeline.to(find(".exchange-core-light"), { scale: 1.8, opacity: .8, duration: 1.2 }, 6);
-  const chapterTimes = [[1.55,2.55],[2.8,4.1],[4.3,6.15],[6.4,8.15]];
-  chapterTimes.forEach(([start,end], i) => {
-    const caption = find(`[data-chapter="${i}"]`);
-    timeline.fromTo(caption, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .35 }, start);
-    timeline.to(caption, { autoAlpha: 0, y: -8, duration: .3 }, end);
-  });
-  // A full final composition holds before the surrounding scene can transition.
-  timeline.addLabel("opening-complete", 7.1);
-  timeline.to({}, { duration: OPENING_DURATION - 7.1 }, 7.1);
+/** The existing GSAP film is the sole scroll owner. WebGL consumes its signal. */
+const OPENING_DURATION = EXCHANGE_DURATION;
+function wakeNetwork(timeline: gsap.core.Timeline, hero: Element) {
+  const playhead={progress:0};
+  exchangeSignal.set(0);
+  timeline.to(playhead,{progress:1,duration:OPENING_DURATION,ease:"none",onUpdate:()=>exchangeSignal.set(playhead.progress)},0);
+  timeline.fromTo(hero.querySelector(".hero-copy"),{autoAlpha:0,y:20,x:0,xPercent:0},{autoAlpha:1,y:0,duration:.5},OPENING_DURATION*.835);
+  timeline.to(hero.querySelector(".hero-copy"),{autoAlpha:0,y:-12,duration:.3},OPENING_DURATION*.933);
+  timeline.to(hero.querySelector(".engine-opening-label"),{autoAlpha:0,duration:.5},.65);
+  timeline.to(hero.querySelector(".hero-bottom"),{autoAlpha:0,duration:.5},.8);
 }
 
-/** Decorative data activates with scene progress; no timers or idle render loop. */
+/** Scene-specific intelligence has one reversible scroll owner, no fabricated live data. */
 function activateFacility(timeline: gsap.core.Timeline, scene: Element, at: number, duration = 1) {
   const find = (selector: string) => scene.querySelectorAll(selector);
-  timeline.fromTo(find(".facility-interface"), { opacity: .35, y: 14 }, { opacity: 1, y: -8, duration }, at);
-  timeline.fromTo(find(".facility-data i"), { scaleY: .15 }, { scaleY: 1, stagger: duration * .07, duration: duration * .45 }, at);
-  timeline.fromTo(find(".facility-route i"), { opacity: .2 }, { opacity: 1, stagger: duration * .15, duration: duration * .3 }, at);
-  timeline.fromTo(find(".facility-sweep"), { xPercent: -65 }, { xPercent: 65, duration, ease: "none" }, at);
+  const animate = (selector: string, from: gsap.TweenVars, to: gsap.TweenVars, offset = 0) => {
+    const nodes = find(selector);
+    if (nodes.length) timeline.fromTo(nodes, from, { ...to, ease: "sine.inOut" }, at + offset * duration);
+  };
+  animate(".intelligence-heading", { opacity: .18 }, { opacity: .55, duration: duration * .5 });
+  animate(".evaluation-row", { opacity: .15 }, { opacity: 1, stagger: duration * .09, duration: duration * .25 }, .08);
+  animate(".evaluation-row i", { scaleX: 0 }, { scaleX: 1, stagger: duration * .09, duration: duration * .25 }, .08);
+  animate(".evaluation-pass, .evaluation-hold", { opacity: .12 }, { opacity: 1, stagger: duration * .12, duration: duration * .25 }, .65);
+  animate(".object-tracker:not(.exchange-identity)", { opacity: .12, y: 5 }, { opacity: .6, y: 0, stagger: duration * .2, duration: duration * .4 }, .3);
+  animate(".vault-bay", { opacity: .06 }, { opacity: .58, stagger: duration * .065, duration: duration * .25 }, .05);
+  animate(".vault-bay i", { scaleY: .1 }, { scaleY: 1, stagger: duration * .065, duration: duration * .35 }, .05);
+  animate(".portfolio-record", { opacity: .16 }, { opacity: .6, duration: duration * .55 }, .3);
+  animate(".cargo-scan", { xPercent: -50, opacity: 0 }, { xPercent: 50, opacity: .35, duration: duration * .9 }, .08);
+  animate(".route-origin", { opacity: .25 }, { opacity: 1, duration: duration * .2 });
+  animate(".route-segment", { scaleX: 0 }, { scaleX: 1, stagger: duration * .14, duration: duration * .22 }, .12);
+  animate(".route-destination b, .channel-destination", { opacity: .12 }, { opacity: 1, stagger: duration * .07, duration: duration * .25 }, .35);
+  animate(".exchange-identity", { opacity: .08, y: 4 }, { opacity: .62, y: 0, stagger: duration * .25, duration: duration * .45 }, .2);
+  animate(".exchange-record", { opacity: .15 }, { opacity: .6, duration: duration * .6 }, .1);
 }
 
 /** One stage, one playhead. Scene entrances and exits share a transition interval. */
@@ -107,7 +82,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
       {
         desktop: "(min-width: 1000px) and (min-height: 700px)",
         mobile: "(max-width: 999px), (max-height: 699px)",
-        short: "(max-height: 599px)",
+        short: "(max-height: 599px) and (orientation: landscape)",
       },
       (context) => {
 
@@ -129,25 +104,24 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           const pinOpening = !context.conditions?.short;
           const descent = gsap.timeline({ scrollTrigger: {
             id: "gent-opening", trigger: hero, start: "top top",
-            end: () => pinOpening ? `+=${hero.clientHeight * 6.8}` : "bottom 25%",
+            end: () => pinOpening ? `+=${hero.clientHeight * 9}` : "bottom 25%",
             pin: pinOpening, scrub: .65, anticipatePin: 1, invalidateOnRefresh: true,
           } });
-          wakeNetwork(descent, hero, true);
+          wakeNetwork(descent, hero);
+          if (pinOpening) {
+            // Scene 02 starts underneath the last pinned viewport. The portal's
+            // arrival frame hands off at the same document position, without a repeated room.
+            descent.set(hero, { autoAlpha: 0 }, OPENING_DURATION);
+          }
           scenes.slice(1).forEach((scene) => {
             const camera = scene.querySelector(".environment-camera");
             if (!camera) return;
             const sceneFilm = gsap.timeline({ scrollTrigger: {
-              trigger: scene, start: "top 90%", end: "bottom top", scrub: true,
+              trigger: scene, start: "top 90%", end: "bottom top", scrub: .85,
             } });
             activateFacility(sceneFilm, scene, 0);
-            sceneFilm.fromTo(camera, { scale: 1.07, yPercent: 2 }, { scale: 1, yPercent: -2, ease: "none", duration: 1 }, 0);
+            sceneFilm.fromTo(camera, { scale: 1.025, yPercent: 1 }, { scale: 1, yPercent: -1, ease: "none", duration: 1 }, 0);
             sceneFilm.fromTo(scene.querySelector(".environment-light"), { opacity: .32 }, { opacity: .03, duration: .4 }, 0);
-            const caseObject = scene.querySelector(".network-case");
-            if (caseObject) sceneFilm.fromTo(caseObject, { x: -45, y: 5 }, { x: 20, y: -10, duration: 1 }, 0);
-            const coffee = scene.querySelector(".physical-coffee");
-            if (coffee) sceneFilm.fromTo(coffee, { rotationY: -7 }, { rotationY: 3, duration: 1 }, 0);
-            const card = scene.querySelector(".physical-card");
-            if (card) sceneFilm.fromTo(card, { rotation: -1 }, { rotation: 1, duration: 1 }, 0);
             scene.querySelectorAll(".station-placard, .distribution-stops li, .location-plates > span").forEach((plate, i) => {
               sceneFilm.fromTo(plate, { borderTopColor: "#b3955d40" }, { borderTopColor: "#e8c98e", duration: .2 }, Math.min(.8, i * .15));
             });
@@ -280,55 +254,16 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
         // headline swaps over the sculpture during activation.
 
         cursor = OPENING_DURATION;
-        const origins = scenes[0].querySelector<HTMLElement>(".origin-story");
-        let originStop = 0;
-        if (origins) {
-          gsap.set(origins, { autoAlpha: 0 });
-          film
-            .to(
-              select(0, ".hero-copy, .hero-bottom, .landscape-caption"),
-              { autoAlpha: 0, y: -45, duration: 0.65 },
-              cursor,
-            )
-            .to(
-              select(0, ".network-camera"),
-              { scale: 1.75, yPercent: -6, xPercent: -8, duration: 1.5 },
-              cursor,
-            )
-            .fromTo(
-              select(0, ".network-threshold"),
-              { opacity: 0 },
-              { opacity: .9, duration: 1.05 }, cursor + .25,
-            )
-            .to(select(0, ".engine-surface, .engine-controls"), { autoAlpha: 0, duration: .9 }, cursor + .55)
-            .fromTo(origins,
-              { autoAlpha: 0, y: 45 },
-              { autoAlpha: 1, y: 0, duration: .95 }, cursor + .6)
-            .to(select(0, ".network-threshold"), { opacity: 0, duration: .25 }, cursor + 1.5)
-            .from(
-              select(0, ".acadiana-network"),
-              { scale: 0.92, rotation: 0, duration: 1.3 },
-              cursor + 0.65,
-            );
-          film
-            .from(select(0, ".connection-outcomes article"), { opacity: 0, y: 20, stagger: .15, duration: .5 }, cursor + 1.1)
-            .from(
-              select(0, ".origin-products"),
-              { opacity: 0, y: 35, duration: 0.65 },
-              cursor + 1.9,
-            )
-            .to({}, { duration: 0.8 }, cursor + 2.55);
-          originStop = cursor + 2.6;
-          cursor += 3.35;
-          film.to(origins, { opacity: 0, scale: 1.15, duration: 0.8 }, cursor);
-        }
+        const originStop = OPENING_DURATION * .10;
+        // The portal arrives directly inside Scene 02. Origin copy remains in HTML fallback.
+        cursor = OPENING_DURATION - .52;
         // The origin's aperture opens into a private development lab. One continuous playhead
         // owns architecture, light and cargo; content never depends on a renderer.
-        let arrived = enter(1, cursor + .25, { opacity: 0, scale: 1.13 }, 1.2);
-        film.to(scenes[1], { opacity: 1, duration: .8 }, cursor + .25);
-        film.fromTo(select(1, ".environment-camera"), { scale: 1.12, xPercent: 1, yPercent: -2 }, { scale: 1.17, xPercent: -1, yPercent: -2, duration: 1.4 }, cursor + .25);
-        film.to(select(1, ".environment-camera"), { scale: 1.28, xPercent: -5, yPercent: 0, duration: .9 }, arrived + .8);
-        film.to(select(1, ".environment-camera"), { scale: 1.43, xPercent: -7, yPercent: 8, duration: 1 }, arrived + 1.7);
+        let arrived = enter(1, cursor, { clipPath: "inset(0% 49.9% 0% 49.9%)", scale: 1.06 }, .8);
+        
+        film.fromTo(select(1, ".environment-camera"), { scale: 1.12, xPercent: 1, yPercent: -2 }, { scale: 1.06, xPercent: -1, yPercent: -2, duration: 1.4 }, cursor + .25);
+        film.to(select(1, ".environment-camera"), { scale: 1.075, xPercent: -1, yPercent: 0, duration: .9 }, arrived + .8);
+        film.to(select(1, ".environment-camera"), { scale: 1.09, xPercent: -2, yPercent: 1, duration: 1 }, arrived + 1.7);
         film.fromTo(select(1, ".environment-light"), { opacity: .6 }, { opacity: .04, duration: 1.2 }, arrived - .3);
         hold(1, arrived + .2);
         const stations = select(1, ".station-placard");
@@ -337,28 +272,22 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           film.fromTo(select(1, ".environment-foreground"), { xPercent: 0 }, { xPercent: -25, duration: 3 }, arrived);
         });
         cursor = arrived + 3.2;
-        // Follow the finished pouch through the dark threshold into its reveal chamber.
-        film.to(select(1, ".environment-camera"), { scale: 1.3, xPercent: -7, duration: 1.4 }, cursor);
+        // The approved sample opens into the multi-category product vault.
+        film.to(select(1, ".environment-camera"), { scale: 1.1, xPercent: -2, duration: 1.4 }, cursor);
         film.to(select(1, ".environment-light"), { opacity: .88, duration: .8 }, cursor);
         arrived = enter(2, cursor + .55, { opacity: 0, scale: 1.08 }, 1.25);
         film.to(scenes[2], { opacity: 1, duration: .8 }, cursor + .55);
         film.fromTo(select(2, ".environment-light"), { opacity: .92 }, { opacity: .02, duration: 1.15 }, arrived - .5);
         film.fromTo(select(2, ".environment-camera"), { scale: 1.09, xPercent: 1 }, { scale: 1, xPercent: -1, duration: 3 }, arrived - .4);
-        film.fromTo(select(2, ".physical-coffee"), { rotationY: -8, xPercent: -2 }, { rotationY: 4, xPercent: 1, duration: 2.8 }, arrived - .4);
-        film.fromTo(select(2, ".coffee-glint"), { opacity: 0 }, { opacity: .8, duration: 2 }, arrived);
         cursor = hold(2, arrived + .75) + .6;
         // Widen the archive into the operating house. An architectural column
         // occludes the join while the same physical case enters the foreground.
-        const cargo = stage.querySelector<HTMLElement>(".journey-cargo");
-        film.to(select(2, ".environment-camera"), { scale: .93, duration: 1.4 }, cursor);
+        film.to(select(2, ".environment-camera"), { scale: 1.02, duration: 1.4 }, cursor);
         arrived = enter(3, cursor + .35, { opacity: 0, scale: 1.13 }, 1.2);
         film.to(scenes[3], { opacity: 1, duration: 1 }, cursor + .35);
         film.fromTo(stage.querySelector(".lens-column"), { xPercent: 120, opacity: 1 }, { xPercent: -120, duration: 1.65, immediateRender: false }, cursor);
         film.set(stage.querySelector(".lens-column"), { opacity: 0 }, arrived);
         film.fromTo(select(3, ".environment-camera"), { scale: 1.14, xPercent: -3 }, { scale: 1, xPercent: 2, duration: 4.2 }, cursor + .35);
-        film.fromTo(cargo, { autoAlpha: 0, x: -80, y: 25, scale: .8 }, { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: .9 }, arrived - .3);
-        film.fromTo(cargo?.querySelector(".case-glint") ?? [], { opacity: .1 }, { opacity: 1, duration: .6 }, arrived);
-        film.to(cargo, { x: 95, y: -30, scale: .72, duration: 2.5 }, arrived + .7);
         hold(3, arrived + .25);
         select(3, ".distribution-stops li").forEach((stop,i) => {
           film.fromTo(stop, { borderTopColor: "#b2945b40" }, { borderTopColor: "#e8c98e", duration: .55 }, arrived + i * .7);
@@ -367,17 +296,13 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           film.fromTo(plate, { borderColor: "#74644850" }, { borderColor: "#c2a166", duration: .5 }, arrived + i * .55);
         });
         cursor = arrived + 3.4;
-        // The case stays in the same DOM layer as the large hall falls away.
+        // Follow the product network into its human destination: the Exchange.
         arrived = enter(4, cursor + .25, { opacity: 0, scale: 1.025 }, 1.35);
         film.to(scenes[4], { opacity: 1, duration: 1.1 }, cursor + .25);
-        film.to(cargo, { x: 65, y: -45, scale: .8, duration: 1.35 }, cursor + .25);
         film.fromTo(select(4, ".environment-camera"), { scale: 1.025, rotation: -.25 }, { scale: 1, rotation: 0, duration: 2.8 }, cursor + .25);
         film.fromTo(select(4, ".environment-light"), { opacity: .35 }, { opacity: .02, duration: 1.8 }, cursor + .25);
-        film.fromTo(select(4, ".physical-card"), { rotation: -1.5, rotationY: -3 }, { rotation: 0, rotationY: 0, duration: 2.5 }, cursor + .25);
-        film.fromTo(select(4, ".card-glint"), { opacity: 0 }, { opacity: .7, duration: 2 }, cursor + .4);
         cursor = hold(4, arrived + .65) + .6;
         // A quiet editorial coda in the same room, never another spectacle.
-        film.to(cargo, { autoAlpha: 0, duration: .9 }, cursor);
         arrived = enter(5, cursor, { opacity: 0 }, .9);
         film.to(scenes[5], { opacity: 1, duration: .9 }, cursor);
         hold(5, arrived + .3);
@@ -569,6 +494,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
   return () => {
     destroyed = true;
     media.revert();
+    exchangeSignal.set(0);
     originalFocus.forEach((value, node) => {
       if (value === null) node.removeAttribute("tabindex");
       else node.setAttribute("tabindex", value);

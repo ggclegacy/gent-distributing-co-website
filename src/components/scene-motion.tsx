@@ -19,6 +19,8 @@ export function SceneMotion() {
       revert?.();
       revert = undefined;
       if (
+        location.hash === "#origins" ||
+        root.dataset.exchangeRenderer !== "webgl" ||
         reduced.matches ||
         document.documentElement.dataset.motion === "paused"
       )
@@ -37,12 +39,15 @@ export function SceneMotion() {
       attributes: true,
       attributeFilter: ["data-motion"],
     });
+    const rendererObserver = new MutationObserver(sync);
+    rendererObserver.observe(root, {attributes:true, attributeFilter:["data-exchange-renderer"]});
     reduced.addEventListener("change", sync);
     void sync();
     return () => {
       disposed = true;
       generation++;
       observer.disconnect();
+      rendererObserver.disconnect();
       reduced.removeEventListener("change", sync);
       revert?.();
     };

@@ -59,7 +59,7 @@ export function ProductExplorer() {
         >
           {selected === i ? (
             <div className={`explorer-content explore-${product.visual.kind}`}>
-              <div className="archive-object-caption">
+              <div className="archive-object-caption" hidden={selected !== 0}>
                 <span>RELEASE / 01</span><span>LEGACY RESERVE</span><small>CONCEPT PACKAGING · IN DEVELOPMENT</small>
               </div>
               <div className="explorer-copy" key={product.handle}>

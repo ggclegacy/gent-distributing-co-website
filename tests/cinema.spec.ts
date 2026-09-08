@@ -11,7 +11,7 @@ async function ready(page: import("@playwright/test").Page) {
   const viewport = page.viewportSize();
   if (viewport && (viewport.width < 1000 || viewport.height < 700)) {
     await expect(page.locator(".cinema-tools .motion-control")).toBeVisible();
-    await expect(page.locator(".pin-spacer")).toHaveCount(viewport.height >= 600 ? 1 : 0);
+    await expect(page.locator(".pin-spacer")).toHaveCount(viewport.height >= 600 || viewport.height > viewport.width ? 1 : 0);
     return;
   }
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
@@ -66,7 +66,7 @@ test("all six scenes share one stage, with reversible native-scroll transitions 
     "data-active-scene",
     "0",
   );
-  await expect(page.locator(".hero-copy")).toHaveCSS("opacity", "1");
+  await expect(page.locator(".exchange-film")).toHaveAttribute("data-beat", "artifact");
   expect(errors).toEqual([]);
 });
 
@@ -153,9 +153,9 @@ test("mobile pins the opening, preserves product controls and cleans up responsi
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await ready(page);
-  const initial = await page.locator(".engine-tilt").evaluate(el => getComputedStyle(el).transform);
+  const initial = await page.locator(".exchange-film").getAttribute("data-progress");
   await page.evaluate(() => scrollTo({top: 400, behavior: "instant"}));
-  await expect.poll(() => page.locator(".engine-tilt").evaluate(el => getComputedStyle(el).transform)).not.toBe(initial);
+  await expect.poll(() => page.locator(".exchange-film").getAttribute("data-progress")).not.toBe(initial);
   for (const id of ids) {
     await expect(page.locator("#" + id)).toBeVisible();
     await expect(page.locator("#" + id)).not.toHaveAttribute("inert");
@@ -191,30 +191,13 @@ test("no JavaScript and system reduced-motion expose every scene in order", asyn
   await context.close();
 });
 
-for (const width of [1440, 390]) {
-  test(`Engine opening resolves its origin and story at ${width}px`, async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
-    await page.goto("/");
-    await ready(page);
-    await page.getByRole("link", { name: "Follow our roots" }).click();
-    await expect(page.locator("#origins")).toHaveCSS("opacity", "1");
-    if (width === 1440) await expect(page.locator(".engine-surface")).toHaveCSS("visibility", "hidden");
-    await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
-    await expect(page.locator(".connection-outcomes article")).toHaveCount(3);
-    await expect(page.locator(".connection-outcomes article").last()).toHaveCSS("opacity", "1");
-    await page.screenshot({ path: `test-results/origin-${width}.png` });
-  });
-}
-
 for (const width of [320, 390]) {
   test(`compact ${width}px phone keeps the opening goods and controls readable`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 667 });
     await page.goto("/#origins");
-    await ready(page);
+    await expect(page.locator(".pin-spacer")).toHaveCount(0);
     await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
     await page.locator(".origin-products").scrollIntoViewIfNeeded();
     await expect(page.locator(".origin-products")).toBeInViewport();

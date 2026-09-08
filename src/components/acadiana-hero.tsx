@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { DistributionEngine } from "./distribution-engine";
+import { ExchangeHero } from "./exchange/exchange-hero";
 
 /** The entire narrative is server-rendered; cinema progressively layers these scenes. */
 export function AcadianaHero() {
   return (
-    <div className="homecoming-stage gent-engine-hero">
+    <div className="homecoming-stage gent-engine-hero exchange-production">
       <section className="hero scene" aria-labelledby="hero-title">
         <div className="hero-visual" role="group" aria-label="The Gent Exchange: sources converge through a selection aperture into purposeful distribution, beginning in Lafayette">
-          <DistributionEngine />
+          <ExchangeHero />
         </div>
         <div className="hero-shade" />
         <div className="network-threshold" aria-hidden="true" />
@@ -18,23 +18,12 @@ export function AcadianaHero() {
           <p className="hero-description">Born in Lafayette. We discover, develop, curate and distribute exceptional goods—from Louisiana and beyond.</p>
           <div className="hero-actions">
             <Link className="button" href="#collection">Explore the collection <span aria-hidden="true">↗</span></Link>
-            <Link className="quiet-link" href="#origins">Follow our roots <span aria-hidden="true">↓</span></Link>
+            <Link className="quiet-link" href="/approach">Follow our roots <span aria-hidden="true">↓</span></Link>
           </div>
           <p className="hero-categories">A MODERN DISTRIBUTION HOUSE. <b>/</b> ONE STANDARD.</p>
         </div>
-        <div className="exchange-chapters" aria-hidden="true">
-          <p className="exchange-chapter" data-chapter="0"><span>01 / THE IGNITION</span>Everything begins in Lafayette.</p>
-          <p className="exchange-chapter" data-chapter="1"><span>02 / THE OPENING</span>A place in our house is earned.</p>
-          <p className="exchange-chapter" data-chapter="2"><span>03 / THE CATEGORY VISION</span>Different categories. One standard.<small>Provisions first. New possibilities ahead.</small></p>
-          <p className="exchange-chapter" data-chapter="3"><span>04 / THE REACH</span>Rooted here. Built to move further.</p>
-        </div>
-        <div className="network-story" aria-hidden="true">
-          <div className="network-beat network-beat-origin"><p className="eyebrow">02 / SELECTED WITH PURPOSE</p><h2>Different categories.<br /><em>One standard.</em></h2><p>Discover. Develop. Curate.<br />A place in our house is earned.</p></div>
-          <div className="network-beat network-beat-reach"><p className="eyebrow">03 / BUILT TO MOVE FURTHER</p><h2>One origin.<br /><em>Wider horizons.</em></h2><p>Exceptional goods. Wherever we find them.<br />New categories. The same standard.</p></div>
-        </div>
-        <div className="landscape-caption" aria-hidden="true"><span>SOURCING → SELECTION → GENT</span><span className="landscape-caption-detail">DISTRIBUTION → PEOPLE & PLACES.</span></div>
         <div className="hero-bottom">
-          <Link href="#origins"><span className="scroll-line" /> SCROLL TO FOLLOW THE STORY</Link>
+          <Link href="#philosophy"><span className="scroll-line" /> SCROLL TO FOLLOW THE STORY</Link>
           <span>OUR ROOTS RUN DEEP. OUR REACH GROWS.</span>
           <span>EST. IN ACADIANA</span>
         </div>

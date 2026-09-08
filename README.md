@@ -13,7 +13,7 @@ npm run build
 
 ## Current release
 
-A prelaunch immersive experience with a live dimensional Louisiana sculpture hero, five editorial chapters, a keyboard-accessible product explorer, persistent responsive navigation, reduced-motion controls, product detail routes, and a dedicated umbrella membership page. Packaging is an original CSS concept, not final product photography. Product descriptions deliberately avoid unverified origin, certification, roast, pricing, or delivery claims.
+A prelaunch immersive experience with a scroll-directed Three.js Exchange hero, five editorial chapters, a keyboard-accessible product explorer, persistent responsive navigation, reduced-motion controls, product detail routes, and a dedicated umbrella membership page. Hero packaging is procedural 3D concept geometry with an authored GLB replacement interface, not final product photography. Product descriptions deliberately avoid unverified origin, certification, roast, pricing, or delivery claims.
 
 ## Architecture
 
@@ -46,3 +46,7 @@ Obsidian #050806, emerald #0c2a1d, metallic gold #c5a66a, and pale gold text #ec
 The post-origin homepage now travels through the Maker’s Workshop, Gent Vault, Distribution Network and a quiet membership arrival. See [the implementation guide](docs/cinematic-homepage.md) and [verification results](docs/cinematic-verification.md). The approved hero is retained. Product/partner routes and prelaunch commerce safeguards remain intact.
 
 `npm run test:e2e` runs the existing Chromium regressions plus the new material-scene tests in Chromium and WebKit. Install both with `npx playwright install chromium webkit`.
+
+## THE EXCHANGE cinematic opening
+
+The opening now uses React Three Fiber, a single normalized GSAP film signal, three responsive camera tracks, physical exploded components, three product macro shots, reassembly and a portal into the existing next scene. See [production architecture and asset contract](docs/exchange/production.md) and [verification](docs/exchange/verification.md). Run the focused production checks with `playwright.exchange.config.ts` after starting the production server at its configured base URL.
