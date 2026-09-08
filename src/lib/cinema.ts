@@ -12,57 +12,58 @@ const titles = [
   "COME IN",
 ];
 
-/** A finite scroll sequence; no idle particle loop or per-frame React updates. */
-function wakeNetwork(timeline: gsap.core.Timeline, hero: Element, at = 0) {
+/** Eight authored beats, followed by a terminal hold. One reversible playhead
+ * owns the entire opening; future category objects are conceptual silhouettes. */
+const OPENING_DURATION = 8.45;
+function wakeNetwork(timeline: gsap.core.Timeline, hero: Element, mobile = false) {
   const find = (selector: string) => hero.querySelectorAll(selector);
-  timeline.fromTo(find(".engine-paths path"), { strokeDashoffset: 1 },
-    { strokeDashoffset: 0, stagger: .08, duration: .85, ease: "none" }, at);
-  timeline.fromTo(find(".engine-product"), { opacity: .12 },
-    { opacity: .9, stagger: .045, duration: .6 }, at + .12);
-  timeline.fromTo(find(".exchange-panel"), { y: 0 },
-    { y: -42, stagger: .025, duration: .9, ease: "power1.out" }, at);
-  timeline.fromTo(find(".exchange-blade, .exchange-blade-edge"), { y: 0, rotation: 0 },
-    { y: -44, rotation: -26, duration: 1, transformOrigin: "300px 300px" }, at);
-  timeline.fromTo(find(".exchange-confluence"), { opacity: .25 }, { opacity: 1, duration: .4 }, at);
-  timeline.fromTo(find(".exchange-monogram"), { opacity: .5 }, { opacity: 1, duration: .4 }, at);
-  timeline.to(find(".exchange-panel"), { y: -18, duration: .8 }, at + 2.3);
-  timeline.fromTo(find(".engine-expansion"), { opacity: .06 }, { opacity: .7, duration: 1.2 }, at + 1.5);
-  timeline.fromTo(find(".engine-expansion path"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.2 }, at + 1.5);
-  // Light, architecture and foreground travel independently, tied to the same playhead.
-  timeline.fromTo(find(".exchange-environment"), { opacity: 0 }, { opacity: 1, duration: .22 }, at);
-  timeline.fromTo(find(".exchange-aurora"), { xPercent: 18, scale: .8 },
-    { xPercent: -14, scale: 1.35, rotation: -18, duration: 3.3 }, at);
-  timeline.fromTo(find(".exchange-depth-plane"), { yPercent: 18, rotationX: 68, rotationZ: -12 },
-    { yPercent: -12, rotationX: 48, rotationZ: 9, duration: 3.3 }, at);
-  timeline.fromTo(find(".exchange-horizons"), { scale: .7, rotation: -20, xPercent: 8 },
-    { scale: 1.35, rotation: 28, xPercent: -8, duration: 3.3 }, at);
-  timeline.fromTo(find(".exchange-dust i"), { opacity: .15, y: 40 },
-    { opacity: .7, y: -90, stagger: .015, duration: 2.9 }, at);
-  timeline.fromTo(find(".exchange-light-shaft"), { xPercent: -60, opacity: 0 },
-    { xPercent: 45, opacity: .65, duration: 1.5 }, at);
-  timeline.to(find(".exchange-light-shaft"), { xPercent: 90, opacity: .1, duration: 1.7 }, at + 1.5);
-  timeline.fromTo(find(".exchange-reflection"), { xPercent: -110, opacity: 0 },
-    { xPercent: 110, opacity: .65, duration: 1.5 }, at);
-  timeline.to(find(".exchange-reflection"), { xPercent: -80, opacity: .15, duration: 1.7 }, at + 1.5);
-  timeline.fromTo(find(".engine-waterways"), { y: 0, opacity: .32 },
-    { y: -35, x: -45, opacity: .75, duration: 3.3 }, at);
-  timeline.fromTo(find(".engine-atmosphere"), { opacity: .4, scale: 1 },
-    { opacity: 1, scale: 1.25, duration: .8 }, at);
-  timeline.fromTo(find(".exchange-transit"), { opacity: 0 }, { opacity: .8, duration: .15 }, at);
-  timeline.fromTo(find(".exchange-transit path"), { strokeDashoffset: 1 },
-    { strokeDashoffset: -2, stagger: .12, duration: 3, ease: "none" }, at);
-  timeline.to(find(".exchange-transit"), { opacity: 0, duration: .18 }, at + 3.1);
-}
-
-function orbitExchange(timeline: gsap.core.Timeline, hero: Element, mobile = false) {
-  const tilt = hero.querySelector(".engine-tilt");
-  const sculpture = hero.querySelector(".exchange-sculpture");
-  const amount = mobile ? .65 : 1;
-  timeline.to(tilt, { rotationX: 38, rotationY: -24 * amount, rotationZ: 16, yPercent: -3, duration: .8, ease: "power1.out" }, 0);
-  timeline.to(tilt, { rotationX: 7, rotationY: 22 * amount, rotationZ: 52, yPercent: -6, duration: 1.15 }, .8);
-  timeline.to(tilt, { rotationX: 28, rotationY: -10, rotationZ: 96, yPercent: -2, duration: 1.35 }, 1.95);
-  timeline.to(sculpture, { scale: mobile ? 1.08 : 1.16, transformOrigin: "50% 50%", duration: .85 }, 0);
-  timeline.to(sculpture, { scale: mobile ? .88 : .78, duration: 1.35 }, 1.95);
+  timeline.addLabel("opening-ignition", 0);
+  timeline.to(find(".engine-tilt"), { rotationX: mobile ? 6 : 10, rotationY: -6,
+    rotationZ: -2, duration: 1.6, ease: "sine.inOut" }, 0);
+  timeline.to(find(".exchange-sculpture"), { scale: 1.06, duration: 1.2, ease: "sine.inOut" }, 0);
+  timeline.fromTo(find(".engine-origin"), { opacity: .4 }, { opacity: 1, duration: .6 }, .25);
+  timeline.fromTo(find(".engine-origin-path"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: .9, ease: "power2.inOut" }, .3);
+  timeline.fromTo(find(".exchange-core-light"), { opacity: .12 }, { opacity: 1, scale: 1.4, svgOrigin: "300 300", duration: .65 }, .85);
+  timeline.to(find(".exchange-core-light"), { opacity: .5, duration: .8 }, 1.5);
+  timeline.fromTo(find(".exchange-monogram"), { opacity: .65 }, { opacity: 1, duration: .6 }, .85);
+  timeline.to(find(".hero-copy, .engine-opening-label"), { autoAlpha: 0, y: -14, duration: .6 }, 1.1);
+  timeline.addLabel("opening-unlock", 1.7);
+  timeline.to(find(".exchange-ring-outer"), { rotation: 52, svgOrigin: "300 300", duration: 4.7, ease: "sine.inOut" }, 1.3);
+  timeline.to(find(".exchange-ring-inner"), { rotation: -68, svgOrigin: "300 300", duration: 4.7, ease: "sine.inOut" }, 1.3);
+  timeline.to(find(".exchange-panel-signal"), { stroke: "#ffe5aa", strokeWidth: 3, stagger: .12, duration: .4 }, 1.6);
+  // Local Y is radial because every housing has its own rotated parent.
+  timeline.to(find(".exchange-panel"), { y: -22, stagger: .12, duration: .6, ease: "power3.inOut" }, 1.9);
+  timeline.to(find(".exchange-blade, .exchange-blade-edge"), { y: -42, rotation: -26,
+    svgOrigin: "300 300", duration: 1.35, ease: "power3.inOut" }, 2.35);
+  timeline.to(find(".exchange-panel"), { y: mobile ? -115 : -140, opacity: .24, stagger: .09, duration: 1.15, ease: "power3.inOut" }, 2.9);
+  timeline.to(find(".exchange-sculpture"), { scale: mobile ? .88 : .92, duration: 1.35, ease: "sine.inOut" }, 2.7);
+  timeline.to(find(".engine-product"), { opacity: 0, duration: .4 }, 3);
+  timeline.to(find(".engine-origin"), { y: 805, duration: 1.3, ease: "sine.inOut" }, 2.7);
+  timeline.addLabel("opening-products", 3.4);
+  find(".exchange-released-product").forEach((product, i) => {
+    const angle = i * Math.PI / 3;
+    const radius = mobile ? 267 : 280;
+    timeline.fromTo(product, { opacity: 0, scale: .22, x: Math.sin(angle)*120, y: -Math.cos(angle)*120, rotation: -8 },
+      { opacity: 1, scale: mobile ? 1.3 : 1.35, x: Math.sin(angle)*radius, y: -Math.cos(angle)*radius,
+        rotation: 0, duration: 1.65, ease: "power3.inOut" }, 3.4 + i*.16);
+  });
+  timeline.fromTo(find(".exchange-release-halo"), { opacity: 0, scale: .7, svgOrigin: "300 300" }, { opacity: .45, scale: 1, duration: 1.3 }, 3.6);
+  timeline.fromTo(find(".exchange-product-route"), { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: .4, stagger: .12, duration: 1.2 }, 4);
+  timeline.to(find(".engine-tilt"), { rotationX: 0, rotationY: 0, rotationZ: 0, duration: 1.8, ease: "sine.inOut" }, 3.4);
+  timeline.addLabel("opening-distribution", 5.8);
+  timeline.fromTo(find(".engine-paths path:not(.engine-origin-path)"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: .12, duration: 1 }, 5.65);
+  timeline.fromTo(find(".engine-expansion"), { opacity: .06 }, { opacity: .75, duration: 1 }, 5.8);
+  timeline.fromTo(find(".engine-expansion path"), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: .08, duration: .9 }, 5.8);
+  timeline.to(find(".exchange-core-light"), { scale: 1.8, opacity: .8, duration: 1.2 }, 6);
+  const chapterTimes = [[1.55,2.55],[2.8,4.1],[4.3,6.15],[6.4,8.15]];
+  chapterTimes.forEach(([start,end], i) => {
+    const caption = find(`[data-chapter="${i}"]`);
+    timeline.fromTo(caption, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .35 }, start);
+    timeline.to(caption, { autoAlpha: 0, y: -8, duration: .3 }, end);
+  });
+  // A full final composition holds before the surrounding scene can transition.
+  timeline.addLabel("opening-complete", 7.1);
+  timeline.to({}, { duration: OPENING_DURATION - 7.1 }, 7.1);
 }
 
 /** Decorative data activates with scene progress; no timers or idle render loop. */
@@ -121,16 +122,17 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
             });
           }, { rootMargin: "100% 0px" });
           scenes.forEach(scene => staging.observe(scene));
-          // Phones keep native document flow; one bounded scroll-driven camera,
-          // no pinned scenes, animation loop, canvas, or high-DPI render target.
+          // Only the opening pins on portrait mobile. Short landscape screens use
+          // native flow so header controls cannot consume the available stage.
           const hero = root.querySelector<HTMLElement>(".hero");
-          if (!hero) return;
+          if (!hero) return () => staging.disconnect();
+          const pinOpening = !context.conditions?.short;
           const descent = gsap.timeline({ scrollTrigger: {
-            trigger: hero, start: "top top", end: "bottom 25%", scrub: true,
-          } })
-            .to(hero.querySelector(".network-camera"), { scale: .88, yPercent: -2, duration: 3.2, ease: "none" }, 0);
-          wakeNetwork(descent, hero);
-          orbitExchange(descent, hero, true);
+            id: "gent-opening", trigger: hero, start: "top top",
+            end: () => pinOpening ? `+=${hero.clientHeight * 6.8}` : "bottom 25%",
+            pin: pinOpening, scrub: .65, anticipatePin: 1, invalidateOnRefresh: true,
+          } });
+          wakeNetwork(descent, hero, true);
           scenes.slice(1).forEach((scene) => {
             const camera = scene.querySelector(".environment-camera");
             if (!camera) return;
@@ -273,14 +275,11 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
         };
         let cursor = hold(0, 0);
         wakeNetwork(film, scenes[0]);
-        orbitExchange(film, scenes[0]);
-        film.to(select(0, ".hero-copy"), { x: -12, y: -24, duration: .65 }, 0);
-        film.to(select(0, ".hero-copy"), { autoAlpha: 0, y: -25, duration: .45 }, .65);
-        film.fromTo(select(0, ".network-beat-origin"), { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: .45 }, 1.05);
-        film.to(select(0, ".network-beat-origin"), { autoAlpha: 0, y: -20, duration: .3 }, 1.95);
-        film.fromTo(select(0, ".network-beat-reach"), { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: .45 }, 2.3);
-        film.to(select(0, ".network-beat-reach"), { autoAlpha: 0, y: -20, duration: .35 }, 3.25);
-        cursor = 3.4;
+
+        // The supporting message holds while the mechanism opens; no competing
+        // headline swaps over the sculpture during activation.
+
+        cursor = OPENING_DURATION;
         const origins = scenes[0].querySelector<HTMLElement>(".origin-story");
         let originStop = 0;
         if (origins) {
@@ -301,7 +300,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
               { opacity: 0 },
               { opacity: .9, duration: 1.05 }, cursor + .25,
             )
-            .to(select(0, ".engine-surface, .engine-controls"), { autoAlpha: 0, duration: .5 }, cursor + .55)
+            .to(select(0, ".engine-surface, .engine-controls"), { autoAlpha: 0, duration: .9 }, cursor + .55)
             .fromTo(origins,
               { autoAlpha: 0, y: 45 },
               { autoAlpha: 1, y: 0, duration: .95 }, cursor + .6)
@@ -391,7 +390,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           end: () =>
             `+=${film.duration() * innerHeight * (desktop ? 0.85 : 0.65)}`,
           pin: true,
-          scrub: 0.3,
+          scrub: 1,
           invalidateOnRefresh: true,
           anticipatePin: 1,
         });

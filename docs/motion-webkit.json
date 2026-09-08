@@ -1,0 +1,23 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "active": 0.4753,
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "active": 1,
+    "errors": [],
+    "overflow": false
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "active": 0.9483,
+    "errors": [],
+    "overflow": false
+  }
+]

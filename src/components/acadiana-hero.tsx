@@ -11,15 +11,22 @@ export function AcadianaHero() {
         </div>
         <div className="hero-shade" />
         <div className="network-threshold" aria-hidden="true" />
+        <p className="engine-opening-label" aria-hidden="true">GENT DISTRIBUTION CO. <span>THE EXCHANGE / 01</span></p>
         <div className="hero-copy">
           <p className="eyebrow"><span className="status-dot" /> 01 / ROOTED HERE</p>
-          <h1 id="hero-title">Rooted here.<br /><em>Built to move<br />further.</em></h1>
+          <h1 id="hero-title">Rooted here.<br /><em>Built to move further.</em></h1>
           <p className="hero-description">Born in Lafayette. We discover, develop, curate and distribute exceptional goods—from Louisiana and beyond.</p>
           <div className="hero-actions">
             <Link className="button" href="#collection">Explore the collection <span aria-hidden="true">↗</span></Link>
             <Link className="quiet-link" href="#origins">Follow our roots <span aria-hidden="true">↓</span></Link>
           </div>
           <p className="hero-categories">A MODERN DISTRIBUTION HOUSE. <b>/</b> ONE STANDARD.</p>
+        </div>
+        <div className="exchange-chapters" aria-hidden="true">
+          <p className="exchange-chapter" data-chapter="0"><span>01 / THE IGNITION</span>Everything begins in Lafayette.</p>
+          <p className="exchange-chapter" data-chapter="1"><span>02 / THE OPENING</span>A place in our house is earned.</p>
+          <p className="exchange-chapter" data-chapter="2"><span>03 / THE CATEGORY VISION</span>Different categories. One standard.<small>Provisions first. New possibilities ahead.</small></p>
+          <p className="exchange-chapter" data-chapter="3"><span>04 / THE REACH</span>Rooted here. Built to move further.</p>
         </div>
         <div className="network-story" aria-hidden="true">
           <div className="network-beat network-beat-origin"><p className="eyebrow">02 / SELECTED WITH PURPOSE</p><h2>Different categories.<br /><em>One standard.</em></h2><p>Discover. Develop. Curate.<br />A place in our house is earned.</p></div>

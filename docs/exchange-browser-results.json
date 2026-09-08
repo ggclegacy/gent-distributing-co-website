@@ -1,0 +1,122 @@
+[
+  {
+    "name": "chromium",
+    "width": 1440,
+    "height": 900,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1580,
+    "cls": 0.010713888888888889,
+    "resources": 244965
+  },
+  {
+    "name": "chromium",
+    "width": 1024,
+    "height": 768,
+    "errors": [],
+    "overflow": false,
+    "lcp": 936,
+    "cls": 0.01740860939025879,
+    "resources": 244965
+  },
+  {
+    "name": "chromium",
+    "width": 768,
+    "height": 1024,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1056,
+    "cls": 0,
+    "resources": 244965
+  },
+  {
+    "name": "chromium",
+    "width": 390,
+    "height": 844,
+    "errors": [],
+    "overflow": false,
+    "lcp": 932,
+    "cls": 0,
+    "resources": 241166
+  },
+  {
+    "name": "chromium",
+    "width": 320,
+    "height": 667,
+    "errors": [],
+    "overflow": false,
+    "lcp": 956,
+    "cls": 0,
+    "resources": 241166
+  },
+  {
+    "name": "chromium",
+    "width": 844,
+    "height": 390,
+    "errors": [],
+    "overflow": false,
+    "lcp": 800,
+    "cls": 0,
+    "resources": 244965
+  },
+  {
+    "name": "webkit",
+    "width": 1440,
+    "height": 900,
+    "errors": [],
+    "overflow": false,
+    "lcp": 2718,
+    "cls": 0,
+    "resources": 248924
+  },
+  {
+    "name": "webkit",
+    "width": 1024,
+    "height": 768,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1646,
+    "cls": 0,
+    "resources": 245286
+  },
+  {
+    "name": "webkit",
+    "width": 768,
+    "height": 1024,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1110,
+    "cls": 0,
+    "resources": 245286
+  },
+  {
+    "name": "webkit",
+    "width": 390,
+    "height": 844,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1453,
+    "cls": 0,
+    "resources": 241453
+  },
+  {
+    "name": "webkit",
+    "width": 320,
+    "height": 667,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1416,
+    "cls": 0,
+    "resources": 241453
+  },
+  {
+    "name": "webkit",
+    "width": 844,
+    "height": 390,
+    "errors": [],
+    "overflow": false,
+    "lcp": 1053,
+    "cls": 0,
+    "resources": 245286
+  }
+]

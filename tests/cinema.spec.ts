@@ -11,7 +11,7 @@ async function ready(page: import("@playwright/test").Page) {
   const viewport = page.viewportSize();
   if (viewport && (viewport.width < 1000 || viewport.height < 700)) {
     await expect(page.locator(".cinema-tools .motion-control")).toBeVisible();
-    await expect(page.locator(".pin-spacer")).toHaveCount(0);
+    await expect(page.locator(".pin-spacer")).toHaveCount(viewport.height >= 600 ? 1 : 0);
     return;
   }
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
@@ -149,13 +149,13 @@ test("motion preference restores a readable document and persists", async ({
   await ready(page);
 });
 
-test("mobile preserves native flow, camera descent, product controls and responsive cleanup", async ({ page }) => {
+test("mobile pins the opening, preserves product controls and cleans up responsively", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await ready(page);
-  const initial = await page.locator(".network-camera").evaluate(el => getComputedStyle(el).transform);
+  const initial = await page.locator(".engine-tilt").evaluate(el => getComputedStyle(el).transform);
   await page.evaluate(() => scrollTo({top: 400, behavior: "instant"}));
-  await expect.poll(() => page.locator(".network-camera").evaluate(el => getComputedStyle(el).transform)).not.toBe(initial);
+  await expect.poll(() => page.locator(".engine-tilt").evaluate(el => getComputedStyle(el).transform)).not.toBe(initial);
   for (const id of ids) {
     await expect(page.locator("#" + id)).toBeVisible();
     await expect(page.locator("#" + id)).not.toHaveAttribute("inert");

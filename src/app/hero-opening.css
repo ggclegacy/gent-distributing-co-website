@@ -1,0 +1,129 @@
+/* Mechanism-first opening. Stable small-viewport units avoid Safari toolbar jumps. */
+body .gent-engine-hero .hero {
+  height: 100svh; min-height: 700px; max-height: none; padding: 0;
+  display: block; background: #050806;
+}
+body .gent-engine-hero .hero-visual { inset: 0; opacity: 1; transform: none; }
+body .gent-engine-hero .engine-camera { transform-origin: 50% 40%; background: radial-gradient(ellipse at 50% 38%,#16322280,transparent 56%),#050806; }
+body .gent-engine-hero .engine-surface {
+  width: min(76svh,760px); max-width: 85vw; top: 7svh; left: 50%; right: auto;
+  margin: 0; transform: translateX(-50%);
+}
+body .gent-engine-hero .engine-assembly { top: 11%; left: 19%; width: 62%; }
+body .gent-engine-hero .engine-tilt { transform: rotateX(12deg) rotateZ(-6deg); }
+body .gent-engine-hero .engine-atmosphere { background: radial-gradient(ellipse at 50% 38%,#25482d35,transparent 45%); }
+body .gent-engine-hero .hero-shade { background: linear-gradient(0deg,#050806,transparent 40%); }
+.engine-opening-label { position: absolute; z-index: 3; top: 122px; left: 7%; font-size: 9px; letter-spacing: .2em; color: #bdaf91; }
+.engine-opening-label span { display: block; margin-top: 8px; font-size: 8px; color: #6f8273; }
+body .gent-engine-hero .hero-copy { position: absolute; left: 50%; top: 65%; width: 90%; max-width: 650px; transform: translateX(-50%); text-align: center; }
+body .gent-engine-hero .hero h1 { font-size: clamp(28px,3vw,43px); letter-spacing: -.035em; line-height: 1.12; }
+body .gent-engine-hero .hero-copy .eyebrow { display: none; }
+body .gent-engine-hero .hero-description { max-width: 460px; margin: 14px auto 18px; font-size: 12px; line-height: 1.65; color: #b9c1b5; }
+body .gent-engine-hero .hero-actions { justify-content: center; gap: 24px; }
+body .gent-engine-hero .hero-actions .button { min-height: 44px; padding: 12px 18px; font-size: 10px; }
+body .gent-engine-hero .hero-actions .quiet-link { font-size: 10px; min-height: 44px; display: inline-flex; align-items: center; }
+body .gent-engine-hero .hero-categories, body .gent-engine-hero .landscape-caption { display: none; }
+body .gent-engine-hero .hero-bottom { bottom: 85px; left: 7%; right: 7%; font-size: 8px; }
+body .gent-engine-hero .hero-bottom > span { display: none; }
+body .gent-engine-hero .engine-controls { right: 5%; bottom: 90px; width: 240px; text-align: left; z-index: 8; }
+.engine-controls summary { list-style: none; cursor: pointer; min-height: 44px; padding: 12px 0; border-top: 1px solid #b3996040; color: #c8bc9d; font-size: 10px; letter-spacing: .06em; }
+.engine-controls summary::-webkit-details-marker { display: none; }
+.engine-controls summary span { font-size: 8px; margin-top: 8px; color: #788977; }
+.engine-controls summary b { float: right; color: #c9ac6e; }
+.engine-controls[open] { padding: 14px; background: #07100bf5; border: 1px solid #b3996040; border-radius: 2px; }
+.engine-controls[open] summary b { transform: rotate(45deg); }
+.engine-controls .engine-category-controls { justify-content: flex-start; gap: 0 14px; }
+.engine-controls .engine-category-controls button { min-height: 44px; font-size: 10px; }
+.engine-controls summary:focus-visible, .engine-controls button:focus-visible { outline: 2px solid #d9bd80; outline-offset: 4px; }
+.exchange-ring { transform-origin: 300px 300px; }
+.exchange-core-light { opacity: .35; }
+body .gent-engine-hero .exchange-confluence { opacity: .16; }
+body .gent-engine-hero .exchange-environment { mask-image: radial-gradient(ellipse,#000,transparent 75%); opacity: .15; }
+body .gent-engine-hero .exchange-horizons { left: 14%; top: -20%; width: 72%; opacity: .4; }
+body .gent-engine-hero .exchange-depth-plane, body .gent-engine-hero .exchange-dust, body .gent-engine-hero .exchange-transit { display: none; }
+body .gent-engine-hero .exchange-light-shaft { opacity: .12; }
+body .gent-engine-hero .engine-origin text { font-size: 11px; }
+body .gent-engine-hero .engine-origin-sub { display: none; }
+/* Idle light breathes without a second transform owner or JavaScript render loop. */
+@media (prefers-reduced-motion: no-preference) {
+ html:not([data-motion="paused"]) .engine-atmosphere { animation: gent-breathe 9s ease-in-out infinite alternate; }
+}
+@keyframes gent-breathe { from { opacity: .4; } to { opacity: .8; } }
+@media (max-width: 999px), (max-height: 699px) {
+ body .gent-engine-hero .hero { min-height: 680px; height: 100svh; padding: 0; }
+ body .gent-engine-hero .engine-surface { width: min(112vw,78svh); max-width: 820px; top: 145px; margin: 0; }
+ body .gent-engine-hero .engine-opening-label { top: 149px; left: 0; width: 100%; text-align: center; font-size: 8px; }
+ .engine-opening-label span { display: none; }
+ body .gent-engine-hero .hero-copy { top: auto; bottom: 102px; max-width: 520px; width: 88%; }
+ body .gent-engine-hero .hero h1 { font-size: clamp(25px,6.2vw,36px); }
+ body .gent-engine-hero .hero-description { max-width: 330px; font-size: 11px; margin: 12px auto 14px; }
+ body .gent-engine-hero .hero-actions { gap: 18px; flex-direction: row; }
+ body .gent-engine-hero .hero-actions .button { font-size: 9px; padding: 10px 12px; }
+ body .gent-engine-hero .hero-actions .quiet-link { font-size: 9px; }
+ body .gent-engine-hero .engine-controls { bottom: 21px; width: 76%; left: 12%; right: auto; }
+ body .gent-engine-hero .engine-controls summary { text-align: center; }
+ body .gent-engine-hero .engine-controls summary span { display: none; }
+ body .gent-engine-hero .engine-controls[open] { bottom: 20px; }
+ body .gent-engine-hero .hero-bottom { display: none; }
+ body .gent-engine-hero .engine-origin text { font-size: 16px; letter-spacing: 1.5px; }
+ body .gent-engine-hero .exchange-horizons { top: 10%; left: -10%; width: 120%; }
+}
+@media (max-width: 600px) and (max-height: 740px) {
+ body .gent-engine-hero .hero { min-height: 630px; }
+ body .gent-engine-hero .engine-surface { width: 108vw; top: 131px; }
+ body .gent-engine-hero .hero-copy { bottom: 76px; }
+ body .gent-engine-hero .hero-description { font-size: 10px; margin: 8px auto; }
+ body .gent-engine-hero .hero h1 { font-size: 24px; }
+ body .gent-engine-hero .engine-controls { bottom: 10px; }
+}
+@media (max-height: 599px) and (min-width: 601px) {
+ body .gent-engine-hero .hero { height: 720px; min-height: 720px; }
+ body .gent-engine-hero .engine-surface { width: 560px; top: 128px; }
+ body .gent-engine-hero .hero-copy { bottom: 86px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .engine-atmosphere { animation: none; }
+ .engine-caliber, .engine-tilt { transition: none; }
+}
+html[data-motion="paused"] .engine-atmosphere { animation: none; }
+@media (max-width: 999px), (max-height: 699px) {
+ body .gent-engine-hero .engine-surface { width: min(112vw,60svh); }
+}
+@media (max-height: 599px) and (min-width: 601px) {
+ body .gent-engine-hero .engine-surface { width: 500px; }
+}
+/* An explicitly opened category sheet must sit above the supporting CTA layer. */
+body .gent-engine-hero .hero:has(.engine-controls[open]) .hero-visual { z-index: 6; }
+body .gent-engine-hero .engine-origin text { font-size: 14px; }
+@media (max-width: 600px) { body .gent-engine-hero .engine-origin text { font-size: 20px; } }
+[data-cinema-ready="desktop"]:not([data-active-scene="0"]) .engine-atmosphere { animation-play-state: paused; }
+body .gent-engine-hero .engine-controls summary { display: block; }
+body .gent-engine-hero .hero-bottom { pointer-events: none; }
+body .gent-engine-hero .hero-bottom a { pointer-events: auto; }
+/* Keep illumination local. Full-stage masked gradients and filtered moving SVGs
+   force costly repainting; the sculpture already contains its own cast shadow. */
+body .gent-engine-hero .exchange-environment,
+body .gent-engine-hero .exchange-light-volume { display: none; }
+body .gent-engine-hero .engine-caliber { filter: none; }
+body .gent-engine-hero .engine-atmosphere {
+ inset: auto; width: 240px; height: 240px; left: calc(50% - 120px); top: 18%;
+ will-change: opacity;
+}
+
+/* Released category objects leave the housing windows and occupy their own plane. */
+body .gent-engine-hero .engine-caliber { overflow: visible; }
+.exchange-released-product, .exchange-release-halo, .exchange-product-route { opacity: 0; }
+.exchange-product-route { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.exchange-product-name { font: 9px Arial, sans-serif; letter-spacing: 1.3px; }
+.exchange-chapters { position: absolute; z-index: 4; left: 10%; right: 10%; top: 72%; text-align: center; pointer-events: none; }
+.exchange-chapter { position: absolute; width: 100%; margin: 0; opacity: 0; visibility: hidden; font-size: clamp(18px,2.2vw,28px); color: #d7d5c7; }
+.exchange-chapter > span { display: block; font: 9px Arial,sans-serif; letter-spacing: .22em; color: #c3a66c; margin-bottom: 15px; }
+.exchange-chapter small { display: block; margin-top: 14px; font-size: 11px; color: #8c9c8c; }
+@media (max-width: 999px), (max-height: 699px) {
+ .exchange-chapters { top: auto; bottom: 185px; left: 7%; right: 7%; }
+ .exchange-chapter { font-size: 20px; }
+ .exchange-product-name { font-size: 11px; letter-spacing: .5px; }
+}
+@media (max-width: 600px) and (max-height: 740px) {
+ .exchange-chapters { bottom: 155px; }
+}

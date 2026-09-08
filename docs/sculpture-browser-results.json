@@ -1,0 +1,71 @@
+{
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "horizontalOverflow": false,
+      "originBounds": {
+        "x": 1016.7901000976562,
+        "y": 540.6778564453125,
+        "width": 114.79217529296875,
+        "height": 45.5008544921875
+      }
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "horizontalOverflow": false,
+      "originBounds": {
+        "x": 723.3236694335938,
+        "y": 448.17919921875,
+        "width": 80.78717041015625,
+        "height": 31.114501953125
+      }
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "horizontalOverflow": false,
+      "originBounds": {
+        "x": 353.2785339355469,
+        "y": 750.6390380859375,
+        "width": 85.15505981445312,
+        "height": 33.041748046875
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false,
+      "originBounds": {
+        "x": 186.0262908935547,
+        "y": 635.2310180664062,
+        "width": 65.50840759277344,
+        "height": 25.63525390625
+      }
+    },
+    {
+      "width": 320,
+      "height": 667,
+      "horizontalOverflow": false,
+      "originBounds": {
+        "x": 154.51312255859375,
+        "y": 633.1632080078125,
+        "width": 53.48760986328125,
+        "height": 20.29962158203125
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "horizontalOverflow": false,
+      "originBounds": {
+        "x": 391.2785339355469,
+        "y": 730.6390380859375,
+        "width": 85.15505981445312,
+        "height": 33.041748046875
+      }
+    }
+  ]
+}

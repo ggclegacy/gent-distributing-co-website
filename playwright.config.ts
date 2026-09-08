@@ -5,7 +5,7 @@ export default defineConfig({
   fullyParallel: false,
   projects: [
     { name: "chromium", use: { browserName: "chromium" } },
-    { name: "webkit", testMatch: /materials\.spec\.ts/, use: { browserName: "webkit" } },
+    { name: "webkit", testMatch: /(?:materials|hero-opening)\.spec\.ts/, use: { browserName: "webkit" } },
   ],
   timeout: 60000,
   expect: { timeout: 15000 },

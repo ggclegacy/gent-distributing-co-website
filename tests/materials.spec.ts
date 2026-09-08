@@ -33,7 +33,7 @@ test.describe("material journey", () => {
       test(`native ${width}px layout has sharp assets, no overflow and working collection links`, async ({page}) => {
         await page.setViewportSize({width,height:844});
         await page.goto("/#collection");
-        await expect(page.locator(".pin-spacer")).toHaveCount(0);
+        await expect(page.locator(".pin-spacer")).toHaveCount(1);
         const coffee = page.locator(".physical-coffee");
         await expect(coffee).toBeInViewport();
         await expect.poll(() => coffee.locator("img").evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);

@@ -65,14 +65,14 @@ export function DistributionEngine() {
         </g>
         <g className="engine-paths" fill="none" stroke="url(#exchange-incoming)" strokeWidth="1.5">
           {positions.slice(0,3).map(([x,y],i)=><path key={i} pathLength="1" d={`M-180 ${y-80} C${x-80} ${y-90} ${x-50} ${y+70} ${x+100} ${y+30} S400 430 500 430`}/>)}
-          <path className="engine-origin-path" pathLength="1" d="M500 794 C500 695 355 689 395 569 S470 481 500 430"/>
+          <path className="engine-origin-path" pathLength="1" d="M500 704 C500 695 355 689 395 569 S470 481 500 430"/>
         </g>
         <g className="exchange-transit" fill="none" stroke="#f0d49a" strokeWidth="2.5">
           <path pathLength="1" d="M155 290C340 270 390 430 500 430S735 210 1000 210"/>
           <path pathLength="1" d="M115 440C305 510 420 430 500 430S750 540 1100 540"/>
-          <path pathLength="1" d="M500 794C500 695 355 689 395 569S470 481 500 430 760 320 1100 320"/>
+          <path pathLength="1" d="M500 704C500 695 355 689 395 569S470 481 500 430 760 320 1100 320"/>
         </g>
-        <g className="engine-origin" transform="translate(500 794)"><circle r="18" fill="none" stroke="#325d40"/><circle r="6" fill="#c4912f"/><circle r="2" fill="#ffebbd"/><text y="40" textAnchor="middle">LAFAYETTE, LOUISIANA</text><text y="58" textAnchor="middle" className="engine-origin-sub">OUR ORIGIN. AN OPEN HORIZON.</text></g>
+        <g className="engine-origin" transform="translate(500 704)"><circle r="18" fill="none" stroke="#325d40"/><circle r="6" fill="#c4912f"/><circle r="2" fill="#ffebbd"/><text y="40" textAnchor="middle">LAFAYETTE, LOUISIANA</text><text y="58" textAnchor="middle" className="engine-origin-sub">OUR ORIGIN. AN OPEN HORIZON.</text></g>
       </svg>
       <div className="engine-assembly" aria-hidden="true" data-exchange-selected={selected !== null}>
         <div className="engine-tilt">
@@ -99,6 +99,15 @@ export function DistributionEngine() {
               <path d="M-54 479C100 539 153 365 221 365S280 307 310 311 443 333 492 228 590 188 676 180" strokeWidth="2"/>
               <path d="M293 574C242 489 411 455 369 360" strokeWidth="4"/>
             </g>
+            <g className="exchange-ring exchange-ring-outer" fill="none" stroke="url(#engine-metal)" strokeWidth="1.5">
+              <circle cx="300" cy="300" r="167" strokeOpacity=".35"/>
+              <circle cx="300" cy="300" r="162" strokeDasharray="94 160"/>
+            </g>
+            <g className="exchange-ring exchange-ring-inner" fill="none" stroke="url(#engine-metal)" strokeWidth="1">
+              <circle cx="300" cy="300" r="104" strokeDasharray="38 16 1 16"/>
+              <circle cx="300" cy="300" r="99" strokeOpacity=".25"/>
+            </g>
+            <circle className="exchange-core-light" cx="300" cy="300" r="82" fill="url(#engine-green)"/>
             <g className="exchange-aperture">
               {housingAngles.map((angle,i)=><g key={angle} transform={`rotate(${angle} 300 300)`}>
                 <path className="exchange-blade" d="M230 181H367L402 241 322 286 295 253 251 257 204 220Z" fill="url(#exchange-obsidian)" stroke="url(#exchange-edge)" strokeWidth="1.2"/>
@@ -125,6 +134,19 @@ export function DistributionEngine() {
                 <path className="exchange-panel-signal" d="M290 140H310" stroke="#c4912f" strokeWidth="2"/>
               </g>
             </g>)}
+            <g className="exchange-release" fill="none" stroke="url(#engine-metal)">
+              <circle className="exchange-release-halo" cx="300" cy="300" r="205" strokeWidth=".8" strokeDasharray="3 15"/>
+              {housingAngles.map((angle,index) => <g key={angle}>
+                <path className="exchange-product-route" pathLength="1" d={`M300 300L${300+Math.sin(angle*Math.PI/180)*268} ${300-Math.cos(angle*Math.PI/180)*268}`} strokeWidth="1"/>
+                <g transform="translate(300 300)">
+                  <g className="exchange-released-product" data-product={index}>
+                    <ellipse cy="57" rx="40" ry="7" fill="#000" stroke="none" opacity=".5"/>
+                    <ProductForm index={index}/>
+                    <text y="80" textAnchor="middle" stroke="none" fill="#d2c3a3" className="exchange-product-name">{categories[index][0].toUpperCase()}</text>
+                  </g>
+                </g>
+              </g>)}
+            </g>
             <path className="exchange-g-bridge" d="M481 303H388L357 334H306" fill="none" stroke="#040907" strokeWidth="22"/>
             <path d="M481 294H388L357 325H306" fill="none" stroke="url(#engine-metal)" strokeWidth="2"/>
             <text x="303" y="555" textAnchor="middle" className="exchange-engraving">G E N T</text>
@@ -134,12 +156,12 @@ export function DistributionEngine() {
         </div>
       </div>
     </div>
-    <div className="engine-controls">
-      <p className="engine-signature">THE GENT EXCHANGE <span>SOURCE / SELECT / CONNECT</span></p>
+    <details className="engine-controls">
+      <summary className="engine-signature">Explore the category vision <span>THE GENT EXCHANGE <b aria-hidden="true">＋</b></span></summary>
       <div className="engine-category-controls" aria-label="Explore the category vision">
         {categories.map(([title],i)=><button key={title} type="button" aria-expanded={selected === i} aria-controls="engine-category-detail" onClick={()=>setSelected(selected === i ? null : i)}>{title}</button>)}
       </div>
       <p id="engine-category-detail" className="engine-detail" aria-live="polite">{selected === null ? "A vision for our house. Every category held to one standard." : categories[selected][1]}</p>
-    </div>
+    </details>
   </div>;
 }
