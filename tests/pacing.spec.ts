@@ -16,7 +16,7 @@ test('complete product story, pause ownership, final hold and entry',async({page
    if(el.dataset.progress==='1.0000' && record.entryDuringHold===undefined) record.entryDuringHold=!document.querySelector<HTMLAnchorElement>('.network-explore')!.hidden;
   }).observe(el,{attributes:true});
  });
- await page.getByRole('button',{name:'ACTIVATE THE NETWORK'}).click();
+ await page.getByRole('button',{name:/ACTIVATE THE NETWORK|ENTER THE EXPERIENCE/}).click();
  await page.getByRole('button',{name:'PAUSE FILM'}).click();
  const paused=await hero.getAttribute('data-progress');
  await page.waitForTimeout(1000);expect(await hero.getAttribute('data-progress')).toBe(paused);
@@ -38,7 +38,7 @@ test('complete product story, pause ownership, final hold and entry',async({page
 test('phone replay, skip, reduced motion and final product layout',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/');const hero=page.locator(heroSelector);
  await expect(hero).toHaveAttribute('data-renderer','webgl',{timeout:60000});
- await page.getByRole('button',{name:'ACTIVATE THE NETWORK'}).click();await page.keyboard.press('Escape');
+ await page.getByRole('button',{name:/ACTIVATE THE NETWORK|ENTER THE EXPERIENCE/}).click();await page.keyboard.press('Escape');
  await expect(page.getByRole('link',{name:'ENTER GENT RESERVE CO.'})).toBeFocused();
  await page.getByRole('button',{name:'REPLAY NETWORK'}).click();await expect(hero).toHaveAttribute('data-state','PLAYING');
  await page.emulateMedia({reducedMotion:'reduce'});await expect(hero).toHaveAttribute('data-state','EXPLORE');await expect(page.locator('canvas')).toHaveCount(0);

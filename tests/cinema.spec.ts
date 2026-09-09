@@ -231,7 +231,7 @@ for (const width of [320, 390]) {
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
     await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
     await expect(
-      page.getByRole("button", { name: "ACTIVATE THE NETWORK" }),
+      page.getByRole("button", { name: /ACTIVATE THE NETWORK|ENTER THE EXPERIENCE/ }),
     ).toBeInViewport();
     expect(
       await page.evaluate(

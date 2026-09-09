@@ -10,6 +10,7 @@ import "./product-story.css";
 import "./hero-elevation.css";
 import "./intelligence.css";
 import "./chapters.css";
+import "./mobile-cinematic.css";
 export const metadata: Metadata = {
   title: { absolute: brand.title },
   description: brand.description,

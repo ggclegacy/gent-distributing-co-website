@@ -19,7 +19,7 @@ export function IntelligenceScene({record}:{record:IntelligenceRecord}){
  return <section ref={root} id={record.id} className={`material-scene cinematic-chapter chapter-${record.scene}`} data-scene={record.scene} data-chapter-scene data-chapter-name={record.name} data-intelligence data-phase={active} aria-labelledby={`${record.id}-title`}>
   <div className="chapter-viewport">
    <StoryEnvironment scene={record.scene} instrumentation={false}/>
-   <Visual/>
+   <div className="chapter-subject"><Visual/></div>
    <div className="chapter-shade" aria-hidden="true"/>
    <header className="chapter-heading"><p className="chapter-index">{record.number} / {record.name}</p><h2 id={`${record.id}-title`} tabIndex={-1}>{headings[record.scene]}</h2></header>
    <div className="chapter-narrative">

@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import Image from "next/image";
+import { enterMobilePresentation } from "./mobile-presentation";
 import { beats, beatAt, exchangeSignal, smooth, storyAt } from "@/lib/exchange-film";
 import {
   IntroDirector,
@@ -38,6 +39,7 @@ export function ExchangeHero() {
     director = useRef<IntroDirector | null>(null),
     skipButton = useRef<HTMLButtonElement>(null),
     exploreLink = useRef<HTMLAnchorElement>(null);
+  const presentation = useRef<(() => void) | undefined>(undefined);
   const [paused, setPaused] = useState(false);
   const [state, setState] = useState<IntroState>("DORMANT");
   const [loadRequest, setLoadRequest] = useState(0);
@@ -49,6 +51,12 @@ export function ExchangeHero() {
   useEffect(() => {
     const element = root.current!;
     const instance = new IntroDirector((next) => {
+      if (next === "EXPLORE") {
+        const wasImmersive = Boolean(presentation.current);
+        presentation.current?.();
+        presentation.current = undefined;
+        if (wasImmersive) requestAnimationFrame(() => exploreLink.current?.focus({ preventScroll: true }));
+      }
       setState(next);
       if (next === "PLAYING" || next === "EXPLORE") setPaused(false);
       setMode(instance.mode);
@@ -153,6 +161,8 @@ export function ExchangeHero() {
       window.removeEventListener("gent-film-seek", seek);
       viewport.disconnect();
       document.removeEventListener("visibilitychange", visibility);
+      presentation.current?.();
+      presentation.current = undefined;
       instance.dispose();
       director.current = null;
       document.removeEventListener("keydown", escape);
@@ -354,12 +364,13 @@ export function ExchangeHero() {
           className="network-activate"
           disabled={running || completed}
           onClick={() => {
+            presentation.current ??= enterMobilePresentation(root.current!, () => director.current?.skip());
             director.current?.activate();
             skipButton.current?.focus({ preventScroll: true });
           }}
         >
           <span className="network-play" aria-hidden="true">▷</span>
-          <span className="network-activate-label">ACTIVATE THE NETWORK</span>
+          <span className="network-activate-label"><span className="desktop-entry-label">ACTIVATE THE NETWORK</span><span className="mobile-entry-label">ENTER THE EXPERIENCE</span></span>
           <span className="network-activate-arrow" aria-hidden="true">→</span>
         </button>
         <noscript>
@@ -441,6 +452,7 @@ export function ExchangeHero() {
           className="network-replay"
           onClick={() => {
             setLoadRequest((n) => n + 1);
+            presentation.current ??= enterMobilePresentation(root.current!, () => director.current?.skip());
             director.current?.replay();
             requestAnimationFrame(() =>
               skipButton.current?.focus({ preventScroll: true }),

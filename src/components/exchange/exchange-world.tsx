@@ -16,6 +16,17 @@ export type ExchangeWorldProps = {
 function World({ onFail, onReady, onProject }: ExchangeWorldProps) {
   const { gl, scene, camera, size, invalidate } = useThree();
   const standard = size.width < 1000;
+  const portrait = size.width < 700 && size.height > size.width;
+  useEffect(() => {
+    // Canvas observes its actual container, including dynamic viewport/fullscreen changes.
+    // Preserve horizontal subject coverage on unusually tall portrait displays.
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.aspect = size.width / Math.max(1, size.height);
+      camera.fov = portrait ? THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(22)) * .5 / camera.aspect)) : 38;
+      camera.updateProjectionMatrix();
+      invalidate();
+    }
+  }, [camera, size.width, size.height, portrait, invalidate]);
   const asset = useMemo(
     () =>
       createNetwork(
@@ -85,12 +96,20 @@ function World({ onFail, onReady, onProject }: ExchangeWorldProps) {
           ? "tablet"
           : "desktop";
     const view = cameraAt(p, framing);
+    if (framing === "portrait") {
+      // Move toward the subject, rather than shrinking Louisiana to fit a desktop view.
+      const distance = 0.77;
+      for (let axis = 0; axis < 3; axis++) view[axis] = view[axis + 3] + (view[axis] - view[axis + 3]) * distance;
+      const verticalOffset = size.height < 700 ? .8 : -.35;
+      view[1] += verticalOffset;
+      view[4] += verticalOffset;
+    }
     camera.position.set(view[0], view[1], view[2]);
     camera.lookAt(view[3], view[4], view[5]);
     camera.updateMatrixWorld();
     const expand = smooth(0.27, 0.44, p),
       recede = smooth(0.62, 0.83, p);
-    const nationalScale = framing === "portrait" ? 0.45 : 1;
+    const nationalScale = framing === "portrait" ? 0.6 : 1;
     const originScale = 2.4 - (framing === "portrait" ? 1.55 : 1.4) * expand;
     asset.louisiana.scale.setScalar(originScale);
     asset.louisiana.position.set(0, 0, -recede * 2.5);
@@ -142,7 +161,8 @@ function World({ onFail, onReady, onProject }: ExchangeWorldProps) {
       1.3 - 1.05 * movement,
       0.2 + 3.1 * movement,
     );
-    asset.transport.scale.setScalar((0.08 + 0.92 * movement) * (1 - .65*smooth(.60,.75,story)));
+    if (framing === "portrait") asset.transport.position.x -= .4 * movement;
+    asset.transport.scale.setScalar((framing === "portrait" ? 1.18 : 1) * (0.08 + 0.92 * movement) * (1 - .65*smooth(.60,.75,story)));
     asset.transport.rotation.set(
       -0.08 * (1 - f.delivery),
       -0.3 + 0.18 * f.delivery,
@@ -227,6 +247,7 @@ export function ExchangeWorld(props: ExchangeWorldProps) {
     <Canvas
       className="exchange-webgl"
       frameloop="demand"
+      resize={{ debounce: 0 }}
       dpr={[1, innerWidth < 1000 ? 1.25 : 1.5]}
       camera={{ position: [2, -3, 11], fov: 38, near: 0.1, far: 80 }}
       gl={(defaults) => {

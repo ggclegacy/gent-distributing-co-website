@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:/mobile-cinematic\.spec\.ts/,timeout:120000,expect:{timeout:45000},workers:1,use:{baseURL:'http://127.0.0.1:3101',launchOptions:{args:['--use-gl=angle','--use-angle=metal']},trace:'retain-on-failure'},projects:[{name:'chromium',use:{browserName:'chromium'}},{name:'webkit',use:{browserName:'webkit'}}]});

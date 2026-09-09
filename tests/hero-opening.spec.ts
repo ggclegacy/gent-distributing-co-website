@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 const hero = ".network-entrance";
 const activate = async (page: import("@playwright/test").Page) => {
-  await page.getByRole("button", { name: "ACTIVATE THE NETWORK" }).click();
+  await page.getByRole("button", { name: /ACTIVATE THE NETWORK|ENTER THE EXPERIENCE/ }).click();
 };
 const progress = async (page: import("@playwright/test").Page) =>
   page

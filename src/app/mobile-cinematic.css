@@ -1,0 +1,175 @@
+.network-entrance .network-activate .mobile-entry-label {display:none}
+@media(max-width:699px){
+ .network-entrance .network-activate .desktop-entry-label {display:none}
+ .network-entrance .network-activate .mobile-entry-label {display:inline}
+ .network-entrance .network-activate {min-height:72px;font-size:clamp(14px,3.6vw,16px);letter-spacing:.035em}
+}
+/* Only a user-entered mobile session changes the stage or its compositions. */
+body .network-entrance[data-immersive="true"] {
+ position:fixed!important;inset:0!important;width:100%!important;height:100vh!important;height:100dvh!important;
+ min-height:0!important;max-height:none!important;max-width:none!important;margin:0!important;padding:0!important;
+ z-index:2147483647!important;isolation:isolate;overflow:hidden;background:#030806;transform:none!important;
+ --mobile-left:max(18px,env(safe-area-inset-left));--mobile-right:max(18px,env(safe-area-inset-right));
+ --mobile-top:max(18px,env(safe-area-inset-top));--mobile-bottom:max(16px,env(safe-area-inset-bottom));
+}
+.network-entrance[data-immersive="true"]::backdrop {background:#030806}
+.network-entrance[data-immersive="true"] .exchange-webgl {position:absolute!important;inset:0!important;width:100%!important;height:100%!important}
+.network-entrance[data-immersive="true"] :is(.network-edition,.network-origin-note,.story-concept-note,.story-network-footnote,.story-chapter-rail,.story-instrument) {display:none!important}
+.network-entrance[data-immersive="true"] .network-intro-copy {visibility:hidden;pointer-events:none}
+.network-entrance[data-immersive="true"] .network-bottom {left:var(--mobile-left);right:var(--mobile-right);bottom:var(--mobile-bottom);gap:12px;flex-wrap:nowrap;z-index:20}
+.network-entrance[data-immersive="true"] .network-bottom button {min-height:48px;padding:12px 14px;font-size:13px;letter-spacing:.04em;background:#06110ff2;border:1px solid #c4a36780;border-radius:4px;color:#f4e8d1}
+.network-entrance[data-immersive="true"] .network-bottom button:focus-visible {outline:3px solid #f5d58a;outline-offset:3px}
+.network-entrance[data-immersive="true"] .network-pause {margin-right:auto}
+.network-entrance[data-immersive="true"] .network-caption {top:var(--mobile-top);bottom:auto;left:var(--mobile-left);right:var(--mobile-right);max-width:none;padding:12px 14px;background:linear-gradient(100deg,#030806f5,#030806c9);text-align:left;border-left:2px solid #bda36b;z-index:10}
+.network-entrance[data-immersive="true"] .network-caption span {font-size:12px;line-height:1.5;letter-spacing:.08em;color:#e4c88d}
+.network-entrance[data-immersive="true"] .network-caption strong {display:block;font-size:clamp(29px,8vw,38px);line-height:1.12;color:#f5efdf;max-width:19ch;margin-top:8px;text-wrap:balance}
+.network-entrance[data-immersive="true"] .story-products {left:50%;top:43%;width:58%;height:34%;}
+.network-entrance[data-immersive="true"] .story-good figcaption {font-size:12px;line-height:1.3;bottom:-22px}
+.network-entrance[data-immersive="true"] .story-scan span {display:none}
+.network-entrance[data-immersive="true"] .story-dossier {top:auto;bottom:calc(var(--mobile-bottom) + 72px);left:var(--mobile-left);right:var(--mobile-right);width:auto;padding:14px;gap:8px 12px;grid-template-columns:1fr 1fr;background:#04100ff2;border-left:2px solid #bda36b}
+.network-entrance[data-immersive="true"] .story-dossier-index {font-size:12px;letter-spacing:.025em}
+body .network-entrance[data-immersive="true"] .story-dossier h3 {font-size:clamp(30px,8vw,38px);line-height:1.03;margin:4px 0}
+.network-entrance[data-immersive="true"] .story-dossier p {font-size:16px;line-height:1.35}
+.network-entrance[data-immersive="true"] .story-dossier dt {font-size:12px;line-height:1.3}
+.network-entrance[data-immersive="true"] .story-dossier dd {font-size:16px;line-height:1.35}
+.network-entrance[data-immersive="true"] .story-detail-list b {font-size:15px;line-height:1.4}
+.network-entrance[data-immersive="true"][data-beat="the collection"] .story-products {top:49%;height:38%;width:58%}
+.network-entrance[data-immersive="true"] .story-honey {transform:translate(calc(var(--story-spread,0)*-.8vw),9%) scale(.8) rotateZ(-4deg)}
+.network-entrance[data-immersive="true"] .story-seasonings {transform:translate(calc(var(--story-spread,0)*.8vw),9%) scale(.8) rotateZ(4deg)}
+.network-entrance[data-immersive="true"] .story-distribution {left:var(--mobile-left);right:var(--mobile-right);top:26%;height:58%;transform:none}
+.network-entrance[data-immersive="true"] .story-network-heading {display:none}
+.network-entrance[data-immersive="true"] .story-route-map {left:50%;top:50%;width:116%;height:70%;transform:translate(-50%,-50%) rotate(90deg)}
+.network-entrance[data-immersive="true"] .story-node {padding:8px 10px;text-align:center;background:#04100ff5;min-width:0;border:1px solid #bca06350;border-radius:4px}
+.network-entrance[data-immersive="true"] .story-node small {font-size:12px;line-height:1.3;letter-spacing:0}
+.network-entrance[data-immersive="true"] .story-node b {font-size:clamp(22px,6vw,28px);line-height:1.2;margin:4px 0}
+.network-entrance[data-immersive="true"] .story-node-maker {top:0;left:50%;right:auto;transform:translateX(-50%)}
+.network-entrance[data-immersive="true"] .story-node-gent {top:27%;left:50%;right:auto;transform:translateX(-50%);width:64%}
+.network-entrance[data-immersive="true"] .story-node-retail {top:56%;left:0;right:auto;width:43%}
+.network-entrance[data-immersive="true"] .story-node-hospitality {top:56%;right:0;left:auto;width:53%}
+.network-entrance[data-immersive="true"] .story-node-people {top:81%;left:50%;right:auto;transform:translateX(-50%)}
+.network-entrance[data-immersive="true"][data-beat="distribution"] .story-products {opacity:0}
+.network-entrance[data-immersive="true"] .story-arrival-caption {top:35%;left:var(--mobile-left);right:var(--mobile-right);padding:16px;background:linear-gradient(90deg,#030806e0,#03080660)}
+.network-entrance[data-immersive="true"] .story-arrival-caption strong {font-size:clamp(38px,10vw,48px);line-height:1.1}
+.network-entrance[data-immersive="true"] .story-arrival-caption span {font-size:13px}
+.network-entrance[data-immersive="true"] .story-brand-mark {top:calc(var(--mobile-top) + 24px)}
+.network-entrance[data-immersive="true"] .story-brand-mark svg {width:60px;height:60px;margin-bottom:8px}
+.network-entrance[data-immersive="true"] .story-brand-mark>span {font-size:34px}
+.network-entrance[data-immersive="true"] .story-brand-mark small {font-size:14px}
+.network-entrance[data-immersive="true"][data-beat="gent"] .story-products {top:47%;height:28%}
+.network-entrance[data-immersive="true"] .network-resolution {bottom:calc(var(--mobile-bottom) + 90px);left:var(--mobile-left);right:var(--mobile-right)}
+body .network-entrance[data-immersive="true"] .network-resolution h2 {font-size:clamp(29px,8vw,38px);line-height:1.13;text-wrap:balance}
+@media(max-height:700px) and (orientation:portrait){
+ .network-entrance[data-immersive="true"] .network-caption {padding:8px 12px}
+ .network-entrance[data-immersive="true"] .network-caption strong {font-size:29px}
+ .network-entrance[data-immersive="true"] .story-products {top:39%;height:28%}
+ .network-entrance[data-immersive="true"] .story-dossier {padding:10px;gap:5px 10px;bottom:calc(var(--mobile-bottom) + 64px)}
+ .network-entrance[data-immersive="true"] .story-dossier dl div {margin-bottom:5px}
+ .network-entrance[data-immersive="true"] .story-distribution {top:27%;height:54%}
+ .network-entrance[data-immersive="true"] .story-node {padding:5px 8px}
+ .network-entrance[data-immersive="true"] .story-node b {font-size:22px}
+ .network-entrance[data-immersive="true"] .story-brand-mark {top:var(--mobile-top)}
+ .network-entrance[data-immersive="true"] .story-brand-mark svg {width:44px;height:44px}
+ .network-entrance[data-immersive="true"] .network-resolution {bottom:calc(var(--mobile-bottom) + 70px)}
+}
+@media(orientation:landscape){
+ .network-entrance[data-immersive="true"] .network-caption {max-width:44%;padding:8px 12px}
+ .network-entrance[data-immersive="true"] .network-caption strong {font-size:26px}
+ .network-entrance[data-immersive="true"] .story-products {left:70%;top:43%;height:55%;width:32%}
+ .network-entrance[data-immersive="true"] .story-dossier {left:var(--mobile-left);right:auto;width:42%;bottom:76px}
+ .network-entrance[data-immersive="true"] .story-dossier-index,.network-entrance[data-immersive="true"] .story-dossier dl {display:none}
+ .network-entrance[data-immersive="true"] .story-distribution {left:52%;top:8%;height:72%}
+ .network-entrance[data-immersive="true"] .story-node {padding:3px 6px}
+ .network-entrance[data-immersive="true"] .story-node small {font-size:10px}
+ .network-entrance[data-immersive="true"] .story-node b {font-size:18px}
+ .network-entrance[data-immersive="true"] .story-brand-mark {left:22%;top:24%}
+ .network-entrance[data-immersive="true"] .network-resolution {left:44%;bottom:85px}
+ body .network-entrance[data-immersive="true"] .network-resolution h2 {font-size:27px}
+ .network-entrance[data-immersive="true"][data-beat="gent"] .story-products {left:65%;top:30%;height:30%}
+ .network-entrance[data-immersive="true"] .story-arrival-caption {left:50%;top:24%}
+ .network-entrance[data-immersive="true"] .story-arrival-caption strong {font-size:32px}
+}
+
+/* Product names remain in the main narrative; labels on scaled figures would shrink and collide. */
+.network-entrance[data-immersive="true"] .story-good figcaption {display:none}
+
+/* Portrait chapters share a content-sized caption, subject and lower-third grid.
+   display:contents preserves the original desktop containing blocks. */
+.chapter-subject {display:contents}
+@media(max-width:699px){
+ body:has(.gent-journey) .site-header {height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) max(18px,env(safe-area-inset-right)) 0 max(18px,env(safe-area-inset-left))}
+ body:has(.gent-journey) .site-header .brand {gap:8px}
+ body:has(.gent-journey) .site-header .brand svg {width:26px;height:26px}
+ body:has(.gent-journey) .wordmark {font-size:18px}
+ body:has(.gent-journey) .wordmark>span {font-size:8px}
+ body:has(.gent-journey) .nav {top:calc(56px + env(safe-area-inset-top))}
+ .gent-journey .cinema-tools {top:calc(6px + env(safe-area-inset-top));right:112px;left:auto;bottom:auto;min-height:44px;padding:0;background:none;border:0;z-index:25}
+ .gent-journey .cinema-tools :is(.cinema-skip,.cinema-position,.scene-stepping) {display:none}
+ .gent-journey .cinema-tools .motion-control {font-size:12px;min-height:44px}
+ .gent-journey .chapter-viewport {box-sizing:border-box;height:auto;min-height:100vh;min-height:100dvh;display:grid;grid-template-rows:auto minmax(90px,1fr) auto auto auto;gap:10px;padding:calc(68px + env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));overflow:visible}
+ .gent-journey .chapter-heading,.gent-journey .chapter-narrative,.gent-journey .chapter-progress,.gent-journey .chapter-status {position:relative;inset:auto;width:auto;max-width:none;margin:0;min-width:0}
+ .gent-journey .chapter-heading {grid-row:1;opacity:1}
+ .gent-journey .chapter-index {margin:0 0 8px;font-size:12px}
+ body .gent-journey .cinematic-chapter h2 {font-size:clamp(34px,9vw,48px);line-height:1.08;max-width:100%;margin:0}
+ .gent-journey .chapter-heading h2 br {display:initial}
+ /* After the establishing shot, the phase title leads; retain the chapter heading for assistive technology. */
+ .gent-journey .cinematic-chapter[data-animated="true"]:not([data-phase="0"]) .chapter-heading h2 {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .gent-journey .chapter-subject {display:block;position:relative;grid-row:2;min-height:90px;isolation:isolate;overflow:hidden}
+ .gent-journey .chapter-narrative {grid-row:3;padding:12px 14px;background:linear-gradient(110deg,#06110ff2,#06110fda);border-left:1px solid #bda36b}
+ body .gent-journey .chapter-beat h3 {font-size:clamp(26px,7vw,34px);line-height:1.12;margin:0 0 8px}
+ .gent-journey .chapter-description {font-size:16px;line-height:1.4}
+ .gent-journey .chapter-kicker {margin:0 0 6px}
+ .gent-journey .chapter-details {margin-top:6px}
+ .gent-journey .chapter-details summary {min-height:44px;display:flex;align-items:center;font-size:14px}
+ .gent-journey .chapter-details[open] {position:absolute;inset:auto 0 0;max-height:55dvh;overflow:auto;padding:14px;z-index:8}
+ .gent-journey .chapter-actions {margin:0;gap:8px}
+ .gent-journey .chapter-actions:empty {display:none}
+ .gent-journey .chapter-actions :is(a,button) {min-height:44px;font-size:14px;padding:6px 0}
+ .gent-journey .chapter-progress {grid-row:4;gap:8px}
+ .gent-journey .chapter-progress button {min-height:44px;font-size:12px;letter-spacing:0;gap:8px}
+ .gent-journey .chapter-status {grid-row:5;font-size:12px;line-height:1.4;letter-spacing:0}
+ .gent-journey .craft-package,.gent-journey .craft-drawing {top:4%;right:20%;width:60%;height:88%}
+ .gent-journey .craft-bench {top:88%}
+ .gent-journey .craft-measure {top:10%;bottom:10%}
+ .gent-journey .craft-signature {top:50%;right:5%;padding:10px}
+ .gent-journey .craft-signature small {display:none}
+ .gent-journey .vault-stage {inset:0;height:100%}
+ .gent-journey .vault-product {top:0;height:90%}
+ .gent-journey .vault-object figcaption {display:none}
+ .gent-journey .vault-ledge {bottom:4%}
+ .gent-journey .dispatch-window {top:5%;height:75%}
+ .gent-journey .dispatch-product {top:10%;height:70%;margin-top:0}
+ .gent-journey .dispatch-path {top:5%;height:70%}
+ .gent-journey .dispatch-case {top:65%;height:28%}
+ .gent-journey .dispatch-stations {display:none}
+ .gent-journey .exchange-invitation {top:6%;right:10%;width:80%}
+ .gent-journey .exchange-human-note {top:20%;right:8%;font-size:clamp(26px,7vw,36px)}
+ .gent-journey .exchange-invitation p {display:none}
+ .gent-journey .chapter-closing .chapter-viewport {display:grid;grid-template-rows:1fr;place-items:center}
+ .gent-journey .closing-copy {padding:24px 0}
+ .gent-journey .closing-copy .chapter-actions {justify-content:center}
+ .gent-journey .chapter-workshop .environment-image {object-position:65% center}
+ .gent-journey .chapter-vault .environment-image {object-position:58% center}
+ .gent-journey .chapter-arrival .environment-image {object-position:62% center}
+}
+/* Content can grow beyond the viewport for enlarged text; native document
+   scrolling exposes the whole frame without a nested scroll container. */
+@media(max-width:699px) and (max-height:700px){
+ .gent-journey .chapter-viewport {height:auto;min-height:100vh;min-height:100dvh;grid-template-rows:auto minmax(90px,1fr) auto auto auto;gap:8px}
+ .gent-journey .cinematic-chapter[data-animated="true"] .chapter-viewport {position:sticky}
+}
+@media(max-width:699px){
+ .gent-journey .chapter-viewport {overflow:clip}
+ /* Establish the chapter with its main statement before adding phase copy.
+    The complete source text remains available in Explore the details. */
+ .gent-journey .cinematic-chapter[data-animated="true"][data-phase="0"] .chapter-beat>h3 {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .gent-journey .cinematic-chapter[data-animated="true"][data-phase="0"] .chapter-beat>.chapter-description {display:none}
+ .gent-journey .craft-macro {opacity:calc((1 - var(--ch-assembly))*.4);mask-image:linear-gradient(transparent,#000 20%,#000 80%,transparent)}
+}
+@media(max-width:699px){
+ /* Settle each collection object in the portrait frame between transitions. */
+ .gent-journey .chapter-vault {--mobile-shelf:0}
+ .gent-journey .chapter-vault[data-phase="1"] {--mobile-shelf:1}
+ .gent-journey .chapter-vault[data-phase="2"] {--mobile-shelf:2}
+ .gent-journey .chapter-vault[data-phase="3"] {--mobile-shelf:3}
+ .gent-journey .vault-travel {transform:translateX(calc(var(--mobile-shelf)*-25%));transition:transform .45s ease}
+}
