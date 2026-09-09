@@ -1,6 +1,6 @@
 # The Louisiana Network
 
-Implemented directly in the existing Gent Distribution Co. homepage. The original local edits were preserved and refined; no package-shaped terrain nodes remain in the hero.
+Implemented directly in the existing Gent Reserve Co. homepage. The original local edits were preserved and refined; no package-shaped terrain nodes remain in the hero.
 
 ## Rendering and motion
 

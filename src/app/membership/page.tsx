@@ -1,6 +1,7 @@
+import { pageMetadata } from "@/lib/brand";
 import Link from "next/link";
 import { MembershipCard } from "@/components/membership-card";
-export const metadata = { title: "Gent membership — Good company, shared taste", description: "A closer connection to Gent’s goods and the people behind them. Explore our membership direction, currently in development. Enrollment is not yet open." };
+export const metadata = pageMetadata("Membership — Considered access", "A closer connection to Gent Reserve Co.’s collection and the people behind it. Explore our membership direction, currently in development. Enrollment is not yet open.");
 const benefits = [
   [
     "01",
@@ -20,7 +21,7 @@ const benefits = [
   [
     "04",
     "Room to grow.",
-    "The aim is one membership that can grow across Gent’s categories and participating brands, with eligibility and terms made clear before enrollment.",
+    "The aim is one membership that can grow across our categories and participating brands, with eligibility and terms made clear before enrollment.",
   ],
 ];
 export default function Membership() {

@@ -3,6 +3,7 @@ for(const width of [390,1440]){
  test(`Exchange preserves collection and product navigation at ${width}`,async({page})=>{
   await page.setViewportSize({width,height:900});await page.goto('/');await expect(page.locator('canvas')).toBeVisible();
   await page.getByRole('link',{name:'Go to collection'}).click();
+  await page.locator('.il-collection-index summary').click();
   const tab=page.getByRole('tab',{name:'02 Honey',exact:true});await tab.scrollIntoViewIfNeeded();await tab.click();
   await page.getByRole('link',{name:'Explore honey',exact:true}).click();await expect(page).toHaveURL(/products\/gent-honey/);await expect(page.locator('canvas')).toHaveCount(0);
  });

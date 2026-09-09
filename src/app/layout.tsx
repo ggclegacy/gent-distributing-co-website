@@ -21,9 +21,12 @@ const manrope = localFont({
 export const metadata: Metadata = {
   title: {
     default: brand.title,
-    template: "%s | Gent Distribution Co.",
+    template: `%s | ${brand.name}`,
   },
   description: brand.description,
+  applicationName: brand.name,
+  openGraph: { title: brand.title, description: brand.description, siteName: brand.name, type: "website" },
+  twitter: { card: "summary", title: brand.title, description: brand.description },
   robots: { index: true, follow: true },
 };
 export const viewport: Viewport = {

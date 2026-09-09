@@ -1,0 +1,201 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "playwright.storyfilm.config.ts"
+    ],
+    "configFile": "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/playwright.storyfilm.config.ts",
+    "rootDir": "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/pacing\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/story-film/test-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "pacing.spec.ts",
+      "file": "pacing.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "complete product story, pause ownership, final hold and entry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 88999,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T03:54:57.738Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/test-results/pacing-complete-product-st-b4920-ership-final-hold-and-entry-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f58bd77690351665ada6-29f12bf086fbc64d19e8",
+          "file": "pacing.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "phone replay, skip, reduced motion and final product layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 35496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T03:56:27.654Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/neilstutes/.codex/.chatgpt-projects/g-p-6a9dc84c72ec8191aabb93e0bb6820a0/story-film/test-results/pacing-phone-replay-skip-r-fe114-on-and-final-product-layout-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f58bd77690351665ada6-9f23f6fe450b98a9eb2b",
+          "file": "pacing.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "direct entry and no-JavaScript retain the site",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-09T03:57:03.228Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f58bd77690351665ada6-2ef605930948ae4b8806",
+          "file": "pacing.spec.ts",
+          "line": 51,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-09T03:54:55.448Z",
+    "duration": 138494.711,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

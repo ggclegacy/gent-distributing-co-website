@@ -1,4 +1,3 @@
-import { exchangeSignal, EXCHANGE_DURATION } from "./exchange-film";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -15,53 +14,157 @@ const titles = [
   "COME IN",
 ];
 
-/** The existing GSAP film is the sole scroll owner. WebGL consumes its signal. */
-const OPENING_DURATION = EXCHANGE_DURATION;
-function wakeNetwork(timeline: gsap.core.Timeline, hero: Element) {
-  const playhead={progress:0};
-  exchangeSignal.set(0);
-  timeline.to(playhead,{progress:1,duration:OPENING_DURATION,ease:"none",onUpdate:()=>exchangeSignal.set(playhead.progress)},0);
-  timeline.fromTo(hero.querySelector(".hero-copy"),{autoAlpha:0,y:20,x:0,xPercent:0},{autoAlpha:1,y:0,duration:.5},OPENING_DURATION*.835);
-  timeline.to(hero.querySelector(".hero-copy"),{autoAlpha:0,y:-12,duration:.3},OPENING_DURATION*.933);
-  timeline.to(hero.querySelector(".engine-opening-label"),{autoAlpha:0,duration:.5},.65);
-  timeline.to(hero.querySelector(".hero-bottom"),{autoAlpha:0,duration:.5},.8);
-}
-
 /** Scene-specific intelligence has one reversible scroll owner, no fabricated live data. */
-function activateFacility(timeline: gsap.core.Timeline, scene: Element, at: number, duration = 1) {
+function activateFacility(
+  timeline: gsap.core.Timeline,
+  scene: Element,
+  at: number,
+  duration = 1,
+) {
+  if (scene.hasAttribute("data-intelligence")) {
+    const signal = { progress: 0 };
+    timeline.fromTo(
+      signal,
+      { progress: 0 },
+      {
+        progress: 1,
+        duration: duration * 1.45,
+        ease: "none",
+        onUpdate: () =>
+          scene.dispatchEvent(
+            new CustomEvent("gent-intelligence-progress", {
+              detail: signal.progress,
+            }),
+          ),
+      },
+      at,
+    );
+    return;
+  }
   const find = (selector: string) => scene.querySelectorAll(selector);
-  const animate = (selector: string, from: gsap.TweenVars, to: gsap.TweenVars, offset = 0) => {
+  const animate = (
+    selector: string,
+    from: gsap.TweenVars,
+    to: gsap.TweenVars,
+    offset = 0,
+  ) => {
     const nodes = find(selector);
-    if (nodes.length) timeline.fromTo(nodes, from, { ...to, ease: "sine.inOut" }, at + offset * duration);
+    if (nodes.length)
+      timeline.fromTo(
+        nodes,
+        from,
+        { ...to, ease: "sine.inOut" },
+        at + offset * duration,
+      );
   };
-  animate(".intelligence-heading", { opacity: .18 }, { opacity: .55, duration: duration * .5 });
-  animate(".evaluation-row", { opacity: .15 }, { opacity: 1, stagger: duration * .09, duration: duration * .25 }, .08);
-  animate(".evaluation-row i", { scaleX: 0 }, { scaleX: 1, stagger: duration * .09, duration: duration * .25 }, .08);
-  animate(".evaluation-pass, .evaluation-hold", { opacity: .12 }, { opacity: 1, stagger: duration * .12, duration: duration * .25 }, .65);
-  animate(".object-tracker:not(.exchange-identity)", { opacity: .12, y: 5 }, { opacity: .6, y: 0, stagger: duration * .2, duration: duration * .4 }, .3);
-  animate(".vault-bay", { opacity: .06 }, { opacity: .58, stagger: duration * .065, duration: duration * .25 }, .05);
-  animate(".vault-bay i", { scaleY: .1 }, { scaleY: 1, stagger: duration * .065, duration: duration * .35 }, .05);
-  animate(".portfolio-record", { opacity: .16 }, { opacity: .6, duration: duration * .55 }, .3);
-  animate(".cargo-scan", { xPercent: -50, opacity: 0 }, { xPercent: 50, opacity: .35, duration: duration * .9 }, .08);
-  animate(".route-origin", { opacity: .25 }, { opacity: 1, duration: duration * .2 });
-  animate(".route-segment", { scaleX: 0 }, { scaleX: 1, stagger: duration * .14, duration: duration * .22 }, .12);
-  animate(".route-destination b, .channel-destination", { opacity: .12 }, { opacity: 1, stagger: duration * .07, duration: duration * .25 }, .35);
-  animate(".exchange-identity", { opacity: .08, y: 4 }, { opacity: .62, y: 0, stagger: duration * .25, duration: duration * .45 }, .2);
-  animate(".exchange-record", { opacity: .15 }, { opacity: .6, duration: duration * .6 }, .1);
+  animate(
+    ".intelligence-heading",
+    { opacity: 0.18 },
+    { opacity: 0.55, duration: duration * 0.5 },
+  );
+  animate(
+    ".evaluation-row",
+    { opacity: 0.15 },
+    { opacity: 1, stagger: duration * 0.09, duration: duration * 0.25 },
+    0.08,
+  );
+  animate(
+    ".evaluation-row i",
+    { scaleX: 0 },
+    { scaleX: 1, stagger: duration * 0.09, duration: duration * 0.25 },
+    0.08,
+  );
+  animate(
+    ".evaluation-pass, .evaluation-hold",
+    { opacity: 0.12 },
+    { opacity: 1, stagger: duration * 0.12, duration: duration * 0.25 },
+    0.65,
+  );
+  animate(
+    ".object-tracker:not(.exchange-identity)",
+    { opacity: 0.12, y: 5 },
+    { opacity: 0.6, y: 0, stagger: duration * 0.2, duration: duration * 0.4 },
+    0.3,
+  );
+  animate(
+    ".vault-bay",
+    { opacity: 0.06 },
+    { opacity: 0.58, stagger: duration * 0.065, duration: duration * 0.25 },
+    0.05,
+  );
+  animate(
+    ".vault-bay i",
+    { scaleY: 0.1 },
+    { scaleY: 1, stagger: duration * 0.065, duration: duration * 0.35 },
+    0.05,
+  );
+  animate(
+    ".portfolio-record",
+    { opacity: 0.16 },
+    { opacity: 0.6, duration: duration * 0.55 },
+    0.3,
+  );
+  animate(
+    ".cargo-scan",
+    { xPercent: -50, opacity: 0 },
+    { xPercent: 50, opacity: 0.35, duration: duration * 0.9 },
+    0.08,
+  );
+  animate(
+    ".route-origin",
+    { opacity: 0.25 },
+    { opacity: 1, duration: duration * 0.2 },
+  );
+  animate(
+    ".route-segment",
+    { scaleX: 0 },
+    { scaleX: 1, stagger: duration * 0.14, duration: duration * 0.22 },
+    0.12,
+  );
+  animate(
+    ".route-destination b, .channel-destination",
+    { opacity: 0.12 },
+    { opacity: 1, stagger: duration * 0.07, duration: duration * 0.25 },
+    0.35,
+  );
+  animate(
+    ".exchange-identity",
+    { opacity: 0.08, y: 4 },
+    {
+      opacity: 0.62,
+      y: 0,
+      stagger: duration * 0.25,
+      duration: duration * 0.45,
+    },
+    0.2,
+  );
+  animate(
+    ".exchange-record",
+    { opacity: 0.15 },
+    { opacity: 0.6, duration: duration * 0.6 },
+    0.1,
+  );
 }
 
-/** One stage, one playhead. Scene entrances and exits share a transition interval. */
-export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
+/** PageDirector: downstream ScrollTrigger authority, independent of IntroDirector.
+ * Called only after completion/skip. Its pin begins below the one-viewport entrance,
+ * so refresh adds runway below the visitor without shifting the completed frame. */
+export function mountPageDirector(root: HTMLElement, rail: HTMLElement | null) {
   const media = gsap.matchMedia();
   const stage = root.querySelector<HTMLElement>(".cinema-stage")!;
-  const scenes = Array.from(
-    stage.querySelectorAll<HTMLElement>("[data-scene]"),
-  );
+  const scenes = [
+    root.querySelector<HTMLElement>(".network-entrance")!,
+    ...Array.from(stage.querySelectorAll<HTMLElement>("[data-scene]")),
+  ];
   const warmScene = (index: number) => {
-    scenes[index]?.querySelectorAll<HTMLImageElement>("img[loading='lazy']").forEach(image => {
-      image.loading = "eager";
-      void image.decode().catch(() => { /* Text and placeholders remain available offline. */ });
-    });
+    scenes[index]
+      ?.querySelectorAll<HTMLImageElement>("img[loading='lazy']")
+      .forEach((image) => {
+        image.loading = "eager";
+        void image.decode().catch(() => {
+          /* Text and placeholders remain available offline. */
+        });
+      });
   };
   let active = 0;
   let destroyed = false;
@@ -85,46 +188,57 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
         short: "(max-height: 599px) and (orientation: landscape)",
       },
       (context) => {
-
         if (context.conditions?.mobile) {
           root.dataset.nativeCinema = "true";
-          const staging = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-              if (!entry.isIntersecting) return;
-              const index = scenes.indexOf(entry.target as HTMLElement);
-              warmScene(index);
-              warmScene(index + 1);
-            });
-          }, { rootMargin: "100% 0px" });
-          scenes.forEach(scene => staging.observe(scene));
-          // Only the opening pins on portrait mobile. Short landscape screens use
-          // native flow so header controls cannot consume the available stage.
-          const hero = root.querySelector<HTMLElement>(".hero");
-          if (!hero) return () => staging.disconnect();
-          const pinOpening = !context.conditions?.short;
-          const descent = gsap.timeline({ scrollTrigger: {
-            id: "gent-opening", trigger: hero, start: "top top",
-            end: () => pinOpening ? `+=${hero.clientHeight * 9}` : "bottom 25%",
-            pin: pinOpening, scrub: .65, anticipatePin: 1, invalidateOnRefresh: true,
-          } });
-          wakeNetwork(descent, hero);
-          if (pinOpening) {
-            // Scene 02 starts underneath the last pinned viewport. The portal's
-            // arrival frame hands off at the same document position, without a repeated room.
-            descent.set(hero, { autoAlpha: 0 }, OPENING_DURATION);
-          }
+          const staging = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const index = scenes.indexOf(entry.target as HTMLElement);
+                warmScene(index);
+                warmScene(index + 1);
+              });
+            },
+            { rootMargin: "100% 0px" },
+          );
+          scenes.forEach((scene) => staging.observe(scene));
           scenes.slice(1).forEach((scene) => {
+            if (scene.hasAttribute("data-intelligence")) return;
             const camera = scene.querySelector(".environment-camera");
             if (!camera) return;
-            const sceneFilm = gsap.timeline({ scrollTrigger: {
-              trigger: scene, start: "top 90%", end: "bottom top", scrub: .85,
-            } });
-            activateFacility(sceneFilm, scene, 0);
-            sceneFilm.fromTo(camera, { scale: 1.025, yPercent: 1 }, { scale: 1, yPercent: -1, ease: "none", duration: 1 }, 0);
-            sceneFilm.fromTo(scene.querySelector(".environment-light"), { opacity: .32 }, { opacity: .03, duration: .4 }, 0);
-            scene.querySelectorAll(".station-placard, .distribution-stops li, .location-plates > span").forEach((plate, i) => {
-              sceneFilm.fromTo(plate, { borderTopColor: "#b3955d40" }, { borderTopColor: "#e8c98e", duration: .2 }, Math.min(.8, i * .15));
+            const sceneFilm = gsap.timeline({
+              scrollTrigger: {
+                trigger: scene,
+                start: "top 90%",
+                end: "bottom top",
+                scrub: 0.85,
+              },
             });
+            activateFacility(sceneFilm, scene, 0);
+            sceneFilm.fromTo(
+              camera,
+              { scale: 1.025, yPercent: 1 },
+              { scale: 1, yPercent: -1, ease: "none", duration: 1 },
+              0,
+            );
+            sceneFilm.fromTo(
+              scene.querySelector(".environment-light"),
+              { opacity: 0.32 },
+              { opacity: 0.03, duration: 0.4 },
+              0,
+            );
+            scene
+              .querySelectorAll(
+                ".station-placard, .distribution-stops li, .location-plates > span",
+              )
+              .forEach((plate, i) => {
+                sceneFilm.fromTo(
+                  plate,
+                  { borderTopColor: "#b3955d40" },
+                  { borderTopColor: "#e8c98e", duration: 0.2 },
+                  Math.min(0.8, i * 0.15),
+                );
+              });
           });
           // WebKit can restore the hash before the local font and scene layout
           // settle. Reconcile once after load; subsequent scrolling stays native.
@@ -133,17 +247,27 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           let frame = 0;
           const alignNativeHash = () => {
             frame = requestAnimationFrame(() => {
-              if (cancelled || !initialHash || location.hash !== initialHash) return;
+              if (cancelled || !initialHash || location.hash !== initialHash)
+                return;
               try {
-                const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
-                if (target && root.contains(target)) target.scrollIntoView({ behavior: "instant", block: "start" });
-              } catch { /* Malformed external fragments leave normal flow intact. */ }
+                const target = document.getElementById(
+                  decodeURIComponent(location.hash.slice(1)),
+                );
+                if (target && root.contains(target))
+                  target.scrollIntoView({
+                    behavior: "instant",
+                    block: "start",
+                  });
+              } catch {
+                /* Malformed external fragments leave normal flow intact. */
+              }
             });
           };
           void document.fonts.ready.then(() => {
             if (cancelled) return;
             if (document.readyState === "complete") alignNativeHash();
-            else window.addEventListener("load", alignNativeHash, { once: true });
+            else
+              window.addEventListener("load", alignNativeHash, { once: true });
           });
           return () => {
             staging.disconnect();
@@ -157,8 +281,8 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
         root.dataset.cinemaReady = desktop ? "desktop" : "small";
         const select = (index: number, selector: string) =>
           scenes[index].querySelectorAll<HTMLElement>(selector);
-        gsap.set(scenes, { autoAlpha: 0 });
-        gsap.set(scenes[0], { autoAlpha: 1 });
+        gsap.set(scenes.slice(1), { autoAlpha: 0 });
+        gsap.set(scenes[1], { autoAlpha: 1 });
         const stops: number[] = [];
         const starts: number[] = [];
         const pans: { start: number; duration: number; overflow: number }[] =
@@ -171,8 +295,10 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           warmScene(index + 1);
           root.dataset.activeScene = String(index);
           scenes.forEach((scene, i) => {
-            scene.inert = i !== index;
-            scene.setAttribute("aria-hidden", String(i !== index));
+            if (i > 0) {
+              scene.inert = i !== index;
+              scene.setAttribute("aria-hidden", String(i !== index));
+            }
           });
           setLabel(index);
         };
@@ -184,7 +310,7 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
           defaults: { ease: "none" },
           onUpdate() {
             const time = this.time();
-            let index = 0;
+            let index = 1;
             starts.forEach((start, i) => {
               if (time >= start) index = i;
             });
@@ -247,67 +373,137 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
             .set(scenes[index - 1], { autoAlpha: 0 }, at + duration);
           return at + duration;
         };
-        let cursor = hold(0, 0);
-        wakeNetwork(film, scenes[0]);
-
-        // The supporting message holds while the mechanism opens; no competing
-        // headline swaps over the sculpture during activation.
-
-        cursor = OPENING_DURATION;
-        const originStop = OPENING_DURATION * .10;
-        // The portal arrives directly inside Scene 02. Origin copy remains in HTML fallback.
-        cursor = OPENING_DURATION - .52;
-        // The origin's aperture opens into a private development lab. One continuous playhead
-        // owns architecture, light and cargo; content never depends on a renderer.
-        let arrived = enter(1, cursor, { clipPath: "inset(0% 49.9% 0% 49.9%)", scale: 1.06 }, .8);
-        
-        film.fromTo(select(1, ".environment-camera"), { scale: 1.12, xPercent: 1, yPercent: -2 }, { scale: 1.06, xPercent: -1, yPercent: -2, duration: 1.4 }, cursor + .25);
-        film.to(select(1, ".environment-camera"), { scale: 1.075, xPercent: -1, yPercent: 0, duration: .9 }, arrived + .8);
-        film.to(select(1, ".environment-camera"), { scale: 1.09, xPercent: -2, yPercent: 1, duration: 1 }, arrived + 1.7);
-        film.fromTo(select(1, ".environment-light"), { opacity: .6 }, { opacity: .04, duration: 1.2 }, arrived - .3);
-        hold(1, arrived + .2);
+        // The entrance has already resolved. Scroll owns only Scene 02 onward.
+        let cursor = 0;
+        const originStop = 0;
+        let arrived = 0;
+        film.fromTo(
+          select(1, ".environment-camera"),
+          { scale: 1.12, xPercent: 1, yPercent: -2 },
+          { scale: 1.06, xPercent: -1, yPercent: -2, duration: 1.4 },
+          cursor + 0.25,
+        );
+        film.to(
+          select(1, ".environment-camera"),
+          { scale: 1.075, xPercent: -1, yPercent: 0, duration: 0.9 },
+          arrived + 0.8,
+        );
+        film.to(
+          select(1, ".environment-camera"),
+          { scale: 1.09, xPercent: -2, yPercent: 1, duration: 1 },
+          arrived + 1.7,
+        );
+        film.fromTo(
+          select(1, ".environment-light"),
+          { opacity: 0.6 },
+          { opacity: 0.04, duration: 1.2 },
+          arrived - 0.3,
+        );
+        hold(1, arrived + 0.2);
         const stations = select(1, ".station-placard");
         stations.forEach((station, i) => {
-          film.fromTo(station, { borderTopColor: "#b3955d40" }, { borderTopColor: "#e8c98e", duration: .7 }, arrived + i * .9);
-          film.fromTo(select(1, ".environment-foreground"), { xPercent: 0 }, { xPercent: -25, duration: 3 }, arrived);
+          film.fromTo(
+            station,
+            { borderTopColor: "#b3955d40" },
+            { borderTopColor: "#e8c98e", duration: 0.7 },
+            arrived + i * 0.9,
+          );
+          film.fromTo(
+            select(1, ".environment-foreground"),
+            { xPercent: 0 },
+            { xPercent: -25, duration: 3 },
+            arrived,
+          );
         });
         cursor = arrived + 3.2;
         // The approved sample opens into the multi-category product vault.
-        film.to(select(1, ".environment-camera"), { scale: 1.1, xPercent: -2, duration: 1.4 }, cursor);
-        film.to(select(1, ".environment-light"), { opacity: .88, duration: .8 }, cursor);
-        arrived = enter(2, cursor + .55, { opacity: 0, scale: 1.08 }, 1.25);
-        film.to(scenes[2], { opacity: 1, duration: .8 }, cursor + .55);
-        film.fromTo(select(2, ".environment-light"), { opacity: .92 }, { opacity: .02, duration: 1.15 }, arrived - .5);
-        film.fromTo(select(2, ".environment-camera"), { scale: 1.09, xPercent: 1 }, { scale: 1, xPercent: -1, duration: 3 }, arrived - .4);
-        cursor = hold(2, arrived + .75) + .6;
+        film.to(
+          select(1, ".environment-camera"),
+          { scale: 1.1, xPercent: -2, duration: 1.4 },
+          cursor,
+        );
+        film.to(
+          select(1, ".environment-light"),
+          { opacity: 0.88, duration: 0.8 },
+          cursor,
+        );
+        arrived = enter(2, cursor + 0.55, { opacity: 0, scale: 1.08 }, 1.25);
+        film.to(scenes[2], { opacity: 1, duration: 0.8 }, cursor + 0.55);
+        film.fromTo(
+          select(2, ".environment-light"),
+          { opacity: 0.92 },
+          { opacity: 0.02, duration: 1.15 },
+          arrived - 0.5,
+        );
+        film.fromTo(
+          select(2, ".environment-camera"),
+          { scale: 1.09, xPercent: 1 },
+          { scale: 1, xPercent: -1, duration: 3 },
+          arrived - 0.4,
+        );
+        cursor = hold(2, arrived + 0.75) + 0.6;
         // Widen the archive into the operating house. An architectural column
         // occludes the join while the same physical case enters the foreground.
-        film.to(select(2, ".environment-camera"), { scale: 1.02, duration: 1.4 }, cursor);
-        arrived = enter(3, cursor + .35, { opacity: 0, scale: 1.13 }, 1.2);
-        film.to(scenes[3], { opacity: 1, duration: 1 }, cursor + .35);
-        film.fromTo(stage.querySelector(".lens-column"), { xPercent: 120, opacity: 1 }, { xPercent: -120, duration: 1.65, immediateRender: false }, cursor);
+        film.to(
+          select(2, ".environment-camera"),
+          { scale: 1.02, duration: 1.4 },
+          cursor,
+        );
+        arrived = enter(3, cursor + 0.35, { opacity: 0, scale: 1.13 }, 1.2);
+        film.to(scenes[3], { opacity: 1, duration: 1 }, cursor + 0.35);
+        film.fromTo(
+          stage.querySelector(".lens-column"),
+          { xPercent: 120, opacity: 1 },
+          { xPercent: -120, duration: 1.65, immediateRender: false },
+          cursor,
+        );
         film.set(stage.querySelector(".lens-column"), { opacity: 0 }, arrived);
-        film.fromTo(select(3, ".environment-camera"), { scale: 1.14, xPercent: -3 }, { scale: 1, xPercent: 2, duration: 4.2 }, cursor + .35);
-        hold(3, arrived + .25);
-        select(3, ".distribution-stops li").forEach((stop,i) => {
-          film.fromTo(stop, { borderTopColor: "#b2945b40" }, { borderTopColor: "#e8c98e", duration: .55 }, arrived + i * .7);
+        film.fromTo(
+          select(3, ".environment-camera"),
+          { scale: 1.14, xPercent: -3 },
+          { scale: 1, xPercent: 2, duration: 4.2 },
+          cursor + 0.35,
+        );
+        hold(3, arrived + 0.25);
+        select(3, ".distribution-stops li").forEach((stop, i) => {
+          film.fromTo(
+            stop,
+            { borderTopColor: "#b2945b40" },
+            { borderTopColor: "#e8c98e", duration: 0.55 },
+            arrived + i * 0.7,
+          );
         });
-        select(3, ".location-plates > span").forEach((plate,i) => {
-          film.fromTo(plate, { borderColor: "#74644850" }, { borderColor: "#c2a166", duration: .5 }, arrived + i * .55);
+        select(3, ".location-plates > span").forEach((plate, i) => {
+          film.fromTo(
+            plate,
+            { borderColor: "#74644850" },
+            { borderColor: "#c2a166", duration: 0.5 },
+            arrived + i * 0.55,
+          );
         });
         cursor = arrived + 3.4;
         // Follow the product network into its human destination: the Exchange.
-        arrived = enter(4, cursor + .25, { opacity: 0, scale: 1.025 }, 1.35);
-        film.to(scenes[4], { opacity: 1, duration: 1.1 }, cursor + .25);
-        film.fromTo(select(4, ".environment-camera"), { scale: 1.025, rotation: -.25 }, { scale: 1, rotation: 0, duration: 2.8 }, cursor + .25);
-        film.fromTo(select(4, ".environment-light"), { opacity: .35 }, { opacity: .02, duration: 1.8 }, cursor + .25);
-        cursor = hold(4, arrived + .65) + .6;
+        arrived = enter(4, cursor + 0.25, { opacity: 0, scale: 1.025 }, 1.35);
+        film.to(scenes[4], { opacity: 1, duration: 1.1 }, cursor + 0.25);
+        film.fromTo(
+          select(4, ".environment-camera"),
+          { scale: 1.025, rotation: -0.25 },
+          { scale: 1, rotation: 0, duration: 2.8 },
+          cursor + 0.25,
+        );
+        film.fromTo(
+          select(4, ".environment-light"),
+          { opacity: 0.35 },
+          { opacity: 0.02, duration: 1.8 },
+          cursor + 0.25,
+        );
+        cursor = hold(4, arrived + 0.65) + 0.6;
         // A quiet editorial coda in the same room, never another spectacle.
-        arrived = enter(5, cursor, { opacity: 0 }, .9);
-        film.to(scenes[5], { opacity: 1, duration: .9 }, cursor);
-        hold(5, arrived + .3);
-        film.to({}, { duration: .5 });
-        updateActive(0);
+        arrived = enter(5, cursor, { opacity: 0 }, 0.9);
+        film.to(scenes[5], { opacity: 1, duration: 0.9 }, cursor);
+        hold(5, arrived + 0.3);
+        film.to({}, { duration: 0.5 });
+        updateActive(1);
         ScrollTrigger.create({
           animation: film,
           trigger: stage,
@@ -321,6 +517,10 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
         });
 
         const go = (index: number, focus = false) => {
+          if (index === 0) {
+            scenes[0].scrollIntoView({ behavior: "instant", block: "start" });
+            return;
+          }
           const trigger = film.scrollTrigger!;
           const time =
             index === 0 && location.hash === "#origins"
@@ -494,7 +694,6 @@ export function mountCinema(root: HTMLElement, rail: HTMLElement | null) {
   return () => {
     destroyed = true;
     media.revert();
-    exchangeSignal.set(0);
     originalFocus.forEach((value, node) => {
       if (value === null) node.removeAttribute("tabindex");
       else node.setAttribute("tabindex", value);

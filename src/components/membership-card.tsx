@@ -20,7 +20,7 @@ export function MembershipCard() {
           <span>
             MEMBERSHIP
             <br />
-            GENT DISTRIBUTION CO.
+            GENT RESERVE CO.
           </span>
         </div>
       </div>

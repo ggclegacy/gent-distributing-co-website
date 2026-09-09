@@ -11,16 +11,16 @@ export function AcadianaHero() {
         </div>
         <div className="hero-shade" />
         <div className="network-threshold" aria-hidden="true" />
-        <p className="engine-opening-label" aria-hidden="true">GENT DISTRIBUTION CO. <span>THE EXCHANGE / 01</span></p>
+        <p className="engine-opening-label" aria-hidden="true">GENT RESERVE CO. <span>THE EXCHANGE / 01</span></p>
         <div className="hero-copy">
           <p className="eyebrow"><span className="status-dot" /> 01 / ROOTED HERE</p>
           <h1 id="hero-title">Rooted here.<br /><em>Built to move further.</em></h1>
-          <p className="hero-description">Born in Lafayette. We discover, develop, curate and distribute exceptional goods—from Louisiana and beyond.</p>
+          <p className="hero-description">Born in Lafayette. Gent Reserve Co. discovers, develops and carries exceptional goods through curation, commerce and distribution.</p>
           <div className="hero-actions">
             <Link className="button" href="#collection">Explore the collection <span aria-hidden="true">↗</span></Link>
             <Link className="quiet-link" href="/approach">Follow our roots <span aria-hidden="true">↓</span></Link>
           </div>
-          <p className="hero-categories">A MODERN DISTRIBUTION HOUSE. <b>/</b> ONE STANDARD.</p>
+          <p className="hero-categories">CURATION. COMMERCE. CONNECTION. <b>/</b> ONE STANDARD.</p>
         </div>
         <div className="hero-bottom">
           <Link href="#philosophy"><span className="scroll-line" /> SCROLL TO FOLLOW THE STORY</Link>
@@ -33,7 +33,7 @@ export function AcadianaHero() {
         <div className="origin-story-copy">
           <p className="eyebrow">01 / THE PLACE. &nbsp; 02 / THE CONNECTION.</p>
           <h2 id="origin-title">Deep roots.<br /><em>New routes.</em></h2>
-          <p>Lafayette is home. Acadiana gives us our character, our first relationships, and a place to begin. From here, we’re building a distribution house for exceptional goods from Louisiana and beyond.</p>
+          <p>Lafayette is home. Acadiana gives us our character, our first relationships, and a place to begin. From here, we’re building a commerce and brand platform for exceptional goods, wherever we find them.</p>
           <p className="origin-method">Our roots guide how we do business. Our standard guides what we bring in.</p>
         </div>
         <div className="acadiana-network connection-outcomes">

@@ -18,12 +18,12 @@ export function Navigation() {
       <Link
         href="/"
         className="brand"
-        aria-label="Gent Distribution Co. home"
+        aria-label="Gent Reserve Co. home"
         onClick={() => setOpen(false)}
       >
         <BrandMark />
         <span className="wordmark">
-          GENT <span>DISTRIBUTION CO.</span>
+          GENT <span>RESERVE CO.</span>
         </span>
       </Link>
       <nav

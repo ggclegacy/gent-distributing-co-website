@@ -15,7 +15,7 @@ const coordinates = [[49,70],[92,65],[77,82],[68,73],[60,61],[82,58],[15,70],[23
 /** Real picture sources: the phone receives a separate vertically composed photograph.
  * The tracking layer shares the camera plane; DOM text stays sharp at every density.
  * All operational displays are explicitly conceptual, never live inventory or scores. */
-export function StoryEnvironment({ scene }: { scene: Scene }) {
+export function StoryEnvironment({ scene, instrumentation = true }: { scene: Scene; instrumentation?: boolean }) {
   const info = scenes[scene];
   const shared = { alt: info.alt, sizes: "100vw", quality: 75, loading: "lazy" as const };
   const desktop = getImageProps({ ...shared, src: `/images/story/${info.file}-landscape.webp`, width: 1536, height: 1024 }).props;
@@ -28,7 +28,7 @@ export function StoryEnvironment({ scene }: { scene: Scene }) {
           {/* getImageProps supplies the optimized fallback, intrinsic size and responsive srcset. */}
           <img {...desktop} alt={info.alt} className="environment-image" />
         </picture>
-        <div className={`gent-intelligence intelligence-${scene}`} aria-hidden="true">
+        {instrumentation && <div className={`gent-intelligence intelligence-${scene}`} aria-hidden="true">
           <div className="intelligence-heading"><span>GENT / {info.title}</span><small>VISION IN DEVELOPMENT</small></div>
           {scene === "workshop" && <>
             <div className="evaluation-record">
@@ -58,7 +58,7 @@ export function StoryEnvironment({ scene }: { scene: Scene }) {
             <span className="object-tracker exchange-identity identity-buyer">DISCOVERY / SPECIALTY RETAIL<small>PRODUCT → SHELF</small></span>
             <div className="exchange-record"><span>THE FUTURE EXCHANGE</span><b>MAKERS × PRODUCTS × PEOPLE</b><small>DISCOVER THROUGH GENT</small></div>
           </>}
-        </div>
+        </div>}
       </div>
     </div>
     <div className="environment-shade" aria-hidden="true" />

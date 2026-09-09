@@ -1,35 +1,87 @@
-# THE EXCHANGE
+# Gent Network entrance
 
-The homepage now renders its opening as a lazily loaded React Three Fiber / Three.js scene. The existing GSAP film remains the single scroll owner. `exchangeSignal.progress` is normalized 0–1; it drives every camera, component, product, light and caption. Existing later scenes, catalog, membership, navigation and commerce behavior are retained.
+The opening is a user-triggered, 10.5-second film. Gent is the infrastructure; categories are information carried through it. Louisiana, its routing layers, the national field, and a precision presentation module replace the product-chamber story. Existing catalog, membership, Shopify safeguards and downstream work remain intact.
 
-## Direction and timing
+## Two directors
 
-The opening lasts 12 authored timeline units. Mobile uses nine viewport heights of native scroll; desktop retains the shared full-site timeline. No wheel/touch interception or snapping is added. The film is reversible and uses demand rendering: stationary scroll does not keep rendering. Mobile portrait, tablet and desktop have separate camera tracks in `src/lib/exchange-film.ts`.
+`src/lib/intro-director.ts` is the sole writer of `exchangeSignal.progress`. One GSAP timeline advances an absolute normalized 0–1 playhead. No ScrollTrigger, wheel delta, touch delta or document position can seek this film. `EXCHANGE_DURATION`, chapter boundaries, and three independently authored camera tracks live in `src/lib/exchange-film.ts`.
 
-- 0–.08: macro artifact, light discovering the metal.
-- .08–.17: Lafayette origin and engineered recognition.
-- .17–.28: staggered depth separation of armor, chambers, rings and connectors.
-- .28–.55: coffee, personal care and wellness close-ups; other categories remain in depth.
-- .55–.64: physical outbound channels toward businesses, retail, hospitality and customers.
-- .64–.73: editorial collection with different depths and scales.
-- .73–.84: sequenced chambers, ring alignment, gold seams and final core seating.
-- .84–.94: campaign composition and “Rooted here. Built to move further.”
-- .94–1: the camera passes through the open core. Desktop directly reveals the existing Scene 02 through a narrow aperture; mobile uses the same Scene 02 environment as an arrival frame before native document flow resumes.
+`src/lib/cinema.ts` exports `mountPageDirector`. `SceneMotion` mounts it when the entrance publishes `EXPLORE`, and reverts it for Replay or Motion Off. It never imports the entrance signal. The entrance sits outside `.cinema-stage` and occupies one stable viewport. The downstream pin begins below it, so adding the downstream runway at completion does not replace, collapse or move the completed entrance.
 
-`?animatic` renders gray materials for camera/choreography review. This is a review switch, not a user-facing mode.
+Desktop retains the existing scroll transitions and phase events for the Gent Intelligence Layer. Mobile retains natural document scrolling and the intelligence panels' existing intersection-gated scroll sampling. Other downstream environments still use ScrollTrigger. Resize, font readiness and direct links retain the existing layout refresh and hash reconciliation. Direct section links skip the entrance and reach their requested section. Links clicked during the entrance establish their hash before the authority handoff, avoiding a race with Next Link and pinned-scene layout.
 
-## Model contract
+## State machine and controls
 
-The supplied geometry is procedural, not a final commissioned Blender asset. Products are packaging/category concepts, not assertions of a launched six-category catalog. Coffee remains the first release in the unchanged collection section.
+- Server: `DORMANT`, semantic heading, static Louisiana poster, Activate and Skip.
+- First real canvas frame: `READY`.
+- Activate before readiness: `PREPARING`, immediately acknowledged by `INITIALIZING NETWORK`; the playhead stays at zero.
+- Ready activation: `PLAYING`; the film runs once even if activation is repeated.
+- At 8.7 seconds: `RESOLVING`; the module and typography settle.
+- At 10.5 seconds: `EXPLORE`; scrolling is restored and PageDirector receives authority.
+- Skip or Escape: transient `SKIPPED`, then `EXPLORE` at exactly progress 1.
+- Save Data, reported memory <=2 GB, renderer import/render failure or context loss: `FALLBACK` mode retains static artwork and accessible controls.
+- Reduced motion or saved Motion Off: activation uses an 850 ms dissolve to the completed static composition. No camera path is sampled. Changing Motion during playback also resolves safely.
+- An eight-second readiness watchdog prevents a permanently stuck initialization state.
 
-Hierarchy: `exchange_root` → `core` → `monogram`; `outer_armor`; `inner_ring`; `distribution_ring`; `category_provisions`, `category_personalcare`, `category_wellness`, `category_pantry`, `category_apparel`, `category_accessories`; `connector_0` through `connector_5`; `gold_channels`. Products have `product_0`–`product_5` anchors. Units are meters, front is +Z, up +Y, and the spindle is at the origin.
+While preparing/playing/resolving, the director fixes the document at its captured position. Completion, Skip, navigation and unmount restore the exact prior inline styles and position. This position restoration is not film playback. No wheel/touch listener consumes gestures and there is no focus trap. Navigation and Motion stay usable. Explicit Skip moves focus to Explore after React commits the completed controls. Keyboard Escape is available during playback.
 
-To replace the mechanism set `NEXT_PUBLIC_EXCHANGE_GLB` to a same-origin public GLB URL. `exchange-assets.ts` validates required named nodes before applying any replacement; visuals sit beneath existing animation pivots. Export each node at its intentional local pivot with applied scale. Include `monogram` so portal visibility remains controlled. Keep a clear central aperture. Failed optional asset loads retain the procedural scene. Meshopt-compressed GLBs are supported without an external decoder service. Draco and KTX2 are not configured because this pass has no asset requiring them; do not add network decoder dependencies without a measured need.
+Completion is remembered in session storage under `gent-network-complete`. It does not force repeat playback on route return/reload. Completed-session and direct-section visits keep the static final composition and defer the renderer until Replay requests it. `REPLAY NETWORK ↻` tears down downstream authority, resets all absolute poses and starts again. Storage denial remains harmless.
 
-Products are isolated in `createExchange` and can be replaced at their named anchors without changing choreography. Product label textures and material grain are generated locally, with no third-party font or image request. Future final assets should bake restrained brushed-metal roughness, product paper creases and approved packaging text, with 1K mobile texture atlases and 2K hero maps only where macro inspection justifies them.
+## Choreography
 
-## Fallback and lifecycle
+| Film time | Physical action |
+| --- | --- |
+| Before activation | Dark Louisiana relief; recessed G and edge discovery. |
+| 0–1.2 s | Lafayette ignition, then gold routing channels. |
+| 1.2–3.0 s | Shell, routing plane and smoked intelligence foundation separate; precision rings emerge from beneath the artifact. |
+| 3.0–5.6 s | National relief resolves; routes and destination rings activate in sequence. Sparse projected DOM labels follow real 3D anchors. |
+| 5.6–7.3 s | A selected route gains emphasis; the precision transport module arrives and the G travels from origin to authentication. Category identifiers remain typographic information. |
+| 7.3–8.7 s | The module opens; the G follows its lid as an authentication seal. No launched product lineup is implied. |
+| 8.7–10.5 s | Camera settles, instrumentation clears and the following lab environment softly appears in depth. Final copy and Explore resolve into ordinary page layout. |
 
-Desktop uses a maximum DPR of 1.5. Standard/mobile reduces ring segments and indices and caps DPR at 1.25. Neither tier uses expensive postprocessing. Reduced motion, saved Motion Off, Save Data and reported device memory <=2GB use the pre-rendered campaign and native HTML. Render errors/context loss also restore the readable campaign and remove cinema pinning. Switching motion destroys the optional canvas; effect cleanup removes the signal subscriber and context listener, and disposes geometry, materials, textures and the PMREM environment. The photo fallback is generated from the actual campaign pose and has separate landscape/portrait framing.
+Routes represent reach, destinations and ambition, not owned facilities. The lower 48 field uses US Atlas 3 / US Census 2017 Albers boundaries. The vendored source, license and deterministic preparation script are local. The field is artistic geographic relief, not an operational GIS or terrain-elevation claim.
 
-The existing source repo is `/Users/neilstutes/Desktop/gent-distribution-co-website`, remote `ggclegacy/gent-distributing-co-website`. Its existing uncommitted later-scene work was included in the working copy and must remain untouched by a broad reset or commit. There is no local `.vercel` project link or Sites hosting config. This change does not imply a public deployment.
+## Scene and replacement contract
+
+`src/components/exchange/network-model.ts` builds the procedural production scene. Units are meters, +Y is north/up, +Z faces the visitor, and the Louisiana geographic center is the origin. Camera animation is always in code.
+
+```
+gent_network_root
+  louisiana
+    shell
+    routing / origin_channels
+    intelligence
+    lafayette_node
+    mechanism
+      origin_ring
+      routing_ring
+      intelligence_ring
+  gent_core                  # independent world pivot permits continuous transfer
+  united_states
+    terrain / lower_48_relief
+    destination_nodes / destination_0…6
+    route_anchors / route_0…6
+  transport
+    capsule_shell / gent_seal
+    capsule_core
+  hud_anchors / source
+  retired_visuals            # invisible resource-lifetime container
+```
+
+`NEXT_PUBLIC_GENT_NETWORK_GLB` optionally points to a same-origin GLB. `network-assets.ts` validates all replacement leaves before any mutation. Required named groups: `shell`, `intelligence`, `origin_ring`, `routing_ring`, `intelligence_ring`, `capsule_shell`, `capsule_core`. These groups must not be nested inside one another; each must contain visual descendants at its local origin with applied scale. Their visuals are placed beneath the existing code-owned pivots. Animated routing channels, core transfer, geographic anchors and seal pivot stay in code. Invalid, cross-origin or failed assets leave the procedural scene usable. Meshopt is supported locally; Draco/KTX2/network decoder services are unnecessary for this asset set.
+
+The old Exchange model/loader remain available for historical reference but are not the active opening asset contract. The procedural scene is not represented as a commissioned Blender asset. Replacement leaves and resources are disposed on teardown; shared materials are retained safely while a replacement is installed.
+
+## Responsive composition and loading
+
+Portrait, tablet and desktop camera tracks are separately authored. Portrait compresses the national field while retaining an enlarged origin relief; it does not simply shrink desktop. HUD anchors are projected through the current Three camera into DOM coordinates, and labels outside the safe central field are omitted. Critical CTA, Skip, chapter, status and resolution copy are HTML. Controls clear persistent navigation and the existing Motion control, including short screens and mobile safe areas.
+
+The local dormant poster and semantic HTML arrive without WebGL. The renderer is dynamically imported only for eligible devices. The poster fades only after a real scene frame is ready. The completed fallback is also an export of the same authored scene, with separate portrait and landscape images. No percentage loader, third-party image/font request or postprocessing chain is required.
+
+The renderer uses demand frames. Film updates and resize invalidate it; stationary dormant and completed scenes settle. DPR is capped at 1.25 on standard/mobile and 1.5 on desktop. National geography is combined into one relief mesh and one edge field; mechanical ticks are instanced. Shared textures/materials and absolute poses avoid accumulated transforms and unnecessary React renders.
+
+## Review and verification
+
+Run `npm run lint`, `npm run build`, then start that production build and set `PLAYWRIGHT_BASE_URL` for `playwright.network.config.ts`. The suite covers the new input/state contract, browser wheel/native touch, full timing, Skip/Replay, session persistence, resize, fallbacks, context loss, idle rendering, navigation, and the existing downstream/catalog/product journeys.
+
+For local art review only, `next dev` accepts `?network-frame=0…1`; this seeks through the same director and cannot run in production. `?animatic` retains neutral material review. `scripts/network-frames.mjs` captures representative frames and exports matching posters. It does not simulate visitor playback by scrolling. See `docs/network/verification.md` for the actual results and limits of this delivery.

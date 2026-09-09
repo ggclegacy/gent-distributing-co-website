@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/brand";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getProduct, publicProducts, originLabel } from "@/lib/catalog";
@@ -13,12 +14,10 @@ export async function generateMetadata({
 }) {
   const { handle } = await params;
   const product = getProduct(handle);
-  return {
-    title: product?.name ?? "Product not found",
-    description: product
-      ? `${product.description} ${product.detail}`
-      : undefined,
-  };
+  return pageMetadata(
+    product?.name ?? "Product not found",
+    product ? `${product.description} ${product.detail}` : "This product could not be found. Explore the Gent Reserve Co. collection.",
+  );
 }
 export default async function ProductPage({
   params,

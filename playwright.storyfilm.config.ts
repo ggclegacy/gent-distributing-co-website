@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:/pacing\.spec\.ts/,workers:1,timeout:120000,expect:{timeout:25000},reporter:[['list'],['json',{outputFile:'docs/story-film/test-report.json'}]],use:{baseURL:process.env.PLAYWRIGHT_BASE_URL||'http://localhost:3093',viewport:{width:1440,height:900},video:'on',trace:'retain-on-failure'},projects:[{name:'chromium',use:{browserName:'chromium'}}]});

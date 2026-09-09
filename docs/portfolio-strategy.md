@@ -1,8 +1,8 @@
-# Gent Distribution Co. — portfolio strategy
+# Gent Reserve Co. — portfolio strategy
 
 Current positioning, September 7, 2026. This guide and brand-voice.md supersede earlier copy in historical visual-verification and hero concept notes.
 
-Gent is a modern premium multi-category distribution house that discovers, develops, curates and distributes exceptional goods. Lafayette / Acadiana is its origin, identity and relationship advantage. Louisiana remains an important source, never a sourcing or category restriction. The standard determines what belongs in the network.
+Gent Reserve Co. is a premium commerce, curation, distribution, logistics and brand platform that discovers, develops, curates and distributes exceptional goods. Lafayette / Acadiana is its origin, identity and relationship advantage. Louisiana remains an important source, never a sourcing or category restriction. The standard determines what belongs in the network.
 
 ## Launch and expansion
 

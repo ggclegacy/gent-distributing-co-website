@@ -21,7 +21,7 @@ export function ProductObject({
         <div className="package-label">
           <span className="package-monogram">G</span>
           <span className="package-brand">GENT</span>
-          <span className="package-small">DISTRIBUTION CO.</span>
+          <span className="package-small">RESERVE CO.</span>
           <div className="package-rule" />
           <span className="package-kind">
             {label ?? (kind === "bundles" ? "COLLECTION" : kind.toUpperCase())}

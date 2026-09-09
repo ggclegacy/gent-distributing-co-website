@@ -8,25 +8,25 @@ export function Footer() {
         <Link
           href="/"
           className="brand"
-          aria-label="Gent Distribution Co. home"
+          aria-label="Gent Reserve Co. home"
         >
           <BrandMark />
           <span className="wordmark">
-            GENT <span>DISTRIBUTION CO.</span>
+            GENT <span>RESERVE CO.</span>
           </span>
         </Link>
-        <p>Lafayette roots. Exceptional goods. A wider horizon.</p>
+        <p>Louisiana roots. Considered goods. Connected commerce.</p>
         <ExperienceControls />
       </div>
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Gent Distribution Co.</span>
+        <span>© {new Date().getFullYear()} Gent Reserve Co.</span>
         <div>
           <Link href="/#collection">Collection</Link>
           <Link href="/approach">The house</Link>
           <Link href="/membership">Membership</Link>
           <a href="#top">Back to top ↑</a>
         </div>
-        <span>DISCOVERY. QUALITY. RELATIONSHIPS.</span>
+        <span>CURATION. COMMERCE. CONNECTION.</span>
       </div>
     </footer>
   );

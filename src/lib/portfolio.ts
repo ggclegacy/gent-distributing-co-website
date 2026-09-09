@@ -14,7 +14,7 @@ export const businessLayers = {
   "gent-developed": {
     label: "Developed by Gent",
     title: "Our own goods.",
-    description: "Products developed or private-labeled for the house. Gent Coffee begins this chapter, with sourcing and product details shared before release.",
+    description: "Products developed for Gent Reserve Co., from concept to brand and packaging. Legacy Reserve coffee begins this chapter; sourcing and release details come first.",
   },
   represented: {
     label: "Represented by Gent",
@@ -24,13 +24,13 @@ export const businessLayers = {
   selected: {
     label: "Selected by Gent",
     title: "A considered selection.",
-    description: "Carefully chosen wholesale and resale goods that meet our standard. Selection is distinct from ownership or exclusive representation.",
+    description: "Exceptional goods selected to carry alongside our own. Quality, usefulness and brand fit earn a place; each maker keeps their identity.",
   },
 } as const;
 export type BusinessLayer = keyof typeof businessLayers;
 
 export const brands = {
-  gent: { name: "Gent Distribution Co.", status: "in-development" },
+  gent: { name: "Gent Reserve Co.", status: "in-development" },
   "groomed-gent": { name: "Groomed Gent Co.", status: "planned" },
 } as const;
 export type BrandId = keyof typeof brands;

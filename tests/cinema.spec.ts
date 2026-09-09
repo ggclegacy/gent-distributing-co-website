@@ -8,21 +8,32 @@ const ids = [
   "welcome",
 ];
 async function ready(page: import("@playwright/test").Page) {
+  await expect(page.locator(".network-entrance")).toHaveAttribute(
+    "data-beat",
+    /.+/,
+  );
+  if (
+    (await page.locator("[data-cinema]").getAttribute("data-intro-state")) !==
+    "EXPLORE"
+  )
+    await page.locator(".network-skip").click();
+  await expect(page.locator(".network-entrance")).toHaveAttribute(
+    "data-state",
+    "EXPLORE",
+  );
   const viewport = page.viewportSize();
   if (viewport && (viewport.width < 1000 || viewport.height < 700)) {
-    await expect(page.locator(".cinema-tools .motion-control")).toBeVisible();
-    await expect(page.locator(".pin-spacer")).toHaveCount(viewport.height >= 600 || viewport.height > viewport.width ? 1 : 0);
+    await expect(page.locator(".pin-spacer")).toHaveCount(0);
     return;
   }
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
     "data-cinema-ready",
-    /desktop|small/,
-    { timeout: 15000 },
+    "desktop",
   );
   await expect(page.locator(".pin-spacer")).toHaveCount(1);
 }
 
-test("all six scenes share one stage, with reversible native-scroll transitions and no gaps", async ({
+test("five downstream scenes share one scroll stage independently of the entrance", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -31,16 +42,16 @@ test("all six scenes share one stage, with reversible native-scroll transitions 
   await ready(page);
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
     "data-active-scene",
-    "0",
+    "1",
   );
   const end = await page
     .locator(".pin-spacer")
     .evaluate((el) => el.getBoundingClientRect().height - innerHeight);
   const seen = new Set<string>();
-  for (let y = 0; y < end; y += 450) {
+  for (let y = 900; y < end + 900; y += 650) {
     await page.evaluate((top) => scrollTo({ top, behavior: "instant" }), y);
     // Allow the 300 ms scrub interpolation to settle before sampling the scene.
-    await page.waitForTimeout(350);
+    await page.waitForTimeout(1100);
     const state = await page.evaluate(() => ({
       active:
         document.querySelector<HTMLElement>("[data-cinema]")!.dataset
@@ -60,13 +71,16 @@ test("all six scenes share one stage, with reversible native-scroll transitions 
     "data-active-scene",
     "5",
   );
-  expect(seen.size).toBe(6);
+  expect(seen.size).toBe(5);
   await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
   await expect(page.locator("[data-cinema]")).toHaveAttribute(
     "data-active-scene",
-    "0",
+    "1",
   );
-  await expect(page.locator(".exchange-film")).toHaveAttribute("data-beat", "artifact");
+  await expect(page.locator(".exchange-film")).toHaveAttribute(
+    "data-progress",
+    "1.0000",
+  );
   expect(errors).toEqual([]);
 });
 
@@ -75,14 +89,15 @@ test("scene navigation exposes only the active scene and maintains product inter
 }) => {
   await page.goto("/");
   await ready(page);
-  for (let i = 0; i < ids.length; i++) {
+  for (let i = 1; i < ids.length; i++) {
     await expect(page.locator("[data-cinema]")).toHaveAttribute(
       "data-active-scene",
       String(i),
     );
     await expect(page.locator("#" + ids[i])).not.toHaveAttribute("inert");
-    expect(await page.locator("[data-scene][inert]").count()).toBe(5);
-    if (i >= 3) await expect(page.locator(".lens-column")).toHaveCSS("opacity", "0");
+    expect(await page.locator("[data-scene][inert]").count()).toBe(4);
+    if (i >= 3)
+      await expect(page.locator(".lens-column")).toHaveCSS("opacity", "0");
     await page.screenshot({ path: `test-results/scene-${i}-desktop.png` });
     if (i < 5)
       await page
@@ -93,6 +108,7 @@ test("scene navigation exposes only the active scene and maintains product inter
     page.getByRole("button", { name: "Next scene", exact: true }),
   ).toBeDisabled();
   await page.getByRole("link", { name: "Go to collection" }).click();
+  await page.locator(".il-collection-index summary").click();
   const coffee = page.getByRole("tab", { name: "01 Coffee" });
   await coffee.focus();
   await page.keyboard.press("ArrowRight");
@@ -113,7 +129,7 @@ for (const [index, id] of ids.entries()) {
     await ready(page);
     await expect(page.locator("[data-cinema]")).toHaveAttribute(
       "data-active-scene",
-      String(index),
+      String(Math.max(1, index)),
     );
     await expect(page.locator("#" + id)).toHaveCSS("opacity", "1");
     expect(
@@ -149,23 +165,38 @@ test("motion preference restores a readable document and persists", async ({
   await ready(page);
 });
 
-test("mobile pins the opening, preserves product controls and cleans up responsively", async ({ page }) => {
+test("mobile entrance remains one viewport and preserves native product controls", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await ready(page);
-  const initial = await page.locator(".exchange-film").getAttribute("data-progress");
-  await page.evaluate(() => scrollTo({top: 400, behavior: "instant"}));
-  await expect.poll(() => page.locator(".exchange-film").getAttribute("data-progress")).not.toBe(initial);
+  const initial = await page
+    .locator(".exchange-film")
+    .getAttribute("data-progress");
+  await page.evaluate(() => scrollTo({ top: 400, behavior: "instant" }));
+  await expect
+    .poll(() => page.locator(".exchange-film").getAttribute("data-progress"))
+    .toBe(initial);
   for (const id of ids) {
     await expect(page.locator("#" + id)).toBeVisible();
     await expect(page.locator("#" + id)).not.toHaveAttribute("inert");
   }
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
   await page.getByRole("link", { name: "Go to collection" }).click();
+  await page.locator(".il-collection-index summary").click();
   await page.getByRole("tab", { name: "03 Seasonings" }).click();
-  await page.getByRole("link", {name: "Explore seasonings", exact: true}).click();
+  await page
+    .getByRole("link", { name: "Explore seasonings", exact: true })
+    .click();
   await expect(page).toHaveURL(/products\/gent-seasonings/);
-  await expect(page.getByRole("heading", {name: "Gent Seasonings", exact: true})).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Gent Seasonings", exact: true }),
+  ).toBeVisible();
   await page.goBack();
   await expect(page.locator("[data-cinema]")).toBeVisible();
   await page.setViewportSize({ width: 844, height: 390 });
@@ -192,20 +223,20 @@ test("no JavaScript and system reduced-motion expose every scene in order", asyn
 });
 
 for (const width of [320, 390]) {
-  test(`compact ${width}px phone keeps the opening goods and controls readable`, async ({
+  test(`compact ${width}px phone retains an accessible Louisiana entrance`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: 667 });
-    await page.goto("/#origins");
+    await page.goto("/");
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
-    await expect(page.locator(".origin-products")).toHaveCSS("opacity", "1");
-    await page.locator(".origin-products").scrollIntoViewIfNeeded();
-    await expect(page.locator(".origin-products")).toBeInViewport();
+    await expect(page.getByRole("heading", { level: 1 })).toBeInViewport();
+    await expect(
+      page.getByRole("button", { name: "ACTIVATE THE NETWORK" }),
+    ).toBeInViewport();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await page.screenshot({ path: `test-results/compact-${width}.png` });
   });
 }

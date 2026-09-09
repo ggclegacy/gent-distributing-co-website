@@ -27,9 +27,10 @@ for (const width of [320, 768, 1440]) {
   await page.setViewportSize({width,height:900});
   await page.emulateMedia({reducedMotion:"reduce"});
   await page.goto("/");
-  await expect(page.locator("h1")).toContainText("further.");
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Louisiana and beyond/);
+  await expect(page.locator("h1")).toContainText("Built to move exceptional things.");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /rooted in Louisiana with a wider reach/);
   await expect(page.locator("main")).not.toContainText("Made here.");
+  await page.locator(".il-collection-index summary").click();
   await expect(page.getByRole("tab")).toHaveCount(4);
   await page.getByRole("tab", {name:"04 Sauces"}).click();
   await page.getByRole("link",{name:"Explore sauces",exact:true}).click();

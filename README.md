@@ -1,4 +1,6 @@
-# Gent Distribution Co.
+# Gent Reserve Co.
+
+Gent Reserve Co.’s premium commerce, curation, distribution, logistics and brand platform. Louisiana heritage, with a selection built across categories and origins.
 
 Custom Next.js App Router / TypeScript storefront, designed for Vercel and a Shopify commerce backend.
 
@@ -35,7 +37,7 @@ Import this GitHub repository as a Next.js project. Default build (`npm run buil
 
 ## Brand language
 
-See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hierarchy, claim standards, and copy ownership. Gent is a modern premium multi-category distribution house, born in Lafayette and built to reach beyond Louisiana. See [portfolio strategy](docs/portfolio-strategy.md) for the catalog model, business layers, launch scope and provenance rules.
+See [the brand voice guide](docs/brand-voice.md) for positioning, messaging hierarchy, claim standards, and copy ownership. Gent Reserve Co. is a premium commerce, curation, distribution, logistics and brand platform, born in Lafayette and built to reach beyond Louisiana. See [portfolio strategy](docs/portfolio-strategy.md) for the catalog model, business layers, launch scope and provenance rules.
 
 ## Design
 

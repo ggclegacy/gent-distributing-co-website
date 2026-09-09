@@ -12,7 +12,7 @@ export default function NotFound() {
         We couldn’t find that page. The collection is a good place to start.
       </p>
       <Link className="button" href="/">
-        Return to Gent ↗
+        Return to Gent Reserve Co. ↗
       </Link>
     </main>
   );

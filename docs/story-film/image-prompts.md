@@ -1,0 +1,11 @@
+# Product concept assets
+
+Generated with the built-in image generation tool; original Legacy Reserve coffee artwork was reused unchanged. Assets are `public/images/story-film/gent-honey.png` and `public/images/story-film/gent-seasonings.png`. PNG alpha is preserved; deployment copies are resized to 1024px height.
+
+## Honey
+
+Use case: product-mockup. Create a photorealistic luxury Gent Reserve Co. honey jar packaging concept, isolated on genuinely transparent background, portrait 2:3. Single upright substantial clear amber glass honey jar with rich golden honey inside, deep black ribbed metal lid, dark forest-green paper label with restrained warm gold foil typography. Exact label text, beautifully readable: GENT / HONEY / THE GENT COLLECTION. No other text, no origin, quantity, certification or factual claims. Full entire object visible with generous transparent margins, front view with very slight right-side depth. Premium real studio photography with soft cream key light, narrow gold edge highlights, sharp tactile glass and paper detail. Quiet sophisticated materials, not plastic, no sci-fi decoration on the jar itself, no pedestal or props. This is a concept product asset for a premium black/gold/green cinematic distribution website. Save transparent alpha.
+
+## Seasonings
+
+Use case: product-mockup. Create a photorealistic luxury Gent Reserve Co. seasoning packaging concept, isolated on genuinely transparent background, portrait 2:3. Single upright tall cylindrical smoked amber glass seasoning jar, visible warm russet spices, brushed black metal screw lid. Deep forest-green label with restrained warm gold foil typography. Exact label text, beautifully readable: GENT / SEASONINGS / THE GENT COLLECTION. No other text, no origin, quantity, certification or factual claims. Full entire object visible with generous transparent margins, front view with very slight left-side depth. Premium real studio photography with soft cream key light and narrow gold edge highlights. Sharp tactile paper/glass detail. Quiet sophisticated materials, no plastic, no sci-fi decorations on jar itself, no pedestal or props. This is a concept product asset for a premium black/gold/green cinematic distribution website. Save transparent alpha.

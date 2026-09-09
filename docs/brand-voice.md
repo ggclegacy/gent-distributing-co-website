@@ -1,12 +1,12 @@
-# Gent Distribution Co. — Brand voice
+# Gent Reserve Co. — Brand voice
 
 ## Foundation
-Gent is a modern premium multi-category distribution house. Distribution is the mechanism; trust, discovery, curation, quality, provenance, and relationships are the reason to care. We discover, develop, curate, and distribute exceptional goods through our own products, brands we represent, and carefully selected wholesale/resale goods. Lafayette / Acadiana is our origin, identity, relationship advantage, and an important source of products. It never restricts sourcing or categories. Never imply all goods are Louisiana-made.
+Gent Reserve Co. is a premium commerce, curation, distribution, logistics and brand platform. Distribution is the mechanism; trust, discovery, curation, quality, provenance, and relationships are the reason to care. We discover, develop, curate, and distribute exceptional goods through our own products, brands we represent, and carefully selected wholesale/resale goods. Lafayette / Acadiana is our origin, identity, relationship advantage, and an important source of products. It never restricts sourcing or categories. USA-made is preferred where appropriate; quality and brand fit come first. Never imply all goods are Louisiana-made or exclusively USA-made.
 
 Exceptional products and their makers deserve more reach. Customers deserve substance and a clear reason to choose. Good business rests on reputation, relationships, a meaningful handshake, and keeping your word. Premium does not mean pretentious. Local does not mean small. Growth should preserve what makes a product special.
 
 ## Voice
-Write with humble confidence: capable, curious, grounded, disciplined, and warm. Think a sophisticated merchant who knows the goods and welcomes you in. Southern hospitality lives in the welcome, not a forced dialect. Masculine luxury comes through restraint and standards, not exclusivity or superiority.
+Write with humble confidence: masculine, modern, refined, disciplined, and powerful through restraint. Think a sophisticated merchant who knows the goods and welcomes you in. Southern hospitality lives in the welcome, not a forced dialect. Masculine luxury comes through restraint and standards, not exclusivity or superiority.
 
 Use short, intentional sentences and concrete nouns. Name the product, person, place, or decision whenever facts are available. Pair an evocative headline with supporting copy that explains something. Keep the black, gold, and deep green scene-based experience; let the copy give it substance.
 

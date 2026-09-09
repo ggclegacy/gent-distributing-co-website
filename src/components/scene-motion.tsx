@@ -20,15 +20,23 @@ export function SceneMotion() {
       revert = undefined;
       if (
         location.hash === "#origins" ||
-        root.dataset.exchangeRenderer !== "webgl" ||
+        root.dataset.introState !== "EXPLORE" ||
+        (
+          navigator as Navigator & {
+            connection?: { saveData?: boolean };
+            deviceMemory?: number;
+          }
+        ).connection?.saveData ||
+        ((navigator as Navigator & { deviceMemory?: number }).deviceMemory ??
+          8) <= 2 ||
         reduced.matches ||
         document.documentElement.dataset.motion === "paused"
       )
         return;
       try {
-        const { mountCinema } = await import("@/lib/cinema");
+        const { mountPageDirector } = await import("@/lib/cinema");
         if (disposed || ticket !== generation) return;
-        revert = mountCinema(root, rail.current);
+        revert = mountPageDirector(root, rail.current);
       } catch {
         // A failed optional motion chunk must never hide the content.
         root.removeAttribute("data-cinema-ready");
@@ -40,7 +48,10 @@ export function SceneMotion() {
       attributeFilter: ["data-motion"],
     });
     const rendererObserver = new MutationObserver(sync);
-    rendererObserver.observe(root, {attributes:true, attributeFilter:["data-exchange-renderer"]});
+    rendererObserver.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-intro-state"],
+    });
     reduced.addEventListener("change", sync);
     void sync();
     return () => {
