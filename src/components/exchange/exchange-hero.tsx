@@ -346,9 +346,11 @@ export function ExchangeHero() {
         <h1 id="hero-title">
           Born in Louisiana.
           <br />
-          <em>Built to move exceptional things.</em>
+          <em>Built for national reach.</em>
         </h1>
+        <p className="network-invitation" id="network-invitation">Enter the Reserve. See how exceptional goods move from origin to opportunity.</p>
         <button
+          aria-describedby="network-invitation"
           className="network-activate"
           disabled={running || completed}
           onClick={() => {
@@ -356,7 +358,9 @@ export function ExchangeHero() {
             skipButton.current?.focus({ preventScroll: true });
           }}
         >
-          ACTIVATE THE NETWORK <span aria-hidden="true">→</span>
+          <span className="network-play" aria-hidden="true">▷</span>
+          <span className="network-activate-label">ACTIVATE THE NETWORK</span>
+          <span className="network-activate-arrow" aria-hidden="true">→</span>
         </button>
         <noscript>
           <a className="network-static-explore" href="#philosophy">

@@ -1,0 +1,209 @@
+/* Five authored scenes. Scroll distance belongs to each chapter, never to the intro. */
+.gent-journey .cinematic-chapter {position:relative;isolation:isolate;overflow:visible;min-height:100svh;scroll-margin-top:0;background:#060b08;color:#eeeade;--ch-p:0;--ch-assembly:0;--ch-approval:0;--ch-shelf:0;--ch-delivery:0;--ch-invitation:0;--ch-settle:0}
+.gent-journey .cinematic-chapter[data-animated="true"] {min-height:340svh}
+.gent-journey .chapter-closing[data-animated="true"] {min-height:160svh}
+.chapter-viewport {position:relative;height:100svh;min-height:680px;overflow:hidden;isolation:isolate}
+[data-animated="true"] .chapter-viewport {position:sticky;top:0}
+.cinematic-chapter .story-environment {position:absolute;inset:0;height:100%;min-height:0;z-index:-2;pointer-events:none}
+.cinematic-chapter .environment-camera {inset:-8%;width:auto;height:auto;transform:scale(calc(1.12 - var(--ch-p)*.1))}
+.cinematic-chapter .room-plane {inset:0;width:100%;height:100%;aspect-ratio:auto}
+.cinematic-chapter .environment-image {width:100%;height:100%;object-fit:cover;filter:brightness(.48) saturate(.75)}
+.cinematic-chapter .environment-foreground,.cinematic-chapter .environment-light,.cinematic-chapter .scene-concept-note {display:none}
+.chapter-shade {position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,#040906d9,transparent 70%),linear-gradient(0deg,#040906 2%,#040906ad 19%,transparent 48%,#04090633 80%,#040906)}
+.chapter-heading {position:absolute;z-index:3;left:6%;top:145px;width:48%;pointer-events:none}
+.chapter-index,.chapter-kicker {font:12px/1.5 var(--font-sans);letter-spacing:.14em;color:#dcc38f;margin:0 0 18px}
+body .cinematic-chapter h2 {font:400 clamp(42px,4.4vw,72px)/1.03 var(--font-sans);letter-spacing:-.055em;text-transform:none;margin:0;text-wrap:balance}
+body .cinematic-chapter h2 em {color:#d9bf86;font-style:normal}
+.chapter-narrative {position:absolute;z-index:4;left:6%;bottom:155px;width:min(42%,510px)}
+.chapter-beat {display:none}
+.chapter-beat[data-selected="true"] {display:block}
+.chapter-kicker {margin:0 0 8px}
+body .chapter-beat h3 {font:400 clamp(26px,2.2vw,36px)/1.15 var(--font-sans);letter-spacing:-.035em;text-transform:none;margin:0 0 12px;color:#f1edde}
+.chapter-description {font:16px/1.55 var(--font-sans);color:#d1d6c8;max-width:470px;margin:0}
+.chapter-details {margin-top:12px;font:14px/1.5 var(--font-sans);color:#c9b887}
+.chapter-details summary {cursor:pointer;min-height:32px;width:fit-content}
+.chapter-details[open] {position:relative;background:#08120ff5;padding:12px;border:1px solid #c4912f55;box-shadow:0 10px 30px #0008}
+.chapter-details dl {display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:10px 0 0}
+.chapter-details dt {font-size:12px;letter-spacing:.04em;color:#c9b887}
+.chapter-details dd {font-size:16px;margin:5px 0;color:#e3e6d9}
+.chapter-actions {display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:14px}
+.chapter-actions a,.chapter-actions button {display:inline-flex;gap:20px;align-items:center;min-height:44px;padding:10px 0;border:0;border-bottom:1px solid #c4912f80;background:none;color:#e5cea0;font:14px/1.4 var(--font-sans);text-decoration:none;cursor:pointer}
+.chapter-progress {position:absolute;z-index:4;left:6%;right:6%;bottom:79px;display:flex;gap:22px}
+.chapter-progress button {flex:1;border:0;background:none;color:#aeb9aa;display:grid;gap:12px;text-align:left;font:12px/1.4 var(--font-sans);letter-spacing:.1em;cursor:pointer;min-height:44px;padding:0}
+.chapter-progress i {height:1px;background:#b7a77944;width:100%}
+.chapter-progress [aria-pressed="true"] {color:#f0d398}
+.chapter-progress [aria-pressed="true"] i {background:#c4912f;box-shadow:0 0 12px #c4912f55}
+.chapter-status,.chapter-scroll {position:absolute;z-index:4;bottom:48px;left:6%;font:12px/1.5 var(--font-sans);color:#a7b3a4;letter-spacing:.05em;margin:0}
+.chapter-scroll {left:auto;right:6%;color:#cab789}
+.cinematic-chapter :is(a,button,summary):focus-visible {outline:2px solid #e4c17a;outline-offset:5px}
+.chapter-static-records {padding:20px 6% 60px;max-width:1000px;margin:auto}
+.chapter-static-records article {padding:24px 0;border-top:1px solid #c4912f55;font-size:17px;line-height:1.6}
+.chapter-static-records h3 {font-size:28px;text-transform:none}
+.chapter-static-records dl {display:flex;gap:30px;flex-wrap:wrap}
+.chapter-static-records dt {color:#d4b777;font-size:13px}.chapter-static-records dd {margin:6px 0}
+[data-animated="true"] .chapter-static-records {display:none}
+.cinematic-chapter:not([data-animated="true"]) .chapter-beat,.cinematic-chapter:not([data-animated="true"]) .chapter-progress,.cinematic-chapter:not([data-animated="true"]) .chapter-scroll {display:none}
+/* Workshop: macro substance → drawn structure → package → approval. */
+.craft-stage {position:absolute;inset:0;z-index:1;pointer-events:none}
+.craft-macro {position:absolute;inset:0;opacity:calc(1 - var(--ch-assembly));transform:scale(calc(1.1 + var(--ch-p)*.15)) translateX(calc(var(--ch-p)*-8%))}
+.craft-macro img {object-fit:cover}
+.craft-bench {position:absolute;width:62%;height:22%;right:-5%;top:65%;background:linear-gradient(155deg,#23443280,#030806);border-top:1px solid #c4912f66;transform:perspective(800px) rotateX(64deg) rotateZ(-8deg);opacity:var(--ch-assembly)}
+.craft-package,.craft-drawing {position:absolute;right:9%;top:18%;width:30%;height:55%}
+.craft-package {opacity:var(--ch-assembly);transform:translateY(calc((1 - var(--ch-assembly))*120px)) rotate(calc((1 - var(--ch-assembly))*-18deg)) scale(calc(.7 + var(--ch-assembly)*.3));filter:drop-shadow(0 30px 24px #0008)}
+.craft-package img {object-fit:contain}
+.craft-drawing {transform:translateX(calc((1 - var(--ch-assembly))*50px)) rotateY(-15deg);opacity:calc(var(--ch-assembly)*(1 - var(--ch-approval)))}
+.craft-drawing svg {width:100%;height:100%;stroke:#dfc68c;stroke-width:.6;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--ch-assembly))}
+.craft-inspection {position:absolute;top:calc(8% + var(--ch-approval)*82%);left:-10%;right:-10%;height:1px;background:linear-gradient(90deg,transparent,#ffe4a0,transparent);box-shadow:0 0 22px #c4912f;opacity:calc(1 - var(--ch-approval))}
+.craft-signature {position:absolute;right:7%;top:56%;padding:20px 28px;border:1px solid #c4912f;background:#082016ec;display:grid;gap:6px;transform:translateY(calc((1 - var(--ch-approval))*35px)) rotate(-6deg);opacity:var(--ch-approval);text-align:center}
+.craft-signature>span {font-size:40px;color:#c4912f}.craft-signature b {font-size:16px;letter-spacing:.15em;font-weight:400}.craft-signature small {font-size:12px}
+.craft-measure {position:absolute;right:5%;top:25%;bottom:35%;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid #c4912f60;opacity:var(--ch-assembly)}
+.craft-measure i {width:15px;height:1px;background:#c4912f70}
+/* Vault: a lateral dolly, product-sized bays, changing light. */
+.chapter-vault .chapter-heading {width:50%;top:145px}
+.chapter-vault .chapter-narrative {width:36%}
+.chapter-vault .chapter-shade {background:linear-gradient(90deg,#030806ee,transparent 60%),linear-gradient(0deg,#030806,transparent 55%)}
+.vault-stage {position:absolute;left:39%;right:0;top:17%;height:60%;perspective:1200px;overflow:hidden;z-index:1}
+.vault-travel {position:absolute;left:0;top:0;width:400%;height:100%;display:flex;transform:translateX(calc(var(--ch-shelf)*-75%));}
+.vault-object {position:relative;width:25%;height:100%;margin:0;flex-shrink:0;display:grid;justify-items:center;align-content:end;padding-bottom:25px}
+.vault-product {position:absolute;top:5%;left:20%;width:60%;height:70%;transform:rotateY(calc(8deg - var(--ch-p)*10deg))}
+.vault-product img {object-fit:contain;filter:drop-shadow(0 25px 20px #0009)}
+.vault-number {position:absolute;left:10%;top:6%;font-size:13px;letter-spacing:.2em;color:#cfb476}
+.vault-light {position:absolute;inset:0 5%;background:radial-gradient(ellipse at 50% 70%,#bd9a3433,transparent 64%);border-left:1px solid #c4912f25;border-right:1px solid #c4912f25}
+.vault-object figcaption {z-index:1;text-align:center;display:grid;gap:7px}
+.vault-object figcaption b {font-size:23px;font-weight:400;letter-spacing:-.03em}.vault-object figcaption span {font-size:12px;color:#c3bd9f}
+.vault-horizon {position:absolute;top:25%;font-size:clamp(40px,5vw,70px);font-weight:300;letter-spacing:-.05em;color:#d8c69f}
+.vault-ledge {position:absolute;left:0;right:0;bottom:16%;border-top:1px solid #b69a5a70;height:30px;background:linear-gradient(#09140d,transparent);transform:skewY(-2deg);pointer-events:none}
+/* Distribution: a physical package travels between two real environments. */
+.chapter-network .chapter-heading {width:55%}
+.chapter-network .chapter-narrative {left:auto;right:6%;width:38%}
+.chapter-network .chapter-shade {background:linear-gradient(0deg,#040906 4%,#040906ad 22%,transparent 65%),linear-gradient(90deg,#04090680,transparent)}
+.dispatch-stage {position:absolute;inset:0;z-index:1;pointer-events:none}
+.dispatch-window {position:absolute;top:19%;width:30%;height:42%;overflow:hidden;border:1px solid #c4912f50;transform:perspective(1000px) rotateY(9deg)}
+.dispatch-window img {object-fit:cover;filter:brightness(.75) saturate(.6)}
+.dispatch-window span {position:absolute;bottom:18px;left:18px;font-size:12px;letter-spacing:.16em;color:#e4d0a6}
+.dispatch-maker {left:4%;opacity:calc(1 - var(--ch-delivery));transform:translateX(calc(var(--ch-delivery)*-50%)) perspective(1000px) rotateY(12deg)}
+.dispatch-destination {right:4%;opacity:var(--ch-delivery);transform:translateX(calc((1 - var(--ch-delivery))*50%)) perspective(1000px) rotateY(-12deg)}
+.dispatch-path {position:absolute;left:7%;top:28%;width:86%;height:35%;fill:none;stroke-width:1.5;overflow:visible}
+.dispatch-track {stroke:#c4912f25}.dispatch-gold {stroke:#c4912f;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--ch-delivery))}
+.dispatch-product {position:absolute;left:calc(13% + var(--ch-delivery)*63%);top:32%;width:12%;height:27%;transform:translateX(-50%) rotate(calc(-12deg + var(--ch-delivery)*24deg));z-index:3;filter:drop-shadow(0 12px 20px #000)}
+.dispatch-product img {object-fit:contain}
+.dispatch-case {position:absolute;left:42%;top:48%;width:20%;height:13%;display:grid;place-content:center;text-align:center;gap:10px;border:1px solid #c4912f88;background:linear-gradient(120deg,#1b3225,#080f0b);box-shadow:0 20px 30px #0008;transform:perspective(900px) rotateY(calc(15deg - var(--ch-delivery)*30deg)) rotateX(12deg)}
+.dispatch-case>span {color:#d3b16e;font-size:38px}.dispatch-case small {font-size:12px;letter-spacing:.08em}
+.dispatch-stations {position:absolute;left:8%;right:8%;top:66%;display:flex;justify-content:space-between;font-size:12px;letter-spacing:.15em;color:#dfc78f}
+/* Exchange: the architecture parts, the light warms, the invitation settles. */
+.chapter-arrival .environment-image {filter:brightness(.7) saturate(.85)}
+.chapter-arrival .environment-camera {transform:scale(calc(1.24 - var(--ch-p)*.22)) translateY(calc(var(--ch-p)*-3%))}
+.exchange-chapter-stage {position:absolute;inset:0;z-index:1;pointer-events:none}
+.exchange-door {position:absolute;top:0;bottom:0;width:24%;background:linear-gradient(90deg,#07100b,#15271d);border-inline:1px solid #c4912f80}
+.door-left {left:0;transform:translateX(calc(var(--ch-p)*-105%))}.door-right {right:0;transform:translateX(calc(var(--ch-p)*105%))}
+.exchange-table-light {position:absolute;inset:0;background:radial-gradient(ellipse at 65% 55%,#e9ac4c30,transparent 60%);opacity:var(--ch-p)}
+.exchange-invitation {position:absolute;right:6%;top:34%;width:40%;opacity:var(--ch-invitation);transform:translateY(calc((1 - var(--ch-invitation))*100px)) perspective(1000px) rotateY(calc((1 - var(--ch-invitation))*-35deg)) rotateZ(calc((1 - var(--ch-invitation))*-8deg))}
+.exchange-invitation .member-card-stage {width:100%;height:auto;min-height:0;padding:0}.exchange-invitation .member-card {width:100%;max-width:480px;aspect-ratio:1.65;height:auto;margin:auto;transform:none}
+.exchange-invitation p {font-size:12px;letter-spacing:.12em;text-align:center;color:#dec89c;margin-top:24px}
+.exchange-human-note {position:absolute;right:7%;top:28%;font-size:clamp(28px,3.8vw,55px);line-height:1.13;letter-spacing:-.04em;opacity:calc(1 - var(--ch-invitation));color:#eee5d2}.exchange-human-note em {color:#e0c58e;font-style:normal}
+/* Coda: space, a threshold and a clear decision. */
+.chapter-closing .chapter-viewport {display:grid;place-items:center}
+.chapter-closing .environment-image {filter:brightness(.36) saturate(.7)}
+.chapter-closing .environment-camera {transform:scale(calc(1.15 - var(--ch-settle)*.15))}
+.closing-threshold {position:absolute;inset:14% 14% 10%;border:1px solid #c4912f65;transform:scale(calc(1.2 - var(--ch-settle)*.2));opacity:calc(.3 + var(--ch-settle)*.7);pointer-events:none}
+.closing-threshold i {position:absolute;top:0;bottom:0;left:12px;width:1px;background:#c4912f30}.closing-threshold i+i {left:auto;right:12px}
+.closing-copy {position:relative;text-align:center;padding:140px 6% 80px;max-width:850px;z-index:2}
+body .closing-copy h2 {font-size:clamp(48px,6.5vw,96px)}
+.closing-copy>p:not(.chapter-index) {font-size:18px;line-height:1.6;color:#d8dece;margin:24px 0}
+.closing-copy .chapter-actions {justify-content:center;gap:30px}
+.closing-copy .chapter-actions a {font-size:16px;padding:16px 20px;border:1px solid #c4912f88;background:#082017b0}
+/* Product browsing uses an ordinary accessible dialog above the cinematic scene. */
+.chapter-catalog {width:min(920px,92vw);max-height:85svh;padding:28px;background:#0b1710;color:#eee8da;border:1px solid #c4912f;overflow:auto;overscroll-behavior:contain}
+.chapter-catalog::backdrop {background:#000c;backdrop-filter:blur(8px)}
+.catalog-top {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}.catalog-top button {background:none;border:1px solid #c4912f88;color:#ecd7aa;padding:12px 18px;cursor:pointer;font-size:16px}
+body .chapter-catalog h2 {font-size:32px}.chapter-catalog .product-explorer {display:flex;flex-direction:column}.chapter-catalog .explorer-copy {width:100%;max-width:none}.chapter-catalog .collection-tabs {display:flex;flex-wrap:wrap;gap:10px}.chapter-catalog .collection-tabs button {font-size:16px}.chapter-catalog .product-explorer [role="tabpanel"] {position:relative;inset:auto}.chapter-catalog .explorer-copy p {font-size:16px}
+@media(max-width:999px){
+ .gent-journey .cinematic-chapter[data-animated="true"] {min-height:310svh}
+ .chapter-viewport {min-height:680px}
+ .chapter-heading {top:143px;left:6%;width:88%}
+ body .cinematic-chapter h2 {font-size:clamp(34px,7vw,56px);max-width:650px}
+ .chapter-index {font-size:12px;margin-bottom:12px;letter-spacing:.09em}
+ .chapter-narrative {bottom:144px;left:6%;width:88%;max-width:550px;background:linear-gradient(90deg,#040b08ed,#040b08c0);padding:14px 16px;border-left:1px solid #c4912f66}
+ body .chapter-beat h3 {font-size:28px;margin-bottom:8px}
+ .chapter-description {font-size:16px;line-height:1.5;max-width:100%}
+ .chapter-details {margin-top:8px}.chapter-details summary {min-height:26px}
+ .chapter-details[open] {position:absolute;bottom:0;left:0;right:0;max-height:35svh;overflow:auto;padding:18px;z-index:5}
+ .chapter-details dl {grid-template-columns:1fr;gap:10px}.chapter-details dl div {display:flex;justify-content:space-between;gap:18px}.chapter-details dd {margin:0}
+ .chapter-progress {bottom:77px;gap:12px}
+ .chapter-progress button {font-size:12px;letter-spacing:.03em;gap:8px}
+ .chapter-status {bottom:34px;max-width:88%;font-size:12px;line-height:1.4}
+ .chapter-scroll {display:none}
+ .chapter-actions {gap:12px;margin-top:8px}.chapter-actions a,.chapter-actions button {font-size:14px;min-height:36px}
+ .craft-macro {transform:scale(calc(1.15 + var(--ch-p)*.12)) translateX(calc(var(--ch-p)*-10%))}.craft-macro img {object-position:65% center}
+ .craft-package,.craft-drawing {top:26%;right:10%;width:43%;height:29%}
+ .craft-signature {top:40%;right:7%;padding:12px 16px}.craft-signature>span {font-size:25px}.craft-signature b {font-size:13px}.craft-signature small {font-size:12px;max-width:180px}
+ .craft-bench {top:48%;width:80%}.craft-measure {top:28%;bottom:50%}
+ .chapter-vault .chapter-heading {top:143px;width:88%}
+ .chapter-vault .chapter-narrative {width:88%}
+ .vault-stage {left:0;right:0;top:26%;height:29%}
+ .vault-product {left:26%;width:48%;height:74%;top:0}
+ .vault-object {padding-bottom:0}.vault-object figcaption b {font-size:20px}.vault-object figcaption span {font-size:12px}
+ .vault-number {left:12%;top:14%}.vault-ledge {bottom:22%}.vault-horizon {font-size:38px;top:8%}
+ .chapter-network .chapter-heading {width:88%}
+ .chapter-network .chapter-narrative {left:6%;right:6%;width:88%}
+ .dispatch-window {top:28%;height:24%;width:38%}.dispatch-window span {font-size:12px;left:8px;bottom:8px;letter-spacing:0}
+ .dispatch-product {top:31%;width:21%;height:18%}
+ .dispatch-path {top:29%;height:23%}
+ .dispatch-case {left:38%;top:43%;width:27%;height:9%}.dispatch-case>span {font-size:22px}.dispatch-case small {font-size:12px;letter-spacing:0}.dispatch-stations {top:53%;font-size:12px;letter-spacing:0}
+ .exchange-invitation {right:7%;top:29%;width:64%}.exchange-invitation .member-card {padding:20px}.exchange-invitation .member-card-top>span {font-size:22px}.exchange-invitation .member-card-bottom {font-size:12px}.exchange-invitation p {font-size:12px;margin-top:12px;letter-spacing:0}
+ .exchange-human-note {right:8%;top:32%;font-size:32px}
+ .closing-threshold {inset:19% 5% 9%}.closing-copy {padding:150px 7% 75px}
+ body .closing-copy h2 {font-size:clamp(40px,10vw,65px)}.closing-copy .chapter-actions {gap:14px}
+ .chapter-catalog {padding:18px}.catalog-top {align-items:start}
+}
+@media(max-width:699px) and (max-height:720px){
+ .chapter-viewport {min-height:100svh}
+ .chapter-heading,.chapter-vault .chapter-heading {top:138px}
+ .chapter-heading h2 br {display:none}
+ body .cinematic-chapter h2 {font-size:30px;line-height:1.06;max-width:100%}
+ .chapter-index {margin-bottom:8px}
+ .chapter-heading {width:88%}
+ .chapter-narrative {bottom:105px;padding:10px 12px}
+ body .chapter-beat h3 {font-size:24px;line-height:1.12}.chapter-description {font-size:16px;line-height:1.35}
+ .chapter-kicker {font-size:12px;margin-bottom:5px}
+ .chapter-progress {bottom:54px;gap:8px}.chapter-progress button {font-size:12px;letter-spacing:0}
+ .chapter-status {bottom:12px;font-size:12px}
+ .craft-package,.craft-drawing {top:30%;height:24%;right:4%;width:34%}.craft-signature {top:34%;right:6%;padding:8px}.craft-signature>span,.craft-signature small {display:none}
+ .vault-stage {top:30%;height:23%}.vault-object figcaption {display:none}.vault-ledge {bottom:2%}
+ .dispatch-window {top:30%;height:22%}.dispatch-product {top:33%;height:16%}.dispatch-stations {display:none}.dispatch-case {top:43%;height:9%}.dispatch-case small {display:none}
+ .exchange-invitation {top:30%;width:48%;right:6%}.exchange-invitation .member-card-bottom,.exchange-invitation p {display:none}.exchange-human-note {top:30%;font-size:26px}
+ .chapter-details summary {min-height:24px}.chapter-actions {margin-top:4px;gap:6px 12px}.chapter-actions a,.chapter-actions button {font-size:13px;min-height:32px;padding:5px 0}
+ .closing-copy>p:not(.chapter-index) {font-size:16px}.closing-copy .chapter-actions a {font-size:14px;padding:12px}
+}
+@media(max-height:600px) and (min-width:700px){
+ .chapter-viewport {min-height:100svh}.chapter-heading,.chapter-vault .chapter-heading {top:115px;width:45%}body .cinematic-chapter h2 {font-size:32px}.chapter-heading h2 br {display:none}.chapter-narrative,.chapter-vault .chapter-narrative,.chapter-network .chapter-narrative {left:53%;right:5%;bottom:75px;width:42%;padding:10px}.chapter-progress {left:6%;right:6%;bottom:15px}.chapter-status {display:none}.craft-package,.craft-drawing {left:15%;right:auto;top:42%;height:36%;width:23%}.vault-stage {left:0;right:48%;top:40%;height:40%}.vault-object figcaption {display:none}.dispatch-window {top:40%;height:33%;width:23%}.dispatch-maker {left:2%}.dispatch-destination {right:50%}.dispatch-case {left:23%;top:60%;width:16%}.dispatch-product {left:calc(8% + var(--ch-delivery)*32%);top:45%;height:27%}.dispatch-path {left:3%;width:45%;top:40%}.dispatch-stations {display:none}.exchange-invitation {left:6%;right:auto;top:42%;width:35%}.exchange-invitation p {display:none}.exchange-human-note {left:6%;top:48%;font-size:28px}.closing-copy {padding:110px 5% 30px}.closing-copy>p:not(.chapter-index) {margin:12px 0;font-size:16px}body .closing-copy h2 {font-size:40px}
+}
+@media(prefers-reduced-motion:reduce){.cinematic-chapter * {animation:none!important;transition:none!important}}
+
+/* Keep the small-screen film legible without covering its subject. */
+.chapter-mobile-copy {display:none}
+@media(min-width:1000px){
+ .chapter-status,.chapter-scroll {bottom:124px}
+ .exchange-invitation p {display:none}
+}
+@media(max-width:699px){
+ .chapter-full-copy {display:none}.chapter-mobile-copy {display:block}
+ .chapter-vault .chapter-actions {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+ .chapter-vault .chapter-actions :is(a,button) {font-size:14px;gap:4px;align-items:center}
+ .chapter-details[open] {max-height:45svh}
+}
+@media(max-width:699px) and (max-height:720px){
+ .chapter-heading {opacity:clamp(0,calc(1 - var(--ch-p)*8),1)}
+ .chapter-heading h2 {margin-top:8px}
+ .chapter-narrative {padding:8px 12px}
+ .craft-package,.craft-drawing {top:24%;height:28%;right:22%;width:48%}
+ .craft-signature {top:36%;right:16%}
+ .vault-stage {top:24%;height:28%}
+ .dispatch-window {top:24%;height:27%}.dispatch-product {top:26%;height:22%}
+ .exchange-invitation {top:25%;width:65%;right:17%}
+ .exchange-human-note {top:26%;font-size:26px}
+ .chapter-arrival .chapter-kicker {font-size:12px}
+}
+
+.dispatch-product {margin-top:calc(var(--ch-transit,0)*55px)}
+@media(max-width:999px){.dispatch-product {margin-top:calc(var(--ch-transit,0)*20px)}}

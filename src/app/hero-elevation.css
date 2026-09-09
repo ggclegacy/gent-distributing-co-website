@@ -1,0 +1,163 @@
+/* The entrance is a deliberate invitation. Motion remains owned by IntroDirector. */
+.network-entrance .network-intro-copy {bottom:16%;max-width:760px;margin:auto}
+.network-entrance .network-eyebrow {font-size:12px;line-height:1.5;letter-spacing:.16em;color:#d8bb7e}
+.network-invitation {max-width:490px;margin:18px auto 0;font:17px/1.5 var(--font-sans);color:#d2d8cc;text-wrap:balance}
+.network-entrance .network-activate {position:relative;display:flex;align-items:center;justify-content:center;gap:20px;width:min(100%,420px);min-height:76px;margin:24px auto 0;padding:18px 24px;border:1px solid #c4912f;border-radius:5px;background:linear-gradient(125deg,#173b2de8,#07120ff5 68%);box-shadow:inset 0 1px #f2d59b30,0 12px 40px #0008;color:#f4e7cd;font:600 16px/1.3 var(--font-sans);letter-spacing:.09em;transition:background .25s,box-shadow .25s,transform .25s}
+.network-activate:before {content:"";position:absolute;inset:-5px;border:1px solid #c4912f40;border-radius:8px;pointer-events:none;animation:reserve-invite 4s ease-in-out infinite}
+.network-entrance .network-activate span {margin:0;transform:none}
+.network-entrance .network-play {font-size:27px;color:#e3ba65}
+.network-entrance .network-activate-arrow {margin-left:auto;font-size:23px}
+@media(hover:hover) and (pointer:fine){.network-entrance .network-activate:hover {transform:translateY(-2px);background:linear-gradient(125deg,#24503be8,#0b2018);box-shadow:inset 0 1px #f2d59b50,0 10px 45px #c4912f24}.network-activate:hover .network-activate-arrow {transform:translateX(3px)}}
+@keyframes reserve-invite {50%{opacity:.35}}
+.network-entrance:not(:is([data-state="DORMANT"],[data-state="READY"])) .network-activate:before,.network-entrance[data-ambient="paused"] .network-activate:before {animation-play-state:paused}
+.network-entrance .network-edition,.network-entrance .network-edition span+span {font-size:12px;line-height:1.5;color:#b5c1b4;letter-spacing:.12em}
+.network-entrance .network-bottom button,.network-entrance .network-bottom a {font-size:12px;letter-spacing:.08em;line-height:1.4}
+.network-entrance .network-origin-note {font-size:12px;color:#afbcad}
+.network-entrance .network-caption {padding:16px 20px;border-left:1px solid #c4912f70;background:linear-gradient(90deg,#030806e8,#03080695 65%,transparent);max-width:650px}
+.network-entrance .network-caption span {font-size:13px;color:#dfc48b;line-height:1.5;letter-spacing:.12em}
+.network-entrance .network-caption strong {font-size:clamp(30px,3vw,44px);line-height:1.15;text-wrap:balance}
+.network-entrance .network-live-status {font-size:16px;line-height:1.5}
+.story-chapter-rail span {font-size:12px;color:#b3bbaa}
+.story-dossier-index,.story-dossier dt,.story-instrument>span,.story-scan span,.story-node small,.story-network-heading span,.story-network-footnote,.story-arrival-caption span {font-size:12px;line-height:1.5;color:#c8b987;letter-spacing:.08em}
+.story-dossier p,.story-dossier dd,.story-detail-list,.story-node span,.story-network-heading p {font-size:16px;line-height:1.5;color:#c2cabb}
+.story-dossier {width:300px}
+.story-good figcaption {font-size:12px;letter-spacing:.06em;white-space:normal;line-height:1.4}
+.story-brand-mark small {font-size:12px;color:#c2cabb;letter-spacing:.12em}
+.story-concept-note {font-size:12px;line-height:1.4;letter-spacing:.05em;color:#b5beaf}
+.story-instrument {width:175px}
+.story-instrument strong {font-size:18px}
+.story-network-footnote {bottom:-65px}
+@media(max-width:699px){
+ .network-entrance .network-edition {top:138px;left:6%;right:6%;font-size:12px}
+ .network-entrance .network-intro-copy {left:6%;right:6%;bottom:17%}
+ body .network-entrance h1,body .network-entrance .network-resolution h2 {font-size:clamp(30px,8.6vw,40px);line-height:1.12;text-wrap:balance}
+ .network-entrance .network-eyebrow {font-size:12px;margin-bottom:12px;letter-spacing:.1em}
+ .network-invitation {font-size:16px;line-height:1.5;margin-top:16px}
+ .network-entrance .network-activate {font-size:14px;letter-spacing:.055em;min-height:72px;padding:16px 15px;gap:12px;margin-top:22px}
+ .network-entrance .network-activate-arrow {font-size:21px}
+ .network-entrance .network-bottom {left:6%;right:6%;bottom:48px;gap:12px;flex-wrap:wrap}
+ .network-entrance .network-bottom button,.network-entrance .network-bottom a {font-size:12px;letter-spacing:.03em}
+ .network-entrance .network-bottom .network-skip {margin-left:auto}
+ .network-entrance .network-bottom .network-explore {max-width:60%;font-size:13px}
+ .network-entrance .network-resolution {bottom:20%;left:6%;right:6%}
+ .network-entrance .network-caption {left:6%;right:6%;bottom:21%;padding:12px 14px;gap:8px}
+ .network-entrance .network-caption strong {font-size:clamp(30px,8vw,36px);line-height:1.13}
+ .network-entrance .network-caption span {font-size:13px}
+ .story-chapter-rail {display:flex;left:6%;right:6%;bottom:110px;gap:6px;height:34px}
+ .story-chapter-rail div {min-width:0;position:relative;gap:8px;align-content:start}
+ .story-chapter-rail span {display:none;font-size:13px;line-height:1.4;letter-spacing:.04em}
+ .story-chapter-rail [data-active="true"] span {display:block;position:absolute;top:9px;left:0}
+ .story-chapter-rail div:nth-last-child(-n+2) span {left:auto;right:0}
+ .story-products {top:36%;height:27svh;width:45vw}
+ .story-good figcaption {font-size:12px;bottom:-32px;letter-spacing:0}
+ .story-dossier {top:52%;left:6%;width:88%;grid-template-columns:1fr 1fr;gap:8px 12px;padding:12px;background:linear-gradient(120deg,#030806eb,#07140fe0);border-left:1px solid #c4912f60}
+ .story-dossier-index {font-size:12px;letter-spacing:.04em;gap:8px}
+ body .story-dossier h3 {font-size:30px;line-height:1.06;margin:4px 0}
+ .story-dossier p {font-size:16px;line-height:1.35}
+ .story-dossier dl div {display:block;font-size:16px;margin:0 0 8px}
+ .story-dossier dt {font-size:12px;line-height:1.3;letter-spacing:.03em}
+ .story-dossier dd {font-size:16px;line-height:1.3}
+ .story-detail-list {font-size:12px;gap:8px;margin-top:4px}
+ .story-detail-list b {font-size:14px;line-height:1.35;padding:0}
+ .network-entrance:is([data-beat="discovery"],[data-beat="development"],[data-beat="the gent standard"]) .network-caption {top:137px;bottom:auto}
+ .network-entrance:is([data-beat="discovery"],[data-beat="development"],[data-beat="the gent standard"]) .network-caption strong {font-size:30px}
+ .story-scan span {font-size:12px;letter-spacing:.06em;bottom:-20%}
+ .story-brand-mark {top:19%}
+ .story-brand-mark>span {font-size:24px}
+ .story-brand-mark small {font-size:12px}
+ .story-concept-note {right:6%;left:6%;bottom:152px;writing-mode:horizontal-tb;text-align:center;font-size:12px;letter-spacing:0}
+ .network-entrance:is([data-beat="discovery"],[data-beat="development"],[data-beat="the gent standard"]) .story-concept-note {visibility:hidden}
+ .network-entrance:is([data-beat="the collection"],[data-beat="gent"]) .story-products {top:44%;height:27svh}
+ .story-distribution {top:25%;height:35%;left:6%;right:6%}
+ .story-network-heading {top:-32px}
+ .story-network-heading span {font-size:12px;letter-spacing:.06em}
+ .story-network-heading p {font-size:16px;margin-top:6px}
+ .story-node {min-width:0;padding:8px 4px;background:#030806d9}
+ .story-node small {font-size:12px;letter-spacing:0}
+ .story-node b {font-size:18px;line-height:1.2;margin:4px 0}
+ .story-node-gent b {font-size:22px}
+ .story-node-maker {left:0;top:49%}
+ .story-node-gent {left:30%;top:75%}
+ .story-node-retail {left:auto;right:8%;top:6%}
+ .story-node-hospitality {left:auto;right:0;top:87%}
+ .story-node-people {right:0;top:49%}
+ .story-network-footnote {font-size:12px;line-height:1.4;letter-spacing:0;bottom:-80px;max-width:65%}
+ .network-entrance[data-beat="distribution"] .story-concept-note {visibility:hidden}
+ .story-arrival-caption {left:6%;right:6%;top:28%}
+ .story-arrival-caption span {font-size:13px}
+ .story-arrival-caption strong {font-size:38px}
+}
+/* Short phones retain a complete readable control strip; metadata uses fewer rows. */
+@media(max-width:699px) and (max-height:700px){
+ .network-entrance .network-intro-copy {bottom:16%}
+ .network-entrance .network-edition {top:138px}
+ .network-entrance .network-bottom {bottom:20px}
+ .network-entrance .network-eyebrow {margin-bottom:8px}
+ .network-invitation {margin-top:12px}
+ .network-entrance .network-activate {margin-top:16px;min-height:64px}
+ .story-chapter-rail {bottom:80px}
+ .story-products {top:35%;height:22svh}
+ .story-dossier {top:49%;padding:10px;gap:6px 10px}
+ .story-dossier dl div {margin-bottom:5px}
+ .story-dossier dd {font-size:16px}
+ .story-detail-list {display:flex}
+ .story-detail-list b {font-size:12px}
+ .network-entrance:is([data-beat="discovery"],[data-beat="development"],[data-beat="the gent standard"]) .network-caption {top:115px;padding:6px 12px}
+ .network-entrance:is([data-beat="discovery"],[data-beat="development"],[data-beat="the gent standard"]) .network-caption strong {display:none}
+ .story-concept-note {bottom:122px}
+ .network-entrance .network-caption {bottom:24%}
+ .story-network-heading p {margin-top:2px}
+ .story-network-footnote {bottom:-55px}
+ .story-brand-mark {top:22%}
+ .story-brand-mark svg {width:28px;height:28px}
+}
+@media(prefers-reduced-motion:reduce){.network-entrance .network-activate,.network-entrance .network-activate:before {animation:none;transition:none;transform:none}}
+html[data-motion="paused"] .network-activate:before,.network-entrance:not([data-mode="full"]) .network-activate:before {animation:none}
+/* Metadata and refinement are distinct story beats on phones. */
+@media(max-width:699px){
+ .network-entrance:not(:is([data-state="DORMANT"],[data-state="READY"])) .network-edition {display:none}
+ .network-entrance:is([data-beat="discovery"],[data-beat="the gent standard"]) .story-detail-list {display:none}
+ .network-entrance[data-beat="development"] .story-dossier dl {display:none}
+ .network-entrance[data-beat="development"] .story-detail-list {grid-column:2;grid-row:2/4;display:grid;gap:5px;margin:0}
+ .story-detail-list span {border:0;padding:0;line-height:1.3}
+ .story-detail-list b {font-size:14px}
+ .network-entrance[data-beat="distribution"] .story-good figcaption {display:none}
+ .network-entrance[data-beat="distribution"] .network-caption {bottom:19%}
+ .story-network-footnote {max-width:none;bottom:-88px}
+}
+@media(max-width:699px) and (max-height:700px){
+ .network-entrance .network-edition {display:none}
+ .network-entrance .network-caption {bottom:23%}
+ .network-entrance:is([data-beat="discovery"],[data-beat="development"],[data-beat="the gent standard"]) .network-caption {top:132px}
+ .story-products {top:37%;height:20svh}
+ .story-dossier {top:51%;}
+ .story-chapter-rail {bottom:70px;height:30px}
+ .story-concept-note {bottom:112px}
+ .story-distribution {top:33%;height:23%}
+ .story-network-heading {top:-45px}
+ .story-node-gent {top:65%;left:29%}
+ .story-node-retail {top:-6%;right:2%}
+ .story-node-hospitality {top:111%;right:0}
+ .story-node-maker,.story-node-people {top:40%}
+ .story-node small {font-size:12px}
+ .story-node b {font-size:16px}
+ .story-network-footnote {display:none}
+ .network-entrance[data-beat="distribution"] .network-caption {bottom:16%;padding:8px 12px}
+ .network-entrance[data-beat="distribution"] .network-caption strong {font-size:30px}
+ .network-entrance[data-beat="distribution"] .story-products {top:36%;height:15svh}
+}
+.story-network-footnote {top:26px;bottom:auto;max-width:45%}
+.story-detail-list {margin-top:16px;gap:8px}
+@media(min-width:700px){
+ .network-entrance[data-beat="distribution"] .network-caption {bottom:17%;max-width:none;text-align:center}
+ .network-entrance[data-beat="distribution"] .story-good figcaption {display:none}
+}
+@media(max-width:699px){
+ .story-network-footnote {top:-76px;bottom:auto;max-width:100%}
+ .network-entrance[data-beat="development"] .story-detail-list span {display:flex;gap:5px;align-items:baseline;opacity:1}
+ .network-entrance[data-beat="development"] .story-detail-list b {display:inline;font-size:14px;line-height:1.35;color:#d6ddce}
+ .network-entrance[data-beat="development"] .story-dossier h3 {grid-row:2;align-self:start}
+ .network-entrance[data-beat="development"] .story-dossier p {grid-row:3;align-self:start}
+}
+/* Refinement copy should be fully readable as soon as its chapter is active. */
+.network-entrance[data-beat="development"] .story-detail-list {opacity:1}

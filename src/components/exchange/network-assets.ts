@@ -23,7 +23,6 @@ export async function replaceNetworkAsset(
   const targets = [
     asset.shell,
     asset.intelligence,
-    ...asset.rings,
     asset.capsuleShell,
     asset.capsuleCore,
   ];

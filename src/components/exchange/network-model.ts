@@ -215,95 +215,25 @@ export function createNetwork(standard: boolean, graybox = false) {
     core,
   );
   const mechanism = group("mechanism", louisiana);
-  const rings = ["origin_ring", "routing_ring", "intelligence_ring"].map(
-    (name, i) => {
-      const g = group(name, mechanism),
-        outer = 0.77 + i * 0.12,
-        inner = outer - 0.044;
-      const shape = new THREE.Shape();
-      shape.absarc(0, 0, outer, 0, Math.PI * 2, false);
-      const hole = new THREE.Path();
-      hole.absarc(0, 0, inner, 0, Math.PI * 2, true);
-      shape.holes.push(hole);
-      mesh(
-        new THREE.ExtrudeGeometry(shape, {
-          depth: 0.055,
-          bevelEnabled: true,
-          bevelSize: 0.006,
-          bevelThickness: 0.006,
-          bevelSegments: 2,
-          curveSegments: standard ? 32 : 48,
-        }),
-        mats.titanium,
-        g,
-      );
-      mesh(
-        new THREE.TorusGeometry(outer - 0.014, 0.0035, 4, 64, Math.PI * 1.3),
-        mats.gold,
-        g,
-        0,
-        0,
-        0.06,
-      );
-      const ticks = new THREE.InstancedMesh(
-          new THREE.BoxGeometry(0.009, 0.027, 0.008),
-          mats.edge,
-          24,
-        ),
-        dummy = new THREE.Object3D();
-      for (let j = 0; j < 24; j++) {
-        const a = (j * Math.PI) / 12;
-        dummy.position.set(Math.cos(a) * outer, Math.sin(a) * outer, 0.06);
-        dummy.rotation.z = a - Math.PI / 2;
-        dummy.updateMatrix();
-        ticks.setMatrixAt(j, dummy.matrix);
-      }
-      g.add(ticks);
-      return g;
-    },
-  );
-  const channels = group("origin_channels", routing);
-  const originCurves: THREE.Mesh[] = [];
-  for (const [x, y] of [
-    [-0.65, 0.65],
-    [0.12, 0.62],
-    [0.55, -0.25],
-    [-0.65, -0.52],
-  ]) {
-    const curve = new THREE.CatmullRomCurve3(
-      [
-        new THREE.Vector3(LAFAYETTE.x, LAFAYETTE.y, 0.09),
-        new THREE.Vector3(x, LAFAYETTE.y, 0.09),
-        new THREE.Vector3(x, y, 0.09),
-      ],
-      false,
-      "catmullrom",
-      0.12,
+  // Surface connections belong to the origin, not to a decorative mechanism.
+  const channels = group("origin_channels", louisiana);
+  const localStops = [
+    [-0.58, 0.48], // northwestern Louisiana
+    [-0.15, 0.52], // northern Louisiana
+    [0.05, -0.18], // capital corridor
+    [0.36, -0.43], // southeastern Louisiana
+  ];
+  const originCurves = localStops.map(([x, y]) => {
+    const end = new THREE.Vector3(x, y, 0.22);
+    const mid = LAFAYETTE.clone().lerp(end, 0.5);
+    mid.z = 0.22;
+    const curve = new THREE.QuadraticBezierCurve3(
+      new THREE.Vector3(LAFAYETTE.x, LAFAYETTE.y, 0.22), mid, end,
     );
-    originCurves.push(
-      mesh(
-        new THREE.TubeGeometry(curve, 28, 0.006, 5, false),
-        mats.gold,
-        channels,
-      ),
-    );
-  }
-  // Recessed alignment studs connect the three purposeful plates.
-  for (const [x, y] of [
-    [-0.65, 0.52],
-    [-0.52, -0.47],
-    [0.1, 0.46],
-    [0.52, -0.42],
-  ]) {
-    mesh(
-      new THREE.CylinderGeometry(0.018, 0.018, 0.65, 8),
-      mats.edge,
-      mechanism,
-      x,
-      y,
-      -0.23,
-    ).rotation.x = Math.PI / 2;
-  }
+    const path = mesh(new THREE.TubeGeometry(curve, 32, 0.007, 5, false), mats.gold, channels);
+    const destination = mesh(new THREE.SphereGeometry(0.025, 12, 8), mats.gold, channels, x, y, 0.22);
+    return { path, destination };
+  });
   const unitedStates = group("united_states"),
     terrain = group("terrain", unitedStates);
   const nationalShapes = networkStates
@@ -336,11 +266,16 @@ export function createNetwork(standard: boolean, graybox = false) {
     const end = new THREE.Vector3(x, y, -0.23),
       mid = LAFAYETTE.clone().lerp(end, 0.5);
     mid.z = 0.65 + Math.abs(x) * 0.09;
-    const curve = new THREE.QuadraticBezierCurve3(LAFAYETTE.clone(), mid, end);
+    const parent = [null, 0, 0, null, 3, 0, 5][i];
+    const start = parent === null ? LAFAYETTE.clone() : new THREE.Vector3(...endpoints[parent], -0.23);
+    mid.copy(start).lerp(end, 0.5);
+    mid.z = 0.45 + Math.abs(end.x - start.x) * 0.06;
+    const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
     const material = mats.gold.clone();
     material.transparent = true;
+    material.emissiveIntensity = 0.65;
     const path = mesh(
-      new THREE.TubeGeometry(curve, 64, 0.008, 5, false),
+      new THREE.TubeGeometry(curve, 64, 0.012, 5, false),
       material,
       anchors,
     );
@@ -396,7 +331,7 @@ export function createNetwork(standard: boolean, graybox = false) {
     nodeRing,
     core,
     mechanism,
-    rings,
+    channels,
     originCurves,
     unitedStates,
     terrain,

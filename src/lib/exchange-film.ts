@@ -19,7 +19,7 @@ export const smooth = (a: number, b: number, p: number) => {
 export const windowAt = (a: number, b: number, p: number, fade = 0.025) =>
   smooth(a, a + fade, p) * (1 - smooth(b - fade, b, p));
 export const beats = [
-  ["ORIGIN", "Great things begin somewhere."],
+  ["ORIGIN", "Born in Louisiana. Built for national reach."],
   ["DISCOVERY", "Find what deserves to go further."],
   ["DEVELOPMENT", "Shape every detail."],
   ["THE GENT STANDARD", "Give exceptional a standard."],
@@ -29,7 +29,7 @@ export const beats = [
   ["GENT", "Louisiana born. Built to move further."],
 ];
 export const INTRO_BEATS = [
-  { name: "Ignition", at: 0, duration: 3.2, progress: 0.10 },
+  { name: "Ignition", at: 0, duration: 4.2, progress: 0.10 },
   { name: "Discovery", at: 4.5, duration: 4.1, progress: 0.22 },
   { name: "Development", at: 10, duration: 3.7, progress: 0.34 },
   { name: "Authentication", at: 15, duration: 3.6, progress: 0.45 },
@@ -44,7 +44,7 @@ export function beatAt(p: number) {
 }
 /** Keep the established Louisiana/case geometry, independently scored within the story. */
 export function geometryAt(p: number) {
-  const keys = [[0,0],[.10,.286],[.34,.286],[.45,.533],[.49,.695],[.60,1],[1,1]];
+  const keys = [[0,0],[.10,.533],[.34,.533],[.45,.533],[.49,.695],[.60,1],[1,1]];
   let i=0; while(i<keys.length-2 && p>keys[i+1][0]) i++;
   const [a,x]=keys[i], [b,y]=keys[i+1];
   return x+(y-x)*Math.max(0,Math.min(1,(p-a)/(b-a)));
@@ -98,8 +98,8 @@ const cameras: Record<Framing, Key[]> = {
     [0, 0.8, -2.2, 16, 0, -1.25, 0],
     [0.114, 0.6, -1.8, 15, 0, -1.25, 0],
     [0.286, 1, -2.5, 17, 0, 0.7, 0],
-    [0.45, 0, -3, 24, -1, 2, 0],
-    [0.533, 0, -3, 24, -1, 2, 0],
+    [0.45, 0, -3, 24, -1, -1, 0],
+    [0.533, 0, -3, 24, -1, -1, 0],
     [0.695, 1.2, -2, 14, 1, 0.8, 2],
     [0.829, 1.2, -1, 15, 1, 0.8, 2],
     [1, 1.2, -0.5, 15, 1, 0.8, 2],

@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { createStudioEnvironment } from "./exchange-studio";
 import { disposeObject } from "./exchange-model";
 import { cameraAt, exchangeSignal, filmAt, geometryAt, smooth } from "@/lib/exchange-film";
-import { createNetwork, disposeNetwork } from "./network-model";
+import { createNetwork, disposeNetwork, LAFAYETTE } from "./network-model";
 export type HudPoint = { id: string; x: number; y: number; visible: boolean };
 export type ExchangeWorldProps = {
   onFail: () => void;
@@ -95,24 +95,16 @@ function World({ onFail, onReady, onProject }: ExchangeWorldProps) {
     asset.louisiana.scale.setScalar(originScale);
     asset.louisiana.position.set(0, 0, -recede * 2.5);
     asset.louisiana.rotation.z = -0.045 * (1 - expand);
-    asset.shell.position.z = 0.04 + f.unfold * 0.43;
-    asset.routing.position.z = -0.15 - f.unfold * 0.06;
-    asset.intelligence.position.z = -0.3 - f.unfold * 0.46;
-    asset.mechanism.visible = f.unfold > 0.002;
-    asset.rings.forEach((r, i) => {
-      r.position.z = -0.35 - i * 0.13 - f.unfold * i * 0.13;
-      r.rotation.z = (i % 2 ? -1 : 1) * f.unfold * 0.24;
+    // Keep Louisiana assembled: the routes are engraved on its upper surface.
+    asset.shell.position.z = 0.04;
+    asset.routing.position.z = -0.15;
+    asset.intelligence.position.z = -0.3;
+    asset.mechanism.visible = false;
+    asset.originCurves.forEach(({ path, destination }, i) => {
+      const reveal = smooth(0.04 + i * 0.025, 0.16 + i * 0.025, p);
+      path.geometry.setDrawRange(0, Math.floor(reveal * (path.geometry.index?.count ?? 0) / 30) * 30);
+      destination.visible = reveal > 0.98;
     });
-    asset.originCurves.forEach((m, i) =>
-      m.geometry.setDrawRange(
-        0,
-        Math.floor(
-          (smooth(0.012 + i * 0.017, 0.09 + i * 0.02, p) *
-            (m.geometry.index?.count ?? 0)) /
-            3,
-        ) * 3,
-      ),
-    );
     asset.node.position.z = asset.shell.position.z + 0.19;
     asset.nodeRing.scale.setScalar(0.94 + 0.06 * f.ignition);
     asset.mats.gold.emissiveIntensity = 0.005 + f.ignition * 0.1;
@@ -125,13 +117,13 @@ function World({ onFail, onReady, onProject }: ExchangeWorldProps) {
     asset.mats.border.opacity = f.network * 0.2;
     asset.unitedStates.visible = f.network > 0.001;
     asset.unitedStates.scale.setScalar(nationalScale);
-    asset.unitedStates.position.set(
-      -0.38 * (originScale - nationalScale) * expand,
-      -0.26 * (originScale - nationalScale) * expand,
-      -recede * 2.5,
-    );
+    // Match the national route origin to the physical Lafayette node at every scale.
+    asset.louisiana.updateMatrixWorld(true);
+    asset.node.getWorldPosition(point);
+    asset.unitedStates.position.copy(point).addScaledVector(LAFAYETTE, -nationalScale);
     asset.routes.forEach((r, i) => {
-      const reveal = smooth(0.3 + i * 0.023, 0.4 + i * 0.023, p);
+      const start = [0.285, 0.37, 0.37, 0.30, 0.39, 0.37, 0.455][i];
+      const reveal = smooth(start, start + 0.075, p);
       r.path.geometry.setDrawRange(
         0,
         Math.floor((reveal * (r.path.geometry.index?.count ?? 0)) / 3) * 3,
@@ -139,7 +131,7 @@ function World({ onFail, onReady, onProject }: ExchangeWorldProps) {
       r.destination.visible = reveal > 0.96;
       r.material.opacity =
         f.network * (1 - smooth(0.533, 0.6, p) * (i === 3 ? 0 : 0.78));
-      const travel = Math.max(0, Math.min(1, (p - (0.32 + i * 0.019)) / 0.16));
+      const travel = reveal;
       r.pulse.visible = travel > 0 && travel < 1;
       r.curve.getPoint(travel, r.pulse.position);
     });
